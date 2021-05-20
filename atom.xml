@@ -8,8 +8,18 @@
     <author>
       <name>orange</name>
     </author>
-    <updated>2021-05-19T10:02:30.942Z</updated>
+    <updated>2021-05-20T09:45:31.000Z</updated>
     <category term="个人博客" />
+    <entry>
+        <id>http://zyczxq.com/1943days/</id>
+        <title>和你一起的第1943天</title>
+        <link rel="alternate" href="http://zyczxq.com/1943days/"/>
+        <content type="html">&lt;p&gt;长长久久～&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;beauty.JPG&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+</content>
+        <category term="life" scheme="http://zyczxq.com/categories/life/" />
+        <updated>2021-05-20T09:45:31.000Z</updated>
+    </entry>
     <entry>
         <id>http://zyczxq.com/hello-world/</id>
         <title>Hello World</title>
