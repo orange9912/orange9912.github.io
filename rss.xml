@@ -1,19 +1,18 @@
 <?xml version="1.0"?>
 <rss version="2.0">
     <channel>
-        <title>Hexo</title>
-        <subtitle>subtitle</subtitle>
+        <title>orange&#39;s blog</title>
+        <subtitle>橙子的博客</subtitle>
         <icon>http://zyczxq.com/images/favicon.ico</icon>
         <link>http://zyczxq.com</link>
         <author>
-          <name>John Doe</name>
+          <name>orange</name>
         </author>
-        <description>描述123</description>
+        <description>博客</description>
         <language>zh-CN</language>
         <pubDate>Wed, 19 May 2021 18:02:30 +0800</pubDate>
         <lastBuildDate>Wed, 19 May 2021 18:02:30 +0800</lastBuildDate>
-        <category term="关键词1" />
-        <category term="关键词2" />
+        <category term="个人博客" />
         <item>
             <guid isPermalink="true">http://zyczxq.com/hello-world/</guid>
             <title>Hello World</title>

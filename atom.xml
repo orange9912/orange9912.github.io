@@ -1,16 +1,15 @@
 <?xml version="1.0"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>http://zyczxq.com</id>
-    <title>Hexo</title>
-    <subtitle>subtitle</subtitle>
+    <title>orange&#39;s blog</title>
+    <subtitle>橙子的博客</subtitle>
     <icon>http://zyczxq.com/images/favicon.ico</icon>
     <link href="http://zyczxq.com" />
     <author>
-      <name>John Doe</name>
+      <name>orange</name>
     </author>
     <updated>2021-05-19T10:02:30.942Z</updated>
-    <category term="关键词1" />
-    <category term="关键词2" />
+    <category term="个人博客" />
     <entry>
         <id>http://zyczxq.com/hello-world/</id>
         <title>Hello World</title>

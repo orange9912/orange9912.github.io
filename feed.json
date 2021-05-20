@@ -1,9 +1,9 @@
 {
     "version": "https://jsonfeed.org/version/1",
-    "title": "Hexo",
-    "subtitle": "subtitle",
+    "title": "orange's blog",
+    "subtitle": "橙子的博客",
     "icon": "http://zyczxq.com/images/favicon.ico",
-    "description": "描述123",
+    "description": "博客",
     "home_page_url": "http://zyczxq.com",
     "items": [
         {
