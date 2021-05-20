@@ -5,3 +5,28 @@ statics: /
 css: css
 js: js
 images: images
+
+loader:
+  start: true
+  switch: false
+
+fireworks:
+  enable: true
+  color:
+    - "rgba(255,182,185,.9)"
+    - "rgba(250,227,217,.9)"
+    - "rgba(183,222,214,.9)"
+    - "rgba(138,198,209,.9)"
+
+menu: #网站菜单样式
+  home: / || home
+  about: /about/ || user
+  posts:
+    default: / || feather
+    categories: /categories/ || th
+
+sidebar:
+  position: left
+  avatar: avatar.jpg
+
+#audio: #背景音乐

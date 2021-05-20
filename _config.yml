@@ -3,11 +3,11 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Hexo
-subtitle: subtitle
-description: 描述123
-keywords: 关键词1,关键词2 # edit for Theme.shoka
-author: John Doe
+title: orange's blog
+subtitle: 橙子的博客
+description: 博客
+keywords: 个人博客 # edit for Theme.shoka
+author: orange
 language: zh-CN # 这里只可以选 zh-CN、zh-HK、zh-TW、ja、en 这几个格式
 timezone: 'Asia/Shanghai'
 
@@ -53,9 +53,7 @@ prismjs:
 default_category: uncategorized
 category_map: # edit for Theme.shoka
   计算机科学: computer-science
-  Java: java
-  二进制杂谈: note
-  零基础学Java语言-浙江大学-翁恺: course-1
+  前端: JavaScript
   Theme Shoka Documentation: theme-shoka-doc
 tag_map:
 
@@ -138,20 +136,20 @@ minify:
     exclude:
       - '**/*.min.js'
 
-algolia:
-  appId:
-  apiKey:
-  adminApiKey:
-  chunkSize: 5000
-  indexName:
-  fields:
-    - title #必须配置
-    - path #必须配置
-    - categories #推荐配置
-    - content:strip:truncate,0,4000
-    - gallery
-    - photos
-    - tags
+# algolia:
+#   appId:
+#   apiKey:
+#   adminApiKey:
+#   chunkSize: 5000
+#   indexName:
+#   fields:
+#     - title #必须配置
+#     - path #必须配置
+#     - categories #推荐配置
+#     - content:strip:truncate,0,4000
+#     - gallery
+#     - photos
+#     - tags
 
 feed:
     limit: 20
@@ -177,3 +175,4 @@ deploy:
   type: git
   repo: git@github.com:orange9912/orange9912.github.io.git
   branch: main
+
