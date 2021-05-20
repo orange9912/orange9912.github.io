@@ -38,7 +38,7 @@ external_link:
   exclude: ''
 filename_case: 0
 render_drafts: false
-post_asset_folder: false
+post_asset_folder: true
 relative_link: false
 future: true
 highlight:
@@ -52,6 +52,8 @@ prismjs:
 # Category & Tag
 default_category: uncategorized
 category_map: # edit for Theme.shoka
+  生活: life
+  医学: medical
   计算机科学: computer-science
   前端: JavaScript
   Theme Shoka Documentation: theme-shoka-doc
