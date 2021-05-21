@@ -138,7 +138,7 @@ hexo deploy//也可以是hexo d
 &lt;h3 id=&#34;2mac下hexo使用hexo-d报权限错误&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#2mac下hexo使用hexo-d报权限错误&#34;&gt;#&lt;/a&gt; 2.mac 下 hexo 使用 hexo d 报权限错误&lt;/h3&gt;
 &lt;p&gt;​	修改文件权限，使用 chown 修改文件夹权限后即可。&lt;/p&gt;
 </content>
-        <category term="各种配置" scheme="http://zyczxq.com/categories/%E5%90%84%E7%A7%8D%E9%85%8D%E7%BD%AE/" />
+        <category term="各种配置" scheme="http://zyczxq.com/categories/configs/" />
         <updated>2021-05-20T14:42:37.000Z</updated>
     </entry>
     <entry>
