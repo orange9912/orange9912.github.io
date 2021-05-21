@@ -14,7 +14,113 @@
         <id>http://zyczxq.com/report/</id>
         <title>个人博客配置过程记录</title>
         <link rel="alternate" href="http://zyczxq.com/report/"/>
-        <content type="html"></content>
+        <content type="html">&lt;h1 id=&#34;个人博客的配置和搭建过程&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#个人博客的配置和搭建过程&#34;&gt;#&lt;/a&gt; 个人博客的配置和搭建过程&lt;/h1&gt;
+&lt;h2 id=&#34;一前言&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#一前言&#34;&gt;#&lt;/a&gt; 一。前言&lt;/h2&gt;
+&lt;p&gt;​	之前就萌生过搭建个人博客的想法，只是因为自己技术能力的不足就一直拖延着，直到最近查资料的时候发现了 github pages 和 hexo 这两个宝藏之后，又看到大佬们漂亮的博客，一咬牙，就开始捣鼓怎么搭建一个自己的个人博客。上网查了挺多资料，其实很多都不太一定正确，中途踩了很多坑，为了方便朋友和自己以后再次配置，故记录下来配置过程。&lt;/p&gt;
+&lt;h2 id=&#34;二使用的工具和简介&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#二使用的工具和简介&#34;&gt;#&lt;/a&gt; 二。使用的工具和简介&lt;/h2&gt;
+&lt;h3 id=&#34;1hexo&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#1hexo&#34;&gt;#&lt;/a&gt; 1.hexo&lt;/h3&gt;
+&lt;p&gt;​	Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 &lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cDovL2RhcmluZ2ZpcmViYWxsLm5ldC9wcm9qZWN0cy9tYXJrZG93bi8=&#34;&gt;Markdown&lt;/span&gt;（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。&lt;/p&gt;
+&lt;h3 id=&#34;2git&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#2git&#34;&gt;#&lt;/a&gt; 2.git&lt;/h3&gt;
+&lt;p&gt;Git 是目前世界上最先进的分布式版本控制系统，可以有效、高速的处理从很小到非常大的项目版本管理。我们这次个人博客的搭建就是基于 github pages。&lt;/p&gt;
+&lt;h3 id=&#34;3nodejs&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#3nodejs&#34;&gt;#&lt;/a&gt; 3.nodejs&lt;/h3&gt;
+&lt;p&gt;​	&lt;em&gt;Node.js&lt;/em&gt; 是一个基于 Chrome V8 引擎的 JavaScript 运行环境。&lt;em&gt;Node.js&lt;/em&gt; 的包管理器 npm, 是全球最大的开源库生态系统。我们所使用到的 hexo，就是基于 nodejs 编写的，需要使用到 nodejs 的包管理器 npm。&lt;/p&gt;
+&lt;h2 id=&#34;三工具的安装及配置&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#三工具的安装及配置&#34;&gt;#&lt;/a&gt; 三。工具的安装及配置&lt;/h2&gt;
+&lt;h3 id=&#34;1git&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#1git&#34;&gt;#&lt;/a&gt; 1.git&lt;/h3&gt;
+&lt;p&gt;git 的安装网上已经有很多，安装过程也没有什么坑，这里就不再赘述了，详细可以看官网的说明&lt;/p&gt;
+&lt;p&gt;&lt;div class=&#34;links&#34;&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;或者查看廖雪峰老师的教程：&lt;/p&gt;
+&lt;p&gt;&lt;div class=&#34;links&#34;&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;mark&gt;注意&lt;/mark&gt;&lt;/p&gt;
+&lt;p&gt;安装好 git 之后，还需要进行用户名、邮箱、ssh 的配置&lt;/p&gt;
+&lt;h4 id=&#34;1配置用户名-邮箱&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#1配置用户名-邮箱&#34;&gt;#&lt;/a&gt; 1）配置用户名、邮箱&lt;/h4&gt;
+&lt;pre&gt;&lt;code class=&#34;language-text&#34;&gt;git config --global user.name &amp;quot;yourname&amp;quot;
+git config --global user.email &amp;quot;youremail&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;yourname 对应你的用户名，youremail 里对应你的 github 邮箱&lt;/p&gt;
+&lt;p&gt;使用以下两条命令可以检查你有没有输入正确的用户名和邮箱&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-text&#34;&gt;git config user.name
+git config user.email
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img data-src=&#34;/Users/zhangyaocheng/Desktop/myblog/source/_posts/report/git-userconfig.png&#34; alt=&#34;git-userconfig&#34; title=&#34;像我这样查看&#34; /&gt;&lt;/p&gt;
+&lt;h4 id=&#34;2配置github的ssh-key&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#2配置github的ssh-key&#34;&gt;#&lt;/a&gt; 2）配置 github 的 ssh key&lt;/h4&gt;
+&lt;p&gt;还是在 git 的命令行，输入这个命令来产生 ssh-key：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-text&#34;&gt;ssh-keygen -t rsa -C &amp;quot;youremail&amp;quot;//youremail换成你的github邮箱
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;生成过程中它会问你生成的路径之类的，通常默认就好（一路回车）&lt;/p&gt;
+&lt;p&gt;如果成功的话应该是这样的：&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;/Users/zhangyaocheng/Desktop/myblog/source/_posts/report/git-ssh1.png&#34; alt=&#34;git-ssh1&#34; title=&#34;网络图片，出处(https://www.cnblogs.com/hafiz/p/8146324.html)&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;它会提示你公钥生成的位置（上图中的 “your public key has been saved in xxx”），打开这个公钥文件（.pub 后缀）== 复制里面的内容到 github 中个人资料 -&amp;gt;ssh keys-&amp;gt;new ssh keys-&amp;gt;key 里面，点击添加，即可添加成功。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-text&#34;&gt;ssh -T git@github.com//执行这条命令看有没有成功配置ssh
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img data-src=&#34;ssh-success.png&#34; alt=&#34;ssh-success&#34; title=&#34;如果成功，应该像我这样&#34; /&gt;&lt;/p&gt;
+&lt;h3 id=&#34;2nodejs&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#2nodejs&#34;&gt;#&lt;/a&gt; 2.nodejs&lt;/h3&gt;
+&lt;p&gt;直接上官网下载安装就好，一般没有什么坑。&lt;/p&gt;
+&lt;p&gt;完成以后在命令行输入以下命令查看是否安装成功&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-text&#34;&gt;node -v//Vxx.xx.x
+npm -v//Vxx.xx.x
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;3hexo&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#3hexo&#34;&gt;#&lt;/a&gt; 3.hexo&lt;/h3&gt;
+&lt;p&gt;​	配置 hexo 比较的简单，配置过程中遇到问题参见 hexo 官方文档。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ npm install -g hexo-cli
+$ hexo -v//版本，能查看表示安装成功
+$ hexo init 文件夹的名字
+$ cd 文件夹的名字
+$ npm install //安装依赖
+
+$ hexo g //生成静态页面
+$ hexo server //这个时候就可以在localhost:4000查看自己的博客雏形了
+ctrl+c将服务关闭
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;四github创建个人仓库&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#四github创建个人仓库&#34;&gt;#&lt;/a&gt; 四.github 创建个人仓库&lt;/h2&gt;
+&lt;p&gt;​	&lt;mark&gt;前提：有一个 GitHub 账户&lt;/mark&gt;&lt;/p&gt;
+&lt;p&gt;​	如果没有，可以去官网上创建一个，然后走步骤 3 的 git 配置 ssh。&lt;/p&gt;
+&lt;h4 id=&#34;1新建仓库&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#1新建仓库&#34;&gt;#&lt;/a&gt; 1. 新建仓库：&lt;/h4&gt;
+&lt;p&gt;&lt;img data-src=&#34;newRepos.png&#34; alt=&#34;newRepos&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;ins&gt;创建一个和你用户名相同的仓库，在后面加上 github.io&lt;/ins&gt;&lt;/p&gt;
+&lt;div class=&#34;note info&#34;&gt;
+&lt;p&gt;这样部署到 github pages 上的时候才会被识别，&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cDovL3huLS14eHgtZW84ZS5naXRodWIuaW8=&#34;&gt;如 xxx.github.io&lt;/span&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;img data-src=&#34;githubRepoName.png&#34; alt=&#34;githubRepoName&#34; /&gt;&lt;/p&gt;
+&lt;div class=&#34;note warning:&#34;&gt;
+&lt;p&gt;必须是公开仓库&lt;/p&gt;
+&lt;/div&gt;
+&lt;h2 id=&#34;五将hexo部署到github-pages&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#五将hexo部署到github-pages&#34;&gt;#&lt;/a&gt; 五。将 hexo 部署到 github Pages&lt;/h2&gt;
+&lt;h3 id=&#34;1修改配置文件&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#1修改配置文件&#34;&gt;#&lt;/a&gt; 1. 修改配置文件&lt;/h3&gt;
+&lt;p&gt;​	&lt;ins&gt;打开我们根目录下的_config.yml，翻到最后&lt;/ins&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-text&#34;&gt;deploy:
+  type: git
+  repo: https://github.com/YourgithubName/YourgithubName.github.io.git//你的github项目地址，也可以用ssh地址
+  branch: main
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;2安装deploy-git&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#2安装deploy-git&#34;&gt;#&lt;/a&gt; 2. 安装 deploy-git&lt;/h3&gt;
+&lt;pre&gt;&lt;code class=&#34;language-text&#34;&gt;npm install hexo-deployer-git --save
+&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;note info&#34;&gt;
+&lt;p&gt;--save 的意思是只在这个项目安装这个包&lt;/p&gt;
+&lt;/div&gt;
+&lt;h3 id=&#34;3进行部署&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#3进行部署&#34;&gt;#&lt;/a&gt; 3. 进行部署&lt;/h3&gt;
+&lt;p&gt;在根目录执行以下命令&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-text&#34;&gt;hexo clean
+hexo generate//也可以是hexo g
+hexo deploy//也可以是hexo d
+&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;note info&#34;&gt;
+&lt;p&gt;Clean 命令用来清除我们之前生成的文件&lt;/p&gt;
+&lt;p&gt;generate 命令生成静态文件&lt;/p&gt;
+&lt;p&gt;deploy 命令部署，部署时可能会需要输入账号密码&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;成功时应该是这样的：&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;deploySuccess.png&#34; alt=&#34;deploySuccess&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;过一会你就可以在 https://yourname.github.io 上面看见你的博客了&lt;/p&gt;
+&lt;h2 id=&#34;六设置个人域名可选&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#六设置个人域名可选&#34;&gt;#&lt;/a&gt; 六。设置个人域名（可选）&lt;/h2&gt;
+&lt;h2 id=&#34;七配置主题的问题&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#七配置主题的问题&#34;&gt;#&lt;/a&gt; 七。配置主题的问题&lt;/h2&gt;
+&lt;h2 id=&#34;八错误问题及解决方法&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#八错误问题及解决方法&#34;&gt;#&lt;/a&gt; 八。错误问题及解决方法&lt;/h2&gt;
+&lt;h3 id=&#34;1mac下npm命令报eacces权限错误&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#1mac下npm命令报eacces权限错误&#34;&gt;#&lt;/a&gt; 1.mac 下 npm 命令报 EACCES 权限错误&lt;/h3&gt;
+&lt;p&gt;​	处理方法见：&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9kb2NzLm5wbWpzLmNvbS9yZXNvbHZpbmctZWFjY2VzLXBlcm1pc3Npb25zLWVycm9ycy13aGVuLWluc3RhbGxpbmctcGFja2FnZXMtZ2xvYmFsbHk=&#34;&gt;Resolving EACCES permissions errors when installing packages globally | npm Docs (npmjs.com)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;​	不要乱用 sudo 覆盖权限，而是要能正常 npm install 某个包才算是搞定了权限&lt;/p&gt;
+&lt;h3 id=&#34;2mac下hexo使用hexo-d报权限错误&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#2mac下hexo使用hexo-d报权限错误&#34;&gt;#&lt;/a&gt; 2.mac 下 hexo 使用 hexo d 报权限错误&lt;/h3&gt;
+&lt;p&gt;​	修改文件权限，使用 chown 修改文件夹权限后即可。&lt;/p&gt;
+</content>
         <category term="各种配置" scheme="http://zyczxq.com/categories/%E5%90%84%E7%A7%8D%E9%85%8D%E7%BD%AE/" />
         <updated>2021-05-20T14:42:37.000Z</updated>
     </entry>
