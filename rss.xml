@@ -10,9 +10,17 @@
         </author>
         <description>博客</description>
         <language>zh-CN</language>
-        <pubDate>Thu, 20 May 2021 21:55:42 +0800</pubDate>
-        <lastBuildDate>Thu, 20 May 2021 21:55:42 +0800</lastBuildDate>
+        <pubDate>Thu, 20 May 2021 22:42:37 +0800</pubDate>
+        <lastBuildDate>Thu, 20 May 2021 22:42:37 +0800</lastBuildDate>
         <category term="个人博客" />
+        <item>
+            <guid isPermalink="true">http://zyczxq.com/report/</guid>
+            <title>个人博客配置过程记录</title>
+            <link>http://zyczxq.com/report/</link>
+            <category term="各种配置" scheme="http://zyczxq.com/categories/%E5%90%84%E7%A7%8D%E9%85%8D%E7%BD%AE/" />
+            <pubDate>Thu, 20 May 2021 22:42:37 +0800</pubDate>
+            <description><![CDATA[  ]]></description>
+        </item>
         <item>
             <guid isPermalink="true">http://zyczxq.com/medical1/</guid>
             <title>第二章 甲状腺功能亢进症</title>

@@ -7,6 +7,16 @@
     "home_page_url": "http://zyczxq.com",
     "items": [
         {
+            "id": "http://zyczxq.com/report/",
+            "url": "http://zyczxq.com/report/",
+            "title": "个人博客配置过程记录",
+            "date_published": "2021-05-20T14:42:37.000Z",
+            "content_html": "",
+            "tags": [
+                "各种配置"
+            ]
+        },
+        {
             "id": "http://zyczxq.com/medical1/",
             "url": "http://zyczxq.com/medical1/",
             "title": "第二章 甲状腺功能亢进症",

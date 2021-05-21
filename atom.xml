@@ -8,8 +8,16 @@
     <author>
       <name>orange</name>
     </author>
-    <updated>2021-05-20T13:55:42.000Z</updated>
+    <updated>2021-05-20T14:42:37.000Z</updated>
     <category term="个人博客" />
+    <entry>
+        <id>http://zyczxq.com/report/</id>
+        <title>个人博客配置过程记录</title>
+        <link rel="alternate" href="http://zyczxq.com/report/"/>
+        <content type="html"></content>
+        <category term="各种配置" scheme="http://zyczxq.com/categories/%E5%90%84%E7%A7%8D%E9%85%8D%E7%BD%AE/" />
+        <updated>2021-05-20T14:42:37.000Z</updated>
+    </entry>
     <entry>
         <id>http://zyczxq.com/medical1/</id>
         <title>第二章 甲状腺功能亢进症</title>
