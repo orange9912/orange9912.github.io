@@ -50,7 +50,8 @@ valine:
     friend: "var(--color-aqua)"
     yome: "var(--color-pink)"
   tagMember:
-    master: d1v8lccudhjsjfb8jx6mq5bgs
+    master: 
+      - BA3A817185D7BBAB4E0D2D6C6B2A5366
       # - hash of master@email.com
       # - hash of master2@email.com
     friend:
