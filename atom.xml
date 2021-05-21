@@ -130,6 +130,7 @@ hexo deploy//也可以是hexo d
 &lt;p&gt;而且本来国内访问 GitHub 巨慢的，绑定域名之后快了非常多&lt;/p&gt;
 &lt;/div&gt;
 &lt;h2 id=&#34;七-配置主题的问题&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#七-配置主题的问题&#34;&gt;#&lt;/a&gt; 七、配置主题的问题&lt;/h2&gt;
+&lt;p&gt;在 hexo 的官方中 theme 中找到自己喜欢的主题，根据主题作者的教程配置就好，这里涉及到一些配置文件的配置，每个主题都不一样，就不展开说了&lt;/p&gt;
 &lt;h2 id=&#34;八-错误问题及解决方法&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#八-错误问题及解决方法&#34;&gt;#&lt;/a&gt; 八、错误问题及解决方法&lt;/h2&gt;
 &lt;h3 id=&#34;1mac下npm命令报eacces权限错误&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#1mac下npm命令报eacces权限错误&#34;&gt;#&lt;/a&gt; 1.mac 下 npm 命令报 EACCES 权限错误&lt;/h3&gt;
 &lt;p&gt;​	处理方法见：&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9kb2NzLm5wbWpzLmNvbS9yZXNvbHZpbmctZWFjY2VzLXBlcm1pc3Npb25zLWVycm9ycy13aGVuLWluc3RhbGxpbmctcGFja2FnZXMtZ2xvYmFsbHk=&#34;&gt;Resolving EACCES permissions errors when installing packages globally | npm Docs (npmjs.com)&lt;/span&gt;&lt;/p&gt;
