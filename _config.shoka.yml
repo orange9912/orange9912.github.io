@@ -29,4 +29,35 @@ sidebar:
   position: left
   avatar: avatar1.jpg
 
+valine:
+  appId: KOByw933qQEjb918QYaqxefY-gzGzoHsz
+  appKey: lPRh5NuD5YgWyfCTxCVRFMQn
+  placeholder: ヽ(○´∀`)ﾉ♪ # Comment box placeholder
+  avatar: mp # Gravatar style : mp, identicon, monsterid, wavatar, robohash, retro
+  pageSize: 10 # Pagination size
+  lang: en
+  visitor: true # Article reading statistic
+  NoRecordIP: false # Whether to record the commenter IP
+  serverURLs: # When the custom domain name is enabled, fill it in here (it will be detected automatically by default, no need to fill in)
+  powerMode: true
+  tagMeta:
+    visitor: 新朋友
+    master: 主人
+    friend: 小伙伴
+    yome: 我老婆
+  tagColor:
+    master: "var(--color-orange)"
+    friend: "var(--color-aqua)"
+    yome: "var(--color-pink)"
+  tagMember:
+    master: d1v8lccudhjsjfb8jx6mq5bgs
+      # - hash of master@email.com
+      # - hash of master2@email.com
+    friend:
+      # - hash of friend@email.com
+      # - hash of friend2@email.com
+    yome: 
+      # - hash of investor1@email.com
+
+
 #audio: #背景音乐
