@@ -1,5 +1,5 @@
 ---
-title: 第二章 甲状腺功能亢进症
+title: 甲状腺功能亢进症
 date: 2021-05-20 21:55:42
 tags:
 categories:
