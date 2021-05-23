@@ -1134,6 +1134,7 @@ hexo deploy//也可以是hexo d
 &lt;/div&gt;
 &lt;p&gt;成功时应该是这样的：&lt;/p&gt;
 &lt;p&gt;&lt;img data-src=&#34;deploySuccess.png&#34; alt=&#34;deploySuccess&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;然后点开仓库的 setting-&amp;gt;github pages，选择我们刚刚的分支，点击 save，开启 pages 服务&lt;/p&gt;
 &lt;p&gt;过一会你就可以在 https://yourname.github.io 上面看见你的博客了&lt;/p&gt;
 &lt;h2 id=&#34;六-设置个人域名可选&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#六-设置个人域名可选&#34;&gt;#&lt;/a&gt; 六、设置个人域名（可选）&lt;/h2&gt;
 &lt;p&gt;去阿里云，注册一个账户然后买一个个人域名，com 比较贵一点，59 首年，cn 的便宜一些，29 首年，纯粹看个人喜好。&lt;/p&gt;
