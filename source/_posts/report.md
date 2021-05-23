@@ -183,6 +183,8 @@ deploy命令部署,部署时可能会需要输入账号密码
 
 ![deploySuccess](deploySuccess.png)
 
+然后点开仓库的setting->github pages，选择我们刚刚的分支，点击save，开启pages服务
+
 过一会你就可以在https://yourname.github.io上面看见你的博客了
 
 ## 六、设置个人域名（可选）
