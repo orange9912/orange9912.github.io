@@ -7,6 +7,16 @@
     "home_page_url": "http://zyczxq.com",
     "items": [
         {
+            "id": "http://zyczxq.com/JSnote2/",
+            "url": "http://zyczxq.com/JSnote2/",
+            "title": "JavaScript笔记之二",
+            "date_published": "2021-05-24T13:14:03.000Z",
+            "content_html": "<h1 id=\"一-原型\"><a class=\"anchor\" href=\"#一-原型\">#</a> 一、原型</h1>\n<p>在 JavaScript 中，<span class=\"orange\">几乎所有事物都是对象</span>。</p>\n<p>在 Java（或者其他面向对象语言）里面，对象的模板是类，由构造函数根据类来生成一个新的对象，但是在 JavaScript 里面并没有类的概念（ES5 时代，ES6 虽提出了 class 的关键字，但其实只是原型的语法糖），而创建一个新对象肯定要根据某个 “模版” 来创建，这个模板就是<strong>原型</strong>。</p>\n<h1 id=\"二-继承\"><a class=\"anchor\" href=\"#二-继承\">#</a> 二、继承</h1>\n<p>刚刚我们提到，在 JavaScript 里，新建对象的模版是这个对象的原型。</p>\n<p>每个对象都会有一个属性指向它的原型 (通常是__proto__)，<mark>所有 JavaScript 对象都从它的原型继承属性和方法</mark>，如果我们给对象的原型添加一个属性或者方法，则所有以它为原型的对象都会获得这个属性或方法。比如数组对象继承自 Array.prototype。</p>\n<p>原型也是一个对象，所以原型也会有它的原型。</p>\n<p><ins>而 Object.prototype 位于原型继承链的顶端</ins>，所有对象最终都继承自 object。</p>\n<div class=\"note default\">\n<p>Object.prototype 指向 null。</p>\n</div>\n<h1 id=\"三-原型链\"><a class=\"anchor\" href=\"#三-原型链\">#</a> 三、原型链</h1>\n<p>对象的模板是原型，原型也是一个对象，也拥有他自己的原型，这样追根溯源一路上去直到 object，这一条原型关系串起来的一条线，就叫原型链。</p>\n<p>而 JavaScript 中对于对象属性的搜索也是与原型链有关的。</p>\n<p>每当代码读取某个对象的某个属性时，都会执行一次搜索，目标是具有给定名字的属性。搜索首先从对象实例本身开始。如果在实例中找到了具有给定名字的属性，则返回该属性的值；如果没有找到，则继续搜索指针指向的原型对象，在原型对象中查找具有给定名字的属性。如果在原型对象中找到了这个属性，则返回该属性的值。</p>\n<div class=\"note default\">\n<p>总而言之，每次访问属性都会执行一次搜索，先从该对象开始，如果没有，则查找该对象的原型，一直往上直到原型链尽头为止，并且一旦搜索到，就会停止搜索，也就是说，会存在 “多态 “现象。</p>\n</div>\n",
+            "tags": [
+                "JavaScript"
+            ]
+        },
+        {
             "id": "http://zyczxq.com/medical2/",
             "url": "http://zyczxq.com/medical2/",
             "title": "常见症状",

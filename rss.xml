@@ -10,9 +10,35 @@
         </author>
         <description>博客</description>
         <language>zh-CN</language>
-        <pubDate>Sun, 23 May 2021 13:55:25 +0800</pubDate>
-        <lastBuildDate>Sun, 23 May 2021 13:55:25 +0800</lastBuildDate>
+        <pubDate>Mon, 24 May 2021 21:14:03 +0800</pubDate>
+        <lastBuildDate>Mon, 24 May 2021 21:14:03 +0800</lastBuildDate>
         <category term="个人博客" />
+        <item>
+            <guid isPermalink="true">http://zyczxq.com/JSnote2/</guid>
+            <title>JavaScript笔记之二</title>
+            <link>http://zyczxq.com/JSnote2/</link>
+            <category term="JavaScript" scheme="http://zyczxq.com/categories/JavaScript/" />
+            <pubDate>Mon, 24 May 2021 21:14:03 +0800</pubDate>
+            <description><![CDATA[ &lt;h1 id=&#34;一-原型&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#一-原型&#34;&gt;#&lt;/a&gt; 一、原型&lt;/h1&gt;
+&lt;p&gt;在 JavaScript 中，&lt;span class=&#34;orange&#34;&gt;几乎所有事物都是对象&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;在 Java（或者其他面向对象语言）里面，对象的模板是类，由构造函数根据类来生成一个新的对象，但是在 JavaScript 里面并没有类的概念（ES5 时代，ES6 虽提出了 class 的关键字，但其实只是原型的语法糖），而创建一个新对象肯定要根据某个 “模版” 来创建，这个模板就是&lt;strong&gt;原型&lt;/strong&gt;。&lt;/p&gt;
+&lt;h1 id=&#34;二-继承&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#二-继承&#34;&gt;#&lt;/a&gt; 二、继承&lt;/h1&gt;
+&lt;p&gt;刚刚我们提到，在 JavaScript 里，新建对象的模版是这个对象的原型。&lt;/p&gt;
+&lt;p&gt;每个对象都会有一个属性指向它的原型 (通常是__proto__)，&lt;mark&gt;所有 JavaScript 对象都从它的原型继承属性和方法&lt;/mark&gt;，如果我们给对象的原型添加一个属性或者方法，则所有以它为原型的对象都会获得这个属性或方法。比如数组对象继承自 Array.prototype。&lt;/p&gt;
+&lt;p&gt;原型也是一个对象，所以原型也会有它的原型。&lt;/p&gt;
+&lt;p&gt;&lt;ins&gt;而 Object.prototype 位于原型继承链的顶端&lt;/ins&gt;，所有对象最终都继承自 object。&lt;/p&gt;
+&lt;div class=&#34;note default&#34;&gt;
+&lt;p&gt;Object.prototype 指向 null。&lt;/p&gt;
+&lt;/div&gt;
+&lt;h1 id=&#34;三-原型链&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#三-原型链&#34;&gt;#&lt;/a&gt; 三、原型链&lt;/h1&gt;
+&lt;p&gt;对象的模板是原型，原型也是一个对象，也拥有他自己的原型，这样追根溯源一路上去直到 object，这一条原型关系串起来的一条线，就叫原型链。&lt;/p&gt;
+&lt;p&gt;而 JavaScript 中对于对象属性的搜索也是与原型链有关的。&lt;/p&gt;
+&lt;p&gt;每当代码读取某个对象的某个属性时，都会执行一次搜索，目标是具有给定名字的属性。搜索首先从对象实例本身开始。如果在实例中找到了具有给定名字的属性，则返回该属性的值；如果没有找到，则继续搜索指针指向的原型对象，在原型对象中查找具有给定名字的属性。如果在原型对象中找到了这个属性，则返回该属性的值。&lt;/p&gt;
+&lt;div class=&#34;note default&#34;&gt;
+&lt;p&gt;总而言之，每次访问属性都会执行一次搜索，先从该对象开始，如果没有，则查找该对象的原型，一直往上直到原型链尽头为止，并且一旦搜索到，就会停止搜索，也就是说，会存在 “多态 “现象。&lt;/p&gt;
+&lt;/div&gt;
+ ]]></description>
+        </item>
         <item>
             <guid isPermalink="true">http://zyczxq.com/medical2/</guid>
             <title>常见症状</title>
