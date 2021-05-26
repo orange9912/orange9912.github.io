@@ -10,9 +10,82 @@
         </author>
         <description>博客</description>
         <language>zh-CN</language>
-        <pubDate>Tue, 25 May 2021 22:34:44 +0800</pubDate>
-        <lastBuildDate>Tue, 25 May 2021 22:34:44 +0800</lastBuildDate>
+        <pubDate>Wed, 26 May 2021 14:36:07 +0800</pubDate>
+        <lastBuildDate>Wed, 26 May 2021 14:36:07 +0800</lastBuildDate>
         <category term="个人博客" />
+        <item>
+            <guid isPermalink="true">http://zyczxq.com/flux/</guid>
+            <title>flux</title>
+            <link>http://zyczxq.com/flux/</link>
+            <category term="JavaScript" scheme="http://zyczxq.com/categories/JavaScript/" />
+            <pubDate>Wed, 26 May 2021 14:36:07 +0800</pubDate>
+            <description><![CDATA[ &lt;h1 id=&#34;前言&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#前言&#34;&gt;#&lt;/a&gt; 前言&lt;/h1&gt;
+&lt;p&gt;最近在实习做项目的时候，使用的是 react，发现项目的数据管理使用的架构是 flux。虽然我很久之前也看过一下 flux 的架构思想，不过过了这么久又没有应用，早就忘光了，趁着这次机会，再来复习一下，顺便也记录下以前对 redux 的结构的思考。&lt;/p&gt;
+&lt;h1 id=&#34;flux是什么&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#flux是什么&#34;&gt;#&lt;/a&gt; Flux 是什么？&lt;/h1&gt;
+&lt;p&gt;&lt;img data-src=&#34;flux.png&#34; alt=&#34;flux&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;flux 是一种架构思想。在 flux 里，一个应用分为四个部分，分别是：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-text&#34;&gt;View:视图层
+Action：动作，视图层发送的信息，比如用户点击了某个按钮。
+Dispatcher：发布者、派发器，用来接收action并执行回调函数。
+Store：数据层，用来存放应用的状态，一旦发生变动，就提醒Views要更新页面
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img data-src=&#34;struct.png&#34; alt=&#34;struct&#34; title=&#34;图摘自阮一峰老师的博客‘Flux架构入门教程’&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;看到这个图，很明显，Flux 的特点是&lt;mark&gt;数据的单项流动&lt;/mark&gt;。&lt;/p&gt;
+&lt;h2 id=&#34;view视图&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#view视图&#34;&gt;#&lt;/a&gt; View（视图）&lt;/h2&gt;
+&lt;p&gt;视图是用来展现数据的，当视图上某些事件发生的时候，他就会调用一个方法，向 Dispatcher 发出一个 Action，告诉他是什么类型的变化。&lt;/p&gt;
+&lt;h2 id=&#34;action&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#action&#34;&gt;#&lt;/a&gt; Action&lt;/h2&gt;
+&lt;p&gt;每一个 Action 都是一个对象，它通常包含动作的类型、数据属性。&lt;/p&gt;
+&lt;h2 id=&#34;dispatcher&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#dispatcher&#34;&gt;#&lt;/a&gt; Dispatcher&lt;/h2&gt;
+&lt;p&gt;它的作用是将 Action 派发到 Store 中。&lt;/p&gt;
+&lt;h2 id=&#34;store&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#store&#34;&gt;#&lt;/a&gt; Store&lt;/h2&gt;
+&lt;p&gt;它保存着整个应用的状态，所有数据都存放在那里&lt;/p&gt;
+&lt;div class=&#34;note default&#34;&gt;
+&lt;p&gt;一般来说，View 从 Store 处获得数据并渲染，用户从 View 进行操作、触发一个 Action 发送到 Dispatcher 中进行相应的更改计算，再更改 Store，并且将这个变化 “告知” View，再重新渲染，大概是这么一个过程。&lt;/p&gt;
+&lt;/div&gt;
+&lt;h1 id=&#34;redux&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#redux&#34;&gt;#&lt;/a&gt; Redux&lt;/h1&gt;
+&lt;p&gt;Redux 是 2015 年出现的，它将 Flux 和函数式编程相结合。&lt;/p&gt;
+&lt;h2 id=&#34;应用场景&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#应用场景&#34;&gt;#&lt;/a&gt; 应用场景&lt;/h2&gt;
+&lt;p&gt;用户使用方式复杂、不同身份用户有不同的使用方式（比如普通用户和管理员），或者使用了 websocket。&lt;/p&gt;
+&lt;p&gt;它是为了解决 react 中组件通信问题的。&lt;/p&gt;
+&lt;h2 id=&#34;设计思想&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#设计思想&#34;&gt;#&lt;/a&gt; 设计思想&lt;/h2&gt;
+&lt;p&gt;Redux 的设计思想其实很简单，两句话就能总结下来&lt;/p&gt;
+&lt;p&gt;&lt;ins&gt;应用是一个状态的集合，状态和视图一一对应&lt;/ins&gt;&lt;/p&gt;
+&lt;p&gt;&lt;ins&gt;所有的状态保存在一个对象里面&lt;/ins&gt;&lt;/p&gt;
+&lt;h2 id=&#34;redux的基本概念&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#redux的基本概念&#34;&gt;#&lt;/a&gt; Redux 的基本概念&lt;/h2&gt;
+&lt;h3 id=&#34;store-2&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#store-2&#34;&gt;#&lt;/a&gt; Store&lt;/h3&gt;
+&lt;p&gt;​	保存数据的地方，整个应用只有一个&lt;/p&gt;
+&lt;p&gt;​	使用 createStore 生成&lt;/p&gt;
+&lt;figure class=&#34;highlight javascript&#34;&gt;&lt;figcaption data-lang=&#34;javascript&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token keyword&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;createStore&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt; form &lt;span class=&#34;token string&#34;&gt;&#39;redux&#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token keyword&#34;&gt;const&lt;/span&gt; store &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;token function&#34;&gt;createStore&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;fn&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;token comment&#34;&gt;// 参数为一个函数（这个函数为 Reducer），返回值为一个 store 对象&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;h3 id=&#34;state&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#state&#34;&gt;#&lt;/a&gt; State&lt;/h3&gt;
+&lt;p&gt;​	store 对象包含所有数据，Store 的快照 —— 某个时点的数据，就叫做 State&lt;/p&gt;
+&lt;p&gt;​	通过 store.getState () 获取&lt;/p&gt;
+&lt;p&gt;​	一个 State 对应一个 View。&lt;/p&gt;
+&lt;h3 id=&#34;action-2&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#action-2&#34;&gt;#&lt;/a&gt; Action&lt;/h3&gt;
+&lt;p&gt;State 改变时，View 会发出一个通知 —— 就是 Action&lt;/p&gt;
+&lt;h3 id=&#34;action-creator&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#action-creator&#34;&gt;#&lt;/a&gt; Action Creator&lt;/h3&gt;
+&lt;p&gt;用于批量生成 Action&lt;/p&gt;
+&lt;h3 id=&#34;storedispatch&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#storedispatch&#34;&gt;#&lt;/a&gt; Store.dispatch()&lt;/h3&gt;
+&lt;p&gt;View 发出 Action 的唯一方法&lt;/p&gt;
+&lt;p&gt;该方法参数为一个对象或一个 Action Creator&lt;/p&gt;
+&lt;p&gt;它其实做了两件事，将传入的 action 传递给 reducer 方法，计算出新的 state、并逐一执行订阅了 store 的函数。&lt;/p&gt;
+&lt;h3 id=&#34;reducer&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#reducer&#34;&gt;#&lt;/a&gt; Reducer&lt;/h3&gt;
+&lt;p&gt;计算新 State 的过程 ——Reducer，一个函数，参数为 Action 与当前 State，返回一个新 State。&lt;/p&gt;
+&lt;p&gt;store.dispatch 会触发 reducer 的自动执行。该函数在生成 store 的时候传入 createStore 方法。&lt;/p&gt;
+&lt;p&gt;&lt;mark&gt;它是一个纯函数，不得改写参数，同样的输入必定得到同样的输出&lt;/mark&gt;&lt;/p&gt;
+&lt;h3 id=&#34;storesubscribe&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#storesubscribe&#34;&gt;#&lt;/a&gt; store.subscribe()&lt;/h3&gt;
+&lt;p&gt;store 允许使用 store.subscribe 方法设置监听函数，一旦 State 发生变化，就自动执行该函数。&lt;/p&gt;
+&lt;p&gt;参数为一个函数（&lt;ins&gt;View 的更新函数，一般对于 react 项目就是组件的 render 或者 setState 方法&lt;/ins&gt;）&lt;/p&gt;
+&lt;p&gt;Store.subscribe 方法返回一个函数，调用这个返回的函数可以解除监听&lt;/p&gt;
+&lt;h2 id=&#34;store的实现&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#store的实现&#34;&gt;#&lt;/a&gt; Store 的实现&lt;/h2&gt;
+&lt;figure class=&#34;highlight javascript&#34;&gt;&lt;figcaption data-lang=&#34;javascript&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token keyword&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;token function-variable function&#34;&gt;createStore&lt;/span&gt; &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token parameter&#34;&gt;reducer&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;token operator&#34;&gt;=&gt;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;	&lt;span class=&#34;token keyword&#34;&gt;let&lt;/span&gt; state&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;token comment&#34;&gt;// 某一时刻数据的状态&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;3&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;	&lt;span class=&#34;token keyword&#34;&gt;let&lt;/span&gt; listeners &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;token comment&#34;&gt;// 监听数据者&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;4&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;	&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;5&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;	&lt;span class=&#34;token keyword&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;token function-variable function&#34;&gt;getState&lt;/span&gt; &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;token operator&#34;&gt;=&gt;&lt;/span&gt; state&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;6&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;	&lt;span class=&#34;token keyword&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;token function-variable function&#34;&gt;dispatch&lt;/span&gt; &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token parameter&#34;&gt;action&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;token operator&#34;&gt;=&gt;&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;7&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;		state &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;token function&#34;&gt;reducer&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;state&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt;action&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;8&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;		listeners&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;forEach&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token parameter&#34;&gt;listener&lt;/span&gt; &lt;span class=&#34;token operator&#34;&gt;=&gt;&lt;/span&gt; &lt;span class=&#34;token function&#34;&gt;listener&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;token comment&#34;&gt;// 一个个执行更新函数&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;9&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;	&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;10&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;	&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;11&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;	&lt;span class=&#34;token keyword&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;token function-variable function&#34;&gt;subscribe&lt;/span&gt; &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token parameter&#34;&gt;listener&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;token operator&#34;&gt;=&gt;&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;12&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;		listeners&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;push&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;listener&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;13&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;		&lt;span class=&#34;token keyword&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;token operator&#34;&gt;=&gt;&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;14&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;			listeners &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; listeners&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;filter&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token parameter&#34;&gt;l&lt;/span&gt; &lt;span class=&#34;token operator&#34;&gt;=&gt;&lt;/span&gt; l&lt;span class=&#34;token operator&#34;&gt;!==&lt;/span&gt;listener&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;token comment&#34;&gt;// 执行函数将监听者数组去除这个 listener&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;15&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;		&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;16&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;	&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;17&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;	&lt;span class=&#34;token function&#34;&gt;dispatch&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;token comment&#34;&gt;// 第一次先初始化一下&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;18&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;	&lt;span class=&#34;token keyword&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt; getState&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; dispatch&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; subscribe &lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;19&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;h2 id=&#34;redux工作流程的梳理总结&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#redux工作流程的梳理总结&#34;&gt;#&lt;/a&gt; Redux 工作流程的梳理总结&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;先通过 createStore (fn) 生成一个 store。fn 为 reducer，通过 action 和 state 计算新的 state&lt;/li&gt;
+&lt;li&gt;通过 getState（）获取 Store 某一时刻的 State&lt;/li&gt;
+&lt;li&gt;通过 State 渲染 View，一个 state 对应一个 view&lt;/li&gt;
+&lt;li&gt;View 通过 store.dispatch 来发出一个 action（通知更新 store）&lt;/li&gt;
+&lt;li&gt;更新后循环 234&lt;/li&gt;
+&lt;/ol&gt;
+ ]]></description>
+        </item>
         <item>
             <guid isPermalink="true">http://zyczxq.com/JSnote3/</guid>
             <title>this关键字的笔记</title>
