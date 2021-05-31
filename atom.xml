@@ -8,12 +8,38 @@
     <author>
       <name>orange</name>
     </author>
-    <updated>2021-05-30T08:23:15.000Z</updated>
+    <updated>2021-05-31T06:42:55.000Z</updated>
     <category term="个人博客" />
     <entry>
-        <id>http://zyczxq.com/JSnote4/</id>
+        <id>http://zyczxq.com/2021/05/31/LinuxNote1/</id>
+        <title>Linux实验一笔记</title>
+        <link rel="alternate" href="http://zyczxq.com/2021/05/31/LinuxNote1/"/>
+        <content type="html">&lt;h1 id=&#34;查看虚拟机的ip信息&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#查看虚拟机的ip信息&#34;&gt;#&lt;/a&gt; 查看虚拟机的 ip 信息&lt;/h1&gt;
+&lt;figure class=&#34;highlight javascript&#34;&gt;&lt;figcaption data-lang=&#34;javascript&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;ifconfig&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;h1 id=&#34;测试虚拟机与ftp服务器的连通性&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#测试虚拟机与ftp服务器的连通性&#34;&gt;#&lt;/a&gt; 测试虚拟机与 FTP 服务器的连通性&lt;/h1&gt;
+&lt;figure class=&#34;highlight javascript&#34;&gt;&lt;figcaption data-lang=&#34;javascript&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;ping &lt;span class=&#34;token number&#34;&gt;172.26&lt;/span&gt;&lt;span class=&#34;token number&#34;&gt;.14&lt;/span&gt;&lt;span class=&#34;token number&#34;&gt;.30&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;h1 id=&#34;安装上传下载工具lrzsz&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#安装上传下载工具lrzsz&#34;&gt;#&lt;/a&gt; 安装上传下载工具 lrzsz&lt;/h1&gt;
+&lt;figure class=&#34;highlight javascript&#34;&gt;&lt;figcaption data-lang=&#34;javascript&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;yum install &lt;span class=&#34;token operator&#34;&gt;-&lt;/span&gt;y lrzsz&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;h1 id=&#34;查看lrzsz中rz和sz的路径&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#查看lrzsz中rz和sz的路径&#34;&gt;#&lt;/a&gt; 查看 lrzsz 中 rz 和 sz 的路径&lt;/h1&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;figcaption data-lang=&#34;bash&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token function&#34;&gt;which&lt;/span&gt; rz sz&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;h1 id=&#34;在系统中创建一个txt文件上传到linux中&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#在系统中创建一个txt文件上传到linux中&#34;&gt;#&lt;/a&gt; 在系统中创建一个 txt 文件，上传到 linux 中&lt;/h1&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;figcaption data-lang=&#34;bash&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;rz&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;h1 id=&#34;把这个txt文件移动到tmp目录下并重命名为exam1txt&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#把这个txt文件移动到tmp目录下并重命名为exam1txt&#34;&gt;#&lt;/a&gt; 把这个 txt 文件移动到 /tmp 目录下，并重命名为 exam1.txt&lt;/h1&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;figcaption data-lang=&#34;bash&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token function&#34;&gt;mv&lt;/span&gt; xxx.txt /tmp/exam1.txt&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;h1 id=&#34;把exam1txt转成unix格式&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#把exam1txt转成unix格式&#34;&gt;#&lt;/a&gt; 把 exam1.txt 转成 unix 格式&lt;/h1&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;figcaption data-lang=&#34;bash&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;yum &lt;span class=&#34;token function&#34;&gt;install&lt;/span&gt; -y dos2unix&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;dos2unix /tmp/exam1.txt&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;h1 id=&#34;利用vim编辑器打开exam1txt并输入学号-保存退出&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#利用vim编辑器打开exam1txt并输入学号-保存退出&#34;&gt;#&lt;/a&gt; 利用 vim 编辑器打开 exam1.txt，并输入学号、保存退出&lt;/h1&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;figcaption data-lang=&#34;bash&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token function&#34;&gt;vim&lt;/span&gt; exam1.txt&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;//进入后&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;3&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;i&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;4&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;输入学号&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;5&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;esc&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;6&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;:wq&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;h1 id=&#34;利用重定向把字符串-1234567890-追加到-exam1txt-的末尾&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#利用重定向把字符串-1234567890-追加到-exam1txt-的末尾&#34;&gt;#&lt;/a&gt; 利⽤重定向把字符串 1234567890 追加到 exam1.txt 的末尾&lt;/h1&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;figcaption data-lang=&#34;bash&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token builtin class-name&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;token string&#34;&gt;&#34;1234567890&#34;&lt;/span&gt; &lt;span class=&#34;token operator&#34;&gt;&gt;&gt;&lt;/span&gt; exam1.txt&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;h1 id=&#34;把etcpasswd的最后5行追加到-exam1txt-中&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#把etcpasswd的最后5行追加到-exam1txt-中&#34;&gt;#&lt;/a&gt; 把 /etc/passwd 的最后 5 ⾏追加到 exam1.txt 中&lt;/h1&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;figcaption data-lang=&#34;bash&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token function&#34;&gt;tail&lt;/span&gt; -5 /etc/passwd &lt;span class=&#34;token operator&#34;&gt;&gt;&gt;&lt;/span&gt; exam1.txt&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;h1 id=&#34;搜索-usr-下所有以-xml-结尾的文件只搜索普通文件并把路径中含有-common-的文件路径追加到-exam1txt-中&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#搜索-usr-下所有以-xml-结尾的文件只搜索普通文件并把路径中含有-common-的文件路径追加到-exam1txt-中&#34;&gt;#&lt;/a&gt; 搜索 /usr 下所有以 xml 结尾的⽂件 (只搜索普通⽂件)，并把路径中含有 common 的⽂件路径追加到 exam1.txt 中&lt;/h1&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;figcaption data-lang=&#34;bash&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token function&#34;&gt;find&lt;/span&gt; /usr -name &lt;span class=&#34;token string&#34;&gt;&#34;*.xml&#34;&lt;/span&gt; -type f &lt;span class=&#34;token operator&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;token function&#34;&gt;grep&lt;/span&gt; common &lt;span class=&#34;token operator&#34;&gt;&gt;&gt;&lt;/span&gt; exam1.txt&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;h1 id=&#34;把当前时间按照-年-月-日-时分秒-的格式追加到-exam1txt-中-如2020-11-23-093243&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#把当前时间按照-年-月-日-时分秒-的格式追加到-exam1txt-中-如2020-11-23-093243&#34;&gt;#&lt;/a&gt; 把当前时间按照 年 - ⽉ - ⽇ 时：分: 秒 的格式追加到 exam1.txt 中。如：2020-11-23 09:32:43&lt;/h1&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;figcaption data-lang=&#34;bash&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token function&#34;&gt;date&lt;/span&gt; +&lt;span class=&#34;token string&#34;&gt;&#34;%Y-%m-%d %H:%M:%S&#34;&lt;/span&gt; &lt;span class=&#34;token operator&#34;&gt;&gt;&gt;&lt;/span&gt; exam1.txt&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;h1 id=&#34;对目录-varlog-进行压缩生成名为-logtargz-文件&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#对目录-varlog-进行压缩生成名为-logtargz-文件&#34;&gt;#&lt;/a&gt; 对⽬录 /var/log 进⾏压缩⽣成名为 log.tar.gz ⽂件&lt;/h1&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;figcaption data-lang=&#34;bash&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token function&#34;&gt;tar&lt;/span&gt; -zcvf log.tar.gz /var/log&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;h1 id=&#34;通过-ls-命令以格式的形式查看-logtargz-的信息并把信息追加到-exam1txt中&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#通过-ls-命令以格式的形式查看-logtargz-的信息并把信息追加到-exam1txt中&#34;&gt;#&lt;/a&gt; 通过 ls 命令以⻓格式的形式查看 log.tar.gz 的信息，并把信息追加到 exam1.txt 中&lt;/h1&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;figcaption data-lang=&#34;bash&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token function&#34;&gt;ls&lt;/span&gt; -l log.tar.gz &lt;span class=&#34;token operator&#34;&gt;&gt;&gt;&lt;/span&gt; exam1.txt&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;h1 id=&#34;利用-awk-命令提取上一步中打印的-logtargz-的-文件类型和权限信息-追加到exam1txt-中&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#利用-awk-命令提取上一步中打印的-logtargz-的-文件类型和权限信息-追加到exam1txt-中&#34;&gt;#&lt;/a&gt; 利⽤ awk 命令提取上⼀步中打印的 log.tar.gz 的 ⽂件类型和权限信息 追加到 exam1.txt 中&lt;/h1&gt;
+&lt;p&gt;打印某一列用 awk，若截取字符串用 cut&lt;/p&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;figcaption data-lang=&#34;bash&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token function&#34;&gt;ls&lt;/span&gt; -l log.tar.gz &lt;span class=&#34;token operator&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;token function&#34;&gt;awk&lt;/span&gt; &lt;span class=&#34;token string&#34;&gt;&#39;&amp;#123;print &lt;span class=&#34;token variable&#34;&gt;$1&lt;/span&gt;&amp;#125;&#39;&lt;/span&gt; &lt;span class=&#34;token operator&#34;&gt;&gt;&gt;&lt;/span&gt; /tmp/exam1.txtz&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;h1 id=&#34;把exam1txt转成window格式&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#把exam1txt转成window格式&#34;&gt;#&lt;/a&gt; 把 exam1.txt 转成 window 格式&lt;/h1&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;figcaption data-lang=&#34;bash&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;unix2dos /tmp/exam1.txt&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;h1 id=&#34;把exam1txt传递到window下&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#把exam1txt传递到window下&#34;&gt;#&lt;/a&gt; 把 exam1.txt 传递到 window 下&lt;/h1&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;figcaption data-lang=&#34;bash&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;sz /tmp/exam1.txt&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</content>
+        <category term="Linux" scheme="http://zyczxq.com/categories/Linux/" />
+        <updated>2021-05-31T06:42:55.000Z</updated>
+    </entry>
+    <entry>
+        <id>http://zyczxq.com/2021/05/30/JSnote4/</id>
         <title>一些封装的工具函数</title>
-        <link rel="alternate" href="http://zyczxq.com/JSnote4/"/>
+        <link rel="alternate" href="http://zyczxq.com/2021/05/30/JSnote4/"/>
         <content type="html">&lt;h1 id=&#34;前言&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#前言&#34;&gt;#&lt;/a&gt; 前言&lt;/h1&gt;
 &lt;p&gt;趁着有空，把自己平时使用的一些函数抽离出来做个记录。&lt;/p&gt;
 &lt;h1 id=&#34;防抖&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#防抖&#34;&gt;#&lt;/a&gt; 防抖&lt;/h1&gt;
@@ -35,9 +61,9 @@
         <updated>2021-05-30T08:23:15.000Z</updated>
     </entry>
     <entry>
-        <id>http://zyczxq.com/flux/</id>
+        <id>http://zyczxq.com/2021/05/26/flux/</id>
         <title>flux</title>
-        <link rel="alternate" href="http://zyczxq.com/flux/"/>
+        <link rel="alternate" href="http://zyczxq.com/2021/05/26/flux/"/>
         <content type="html">&lt;h1 id=&#34;前言&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#前言&#34;&gt;#&lt;/a&gt; 前言&lt;/h1&gt;
 &lt;p&gt;最近在实习做项目的时候，使用的是 react，发现项目的数据管理使用的架构是 flux。虽然我很久之前也看过一下 flux 的架构思想，不过过了这么久又没有应用，早就忘光了，趁着这次机会，再来复习一下，顺便也记录下以前对 redux 的结构的思考。&lt;/p&gt;
 &lt;h1 id=&#34;flux是什么&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#flux是什么&#34;&gt;#&lt;/a&gt; Flux 是什么？&lt;/h1&gt;
@@ -108,9 +134,9 @@ Store：数据层，用来存放应用的状态，一旦发生变动，就提醒
         <updated>2021-05-26T06:36:07.000Z</updated>
     </entry>
     <entry>
-        <id>http://zyczxq.com/JSnote3/</id>
+        <id>http://zyczxq.com/2021/05/25/JSnote3/</id>
         <title>this关键字的笔记</title>
-        <link rel="alternate" href="http://zyczxq.com/JSnote3/"/>
+        <link rel="alternate" href="http://zyczxq.com/2021/05/25/JSnote3/"/>
         <content type="html">&lt;h1 id=&#34;使用this的原因&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#使用this的原因&#34;&gt;#&lt;/a&gt; 使用 this 的原因&lt;/h1&gt;
 &lt;p&gt;在编写代码的时候，我们不得不经常使用当前的上下文对象来做一些事情，比如说对象赋值、调用方法。如果我们不使用 this，就需要经常传入一个上下文对象，非常的繁杂，并且随着使用模式和代码量的增长，显式传递上下文对象会让代码变得越来越混乱。&lt;/p&gt;
 &lt;p&gt;但是 this 提供一种更 “优雅” 的方式来隐式传递一个上下文对象。&lt;/p&gt;
@@ -159,9 +185,9 @@ Store：数据层，用来存放应用的状态，一旦发生变动，就提醒
         <updated>2021-05-25T14:34:44.000Z</updated>
     </entry>
     <entry>
-        <id>http://zyczxq.com/JSnote2/</id>
+        <id>http://zyczxq.com/2021/05/24/JSnote2/</id>
         <title>JavaScript笔记之二</title>
-        <link rel="alternate" href="http://zyczxq.com/JSnote2/"/>
+        <link rel="alternate" href="http://zyczxq.com/2021/05/24/JSnote2/"/>
         <content type="html">&lt;h1 id=&#34;一-原型&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#一-原型&#34;&gt;#&lt;/a&gt; 一、原型&lt;/h1&gt;
 &lt;p&gt;在 JavaScript 中，&lt;span class=&#34;orange&#34;&gt;几乎所有事物都是对象&lt;/span&gt;。&lt;/p&gt;
 &lt;p&gt;在 Java（或者其他面向对象语言）里面，对象的模板是类，由构造函数根据类来生成一个新的对象，但是在 JavaScript 里面并没有类的概念（ES5 时代，ES6 虽提出了 class 的关键字，但其实只是原型的语法糖），而创建一个新对象肯定要根据某个 “模版” 来创建，这个模板就是&lt;strong&gt;原型&lt;/strong&gt;。&lt;/p&gt;
@@ -185,9 +211,9 @@ Store：数据层，用来存放应用的状态，一旦发生变动，就提醒
         <updated>2021-05-24T13:14:03.000Z</updated>
     </entry>
     <entry>
-        <id>http://zyczxq.com/medical2/</id>
+        <id>http://zyczxq.com/2021/05/23/medical2/</id>
         <title>常见症状</title>
-        <link rel="alternate" href="http://zyczxq.com/medical2/"/>
+        <link rel="alternate" href="http://zyczxq.com/2021/05/23/medical2/"/>
         <content type="html">&lt;h1 id=&#34;第一节-发热&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#第一节-发热&#34;&gt;#&lt;/a&gt; 第一节 发热&lt;/h1&gt;
 &lt;h2 id=&#34;掌握&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#掌握&#34;&gt;#&lt;/a&gt; 【掌握】&lt;/h2&gt;
 &lt;h3 id=&#34;1-发热的起病方式急缓-过程及分度&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#1-发热的起病方式急缓-过程及分度&#34;&gt;#&lt;/a&gt; 1、发热的起病方式（急缓）、过程及分度&lt;/h3&gt;
@@ -1150,9 +1176,9 @@ Store：数据层，用来存放应用的状态，一旦发生变动，就提醒
         <updated>2021-05-23T05:55:25.000Z</updated>
     </entry>
     <entry>
-        <id>http://zyczxq.com/JSnote1/</id>
+        <id>http://zyczxq.com/2021/05/23/JSnote1/</id>
         <title>作用域及作用域链的应用</title>
-        <link rel="alternate" href="http://zyczxq.com/JSnote1/"/>
+        <link rel="alternate" href="http://zyczxq.com/2021/05/23/JSnote1/"/>
         <content type="html">&lt;h1 id=&#34;一-前言&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#一-前言&#34;&gt;#&lt;/a&gt; 一、前言&lt;/h1&gt;
 &lt;p&gt;​	2019 年的时候我开始自学前端，这篇博客也是当时学习的时候留下的笔记，直至今日我重新复习的时候把它翻出来，再加以修改总结写成一篇学习笔记，供自己以后复习所用。&lt;/p&gt;
 &lt;h1 id=&#34;二-内容&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#二-内容&#34;&gt;#&lt;/a&gt; 二、内容&lt;/h1&gt;
@@ -1208,9 +1234,9 @@ console.log(i);//报错，undefined
         <updated>2021-05-23T04:31:56.000Z</updated>
     </entry>
     <entry>
-        <id>http://zyczxq.com/report/</id>
+        <id>http://zyczxq.com/2021/05/20/report/</id>
         <title>个人博客配置过程记录</title>
-        <link rel="alternate" href="http://zyczxq.com/report/"/>
+        <link rel="alternate" href="http://zyczxq.com/2021/05/20/report/"/>
         <content type="html">&lt;h1 id=&#34;个人博客的配置和搭建过程&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#个人博客的配置和搭建过程&#34;&gt;#&lt;/a&gt; 个人博客的配置和搭建过程&lt;/h1&gt;
 &lt;h2 id=&#34;一-前言&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#一-前言&#34;&gt;#&lt;/a&gt; 一、前言&lt;/h2&gt;
 &lt;p&gt;​	之前就萌生过搭建个人博客的想法，只是因为自己技术能力的不足就一直拖延着，直到最近查资料的时候发现了 github pages 和 hexo 这两个宝藏之后，又看到大佬们漂亮的博客，一咬牙，就开始捣鼓怎么搭建一个自己的个人博客。上网查了挺多资料，其实很多都不太一定正确，中途踩了很多坑，为了方便朋友和自己以后再次配置，故记录下来配置过程。&lt;/p&gt;
@@ -1340,9 +1366,9 @@ hexo deploy//也可以是hexo d
         <updated>2021-05-20T14:42:37.000Z</updated>
     </entry>
     <entry>
-        <id>http://zyczxq.com/medical1/</id>
+        <id>http://zyczxq.com/2021/05/20/medical1/</id>
         <title>甲状腺功能亢进症</title>
-        <link rel="alternate" href="http://zyczxq.com/medical1/"/>
+        <link rel="alternate" href="http://zyczxq.com/2021/05/20/medical1/"/>
         <content type="html">&lt;h1 id=&#34;第二章-甲状腺功能亢进症&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#第二章-甲状腺功能亢进症&#34;&gt;#&lt;/a&gt; &lt;strong&gt;第二章 甲状腺功能亢进症&lt;/strong&gt;&lt;/h1&gt;
 &lt;h2 id=&#34;掌握&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#掌握&#34;&gt;#&lt;/a&gt; &lt;strong&gt;【掌握】&lt;/strong&gt;&lt;/h2&gt;
 &lt;h3 id=&#34;1gaves病临床表现&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#1gaves病临床表现&#34;&gt;#&lt;/a&gt; 1.Gaves 病临床表现&lt;/h3&gt;
@@ -1410,9 +1436,9 @@ hexo deploy//也可以是hexo d
         <updated>2021-05-20T13:55:42.000Z</updated>
     </entry>
     <entry>
-        <id>http://zyczxq.com/1943days/</id>
+        <id>http://zyczxq.com/2021/05/20/1943days/</id>
         <title>和你一起的第1943天</title>
-        <link rel="alternate" href="http://zyczxq.com/1943days/"/>
+        <link rel="alternate" href="http://zyczxq.com/2021/05/20/1943days/"/>
         <content type="html">&lt;p&gt;也是和你在一起的第六个 520&lt;/p&gt;
 &lt;p&gt;&lt;img data-src=&#34;beauty.JPG&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
 </content>
@@ -1420,9 +1446,9 @@ hexo deploy//也可以是hexo d
         <updated>2021-05-20T09:45:31.000Z</updated>
     </entry>
     <entry>
-        <id>http://zyczxq.com/hello-world/</id>
+        <id>http://zyczxq.com/2021/05/19/hello-world/</id>
         <title>Hello World</title>
-        <link rel="alternate" href="http://zyczxq.com/hello-world/"/>
+        <link rel="alternate" href="http://zyczxq.com/2021/05/19/hello-world/"/>
         <content type="html">&lt;p&gt;第一次弄个人博客，用 hexo 这个框架加上大佬写的主题文件，光是配置就弄了我大半天，真的是累，&lt;br /&gt;
 晚点慢慢更新博客&lt;/p&gt;
 </content>
