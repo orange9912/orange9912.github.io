@@ -15,7 +15,7 @@ timezone: 'Asia/Shanghai'
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
 url: http://zyczxq.com
 root: /
-permalink: :title/ # edit for Theme.shoka
+#permalink: :title/ # edit for Theme.shoka
 permalink_defaults:
 
 # Directory
@@ -57,6 +57,7 @@ category_map: # edit for Theme.shoka
   计算机科学: computer-science
   前端: JavaScript
   各种配置: configs
+  Linux: Linux
   Theme Shoka Documentation: theme-shoka-doc
 tag_map:
 
