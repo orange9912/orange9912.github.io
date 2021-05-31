@@ -23,7 +23,7 @@ categories:
 
 ### 3.nodejs
 
-​	*Node.js* 是一个基于 Chrome V8 引擎的 JavaScript 运行环境。*Node.js* 的包管理器 npm,是全球最大的开源库生态系统。我们所使用到的hexo，就是基于nodejs编写的，需要使用到nodejs的包管理器npm。
+​	*Node.js* 是一个基于 Chrome V8 引擎的 JavaScript 运行环境。*Node.js* 的包管理器 npm,是全球最大的开源库生态系统。我们所使用到的hexo，就是基于nodejs编写的，需要使用到nodejs的包管理器npm.
 
 ## 三、工具的安装及配置
 
