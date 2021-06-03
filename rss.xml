@@ -10,14 +10,32 @@
         </author>
         <description>博客</description>
         <language>zh-CN</language>
-        <pubDate>Mon, 31 May 2021 21:33:01 +0800</pubDate>
-        <lastBuildDate>Mon, 31 May 2021 21:33:01 +0800</lastBuildDate>
+        <pubDate>Thu, 03 Jun 2021 12:02:28 +0800</pubDate>
+        <lastBuildDate>Thu, 03 Jun 2021 12:02:28 +0800</lastBuildDate>
         <category term="个人博客" />
+        <item>
+            <guid isPermalink="true">http://zyczxq.com/2021/06/03/Note1/</guid>
+            <title>开发小知识笔记一</title>
+            <link>http://zyczxq.com/2021/06/03/Note1/</link>
+            <category term="前端" scheme="http://zyczxq.com/categories/JavaScript/" />
+            <pubDate>Thu, 03 Jun 2021 12:02:28 +0800</pubDate>
+            <description><![CDATA[ &lt;h1 id=&#34;移动端产生300ms点击延迟现象&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#移动端产生300ms点击延迟现象&#34;&gt;#&lt;/a&gt; 移动端产生 300ms 点击延迟现象&lt;/h1&gt;
+&lt;p&gt;可以禁止混用 touch、click，或者增加一层透明遮罩&lt;/p&gt;
+&lt;h1 id=&#34;点击元素时禁止产生背景或边框&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#点击元素时禁止产生背景或边框&#34;&gt;#&lt;/a&gt; 点击元素时禁止产生背景或边框&lt;/h1&gt;
+&lt;figure class=&#34;highlight css&#34;&gt;&lt;figcaption data-lang=&#34;CSS&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token property&#34;&gt;-webkit-tap-highlight-color&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;rgba&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;0&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt;0&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt;0&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt;0&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;h1 id=&#34;禁止用户选中文字&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#禁止用户选中文字&#34;&gt;#&lt;/a&gt; 禁止用户选中文字&lt;/h1&gt;
+&lt;figure class=&#34;highlight css&#34;&gt;&lt;figcaption data-lang=&#34;CSS&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token property&#34;&gt;-webkit-user-select&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;:&lt;/span&gt;none&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token property&#34;&gt;user-select&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;:&lt;/span&gt;none&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;h1 id=&#34;开启硬件加速&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#开启硬件加速&#34;&gt;#&lt;/a&gt; 开启硬件加速&lt;/h1&gt;
+&lt;figure class=&#34;highlight css&#34;&gt;&lt;figcaption data-lang=&#34;CSS&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token property&#34;&gt;transform&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;translate3d&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;0&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt;0&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt;0&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;h1 id=&#34;css一行文本超出显示省略号&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#css一行文本超出显示省略号&#34;&gt;#&lt;/a&gt; CSS 一行文本超出显示省略号&lt;/h1&gt;
+&lt;figure class=&#34;highlight css&#34;&gt;&lt;figcaption data-lang=&#34;CSS&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token property&#34;&gt;overflow&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;:&lt;/span&gt;hidden&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token property&#34;&gt;text-overflow&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;:&lt;/span&gt;ellipsis&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;3&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token property&#34;&gt;white-space&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;:&lt;/span&gt;nowrap&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;h1 id=&#34;css多行文本超出显示省略号&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#css多行文本超出显示省略号&#34;&gt;#&lt;/a&gt; CSS 多行文本超出显示省略号&lt;/h1&gt;
+&lt;figure class=&#34;highlight css&#34;&gt;&lt;figcaption data-lang=&#34;CSS&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token property&#34;&gt;display&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;:&lt;/span&gt;-webkit-box&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token property&#34;&gt;-webkit-box-orient&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;:&lt;/span&gt;vertical&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;3&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token property&#34;&gt;-webkit-line-clamp&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;:&lt;/span&gt;3&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;//行数，自由控制&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;4&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token property&#34;&gt;overflow&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;:&lt;/span&gt;hidden&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;h1 id=&#34;修改滚动条样式&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#修改滚动条样式&#34;&gt;#&lt;/a&gt; 修改滚动条样式&lt;/h1&gt;
+&lt;p&gt;查看 div::-webkit-scrollbar 相关样式&lt;/p&gt;
+&lt;h1 id=&#34;css画三角形&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#css画三角形&#34;&gt;#&lt;/a&gt; CSS 画三角形&lt;/h1&gt;
+&lt;figure class=&#34;highlight css&#34;&gt;&lt;figcaption data-lang=&#34;CSS&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token selector&#34;&gt;#triangle&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token property&#34;&gt;width&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;:&lt;/span&gt; 0&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;3&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token property&#34;&gt;height&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;:&lt;/span&gt; 0&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;4&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token property&#34;&gt;border-top&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;:&lt;/span&gt;50px solid blue&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;5&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token property&#34;&gt;border-right&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;:&lt;/span&gt;0px&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;6&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token property&#34;&gt;border-left&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;:&lt;/span&gt;0px&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;7&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token property&#34;&gt;border-bottom&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;:&lt;/span&gt;0px&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;8&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt; ]]></description>
+        </item>
         <item>
             <guid isPermalink="true">http://zyczxq.com/2021/05/31/JSnote5/</guid>
             <title>JavaScript异步学习笔记</title>
             <link>http://zyczxq.com/2021/05/31/JSnote5/</link>
-            <category term="JavaScript" scheme="http://zyczxq.com/categories/JavaScript/" />
+            <category term="前端" scheme="http://zyczxq.com/categories/JavaScript/" />
             <pubDate>Mon, 31 May 2021 21:33:01 +0800</pubDate>
             <description><![CDATA[ &lt;h1 id=&#34;前言&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#前言&#34;&gt;#&lt;/a&gt; 前言&lt;/h1&gt;
 &lt;p&gt;异步是 JavaScript 里一个非常重要的基本功。因为 js 是单线程的，为了提高 CPU 利用率，异步是必要的，否则的话要是某一个任务耗时非常长（比如 IO 设备读写），后一个任务就不得不等待很久，浪费了处理器的能力。&lt;/p&gt;
@@ -165,7 +183,7 @@
             <guid isPermalink="true">http://zyczxq.com/2021/05/30/JSnote4/</guid>
             <title>一些封装的工具函数</title>
             <link>http://zyczxq.com/2021/05/30/JSnote4/</link>
-            <category term="JavaScript" scheme="http://zyczxq.com/categories/JavaScript/" />
+            <category term="前端" scheme="http://zyczxq.com/categories/JavaScript/" />
             <pubDate>Sun, 30 May 2021 16:23:15 +0800</pubDate>
             <description><![CDATA[ &lt;h1 id=&#34;前言&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#前言&#34;&gt;#&lt;/a&gt; 前言&lt;/h1&gt;
 &lt;p&gt;趁着有空，把自己平时使用的一些函数抽离出来做个记录。&lt;/p&gt;
@@ -189,7 +207,7 @@
             <guid isPermalink="true">http://zyczxq.com/2021/05/26/flux/</guid>
             <title>flux</title>
             <link>http://zyczxq.com/2021/05/26/flux/</link>
-            <category term="JavaScript" scheme="http://zyczxq.com/categories/JavaScript/" />
+            <category term="前端" scheme="http://zyczxq.com/categories/JavaScript/" />
             <pubDate>Wed, 26 May 2021 14:36:07 +0800</pubDate>
             <description><![CDATA[ &lt;h1 id=&#34;前言&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#前言&#34;&gt;#&lt;/a&gt; 前言&lt;/h1&gt;
 &lt;p&gt;最近在实习做项目的时候，使用的是 react，发现项目的数据管理使用的架构是 flux。虽然我很久之前也看过一下 flux 的架构思想，不过过了这么久又没有应用，早就忘光了，趁着这次机会，再来复习一下，顺便也记录下以前对 redux 的结构的思考。&lt;/p&gt;
@@ -262,7 +280,7 @@ Store：数据层，用来存放应用的状态，一旦发生变动，就提醒
             <guid isPermalink="true">http://zyczxq.com/2021/05/25/JSnote3/</guid>
             <title>this关键字的笔记</title>
             <link>http://zyczxq.com/2021/05/25/JSnote3/</link>
-            <category term="JavaScript" scheme="http://zyczxq.com/categories/JavaScript/" />
+            <category term="前端" scheme="http://zyczxq.com/categories/JavaScript/" />
             <pubDate>Tue, 25 May 2021 22:34:44 +0800</pubDate>
             <description><![CDATA[ &lt;h1 id=&#34;使用this的原因&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#使用this的原因&#34;&gt;#&lt;/a&gt; 使用 this 的原因&lt;/h1&gt;
 &lt;p&gt;在编写代码的时候，我们不得不经常使用当前的上下文对象来做一些事情，比如说对象赋值、调用方法。如果我们不使用 this，就需要经常传入一个上下文对象，非常的繁杂，并且随着使用模式和代码量的增长，显式传递上下文对象会让代码变得越来越混乱。&lt;/p&gt;
@@ -313,7 +331,7 @@ Store：数据层，用来存放应用的状态，一旦发生变动，就提醒
             <guid isPermalink="true">http://zyczxq.com/2021/05/24/JSnote2/</guid>
             <title>JavaScript笔记之二</title>
             <link>http://zyczxq.com/2021/05/24/JSnote2/</link>
-            <category term="JavaScript" scheme="http://zyczxq.com/categories/JavaScript/" />
+            <category term="前端" scheme="http://zyczxq.com/categories/JavaScript/" />
             <pubDate>Mon, 24 May 2021 21:14:03 +0800</pubDate>
             <description><![CDATA[ &lt;h1 id=&#34;一-原型&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#一-原型&#34;&gt;#&lt;/a&gt; 一、原型&lt;/h1&gt;
 &lt;p&gt;在 JavaScript 中，&lt;span class=&#34;orange&#34;&gt;几乎所有事物都是对象&lt;/span&gt;。&lt;/p&gt;
@@ -1304,7 +1322,7 @@ Store：数据层，用来存放应用的状态，一旦发生变动，就提醒
             <guid isPermalink="true">http://zyczxq.com/2021/05/23/JSnote1/</guid>
             <title>作用域及作用域链的应用</title>
             <link>http://zyczxq.com/2021/05/23/JSnote1/</link>
-            <category term="JavaScript" scheme="http://zyczxq.com/categories/JavaScript/" />
+            <category term="前端" scheme="http://zyczxq.com/categories/JavaScript/" />
             <pubDate>Sun, 23 May 2021 12:31:56 +0800</pubDate>
             <description><![CDATA[ &lt;h1 id=&#34;一-前言&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#一-前言&#34;&gt;#&lt;/a&gt; 一、前言&lt;/h1&gt;
 &lt;p&gt;​	2019 年的时候我开始自学前端，这篇博客也是当时学习的时候留下的笔记，直至今日我重新复习的时候把它翻出来，再加以修改总结写成一篇学习笔记，供自己以后复习所用。&lt;/p&gt;
