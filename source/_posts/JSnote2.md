@@ -3,7 +3,7 @@ title: JavaScript笔记之二
 date: 2021-05-24 21:14:03
 tags:
 categories:
-- JavaScript
+- 前端
 ---
 
 # 一、原型

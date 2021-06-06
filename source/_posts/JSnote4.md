@@ -3,7 +3,7 @@ title: 一些封装的工具函数
 date: 2021-05-30 16:23:15
 tags:
 categories:
-- JavaScript
+- 前端
 ---
 
 # 前言

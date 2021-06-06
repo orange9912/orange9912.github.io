@@ -3,7 +3,7 @@ title: 作用域及作用域链的应用
 date: 2021-05-23 12:31:56
 tags:
 categories:
-- JavaScript
+- 前端
 ---
 
 # 一、前言

@@ -3,7 +3,7 @@ title: flux
 date: 2021-05-26 14:36:07
 tags:
 categories:
-- JavaScript
+- 前端
 ---
 
 # 前言

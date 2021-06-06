@@ -53,10 +53,13 @@ valine:
       - BA3A817185D7BBAB4E0D2D6C6B2A5366
       # - hash of master@email.com
       # - hash of master2@email.com
-    friend:
+    friend: 
+      - D
       # - hash of friend@email.com
       # - hash of friend2@email.com
     yome: 
+      - D358282E2C6875A7A208B2601ABAFEB3
+      #- d358282e2c6875a7a208b2601abafeb3
       # - hash of investor1@email.com
 
 

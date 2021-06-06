@@ -3,7 +3,7 @@ title: this关键字的笔记
 date: 2021-05-25 22:34:44
 tags:
 categories:
-- JavaScript
+- 前端
 ---
 
 # 使用this的原因
