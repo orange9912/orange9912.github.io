@@ -8,8 +8,82 @@
     <author>
       <name>orange</name>
     </author>
-    <updated>2021-06-14T09:06:26.000Z</updated>
+    <updated>2021-06-15T11:01:48.000Z</updated>
     <category term="个人博客" />
+    <entry>
+        <id>http://zyczxq.com/2021/06/15/webSafe1/</id>
+        <title>前端安全笔记一_xss和csrf</title>
+        <link rel="alternate" href="http://zyczxq.com/2021/06/15/webSafe1/"/>
+        <content type="html">&lt;p&gt;在互联网不断发展的今天，随着 web 端页面的庞大化，互动性越来越强，网络安全也变得越来越重要。通过简单总结两种常见的攻击，来初步学习一下。&lt;/p&gt;
+&lt;h1 id=&#34;xss跨站脚本攻击cross-site-scripting&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#xss跨站脚本攻击cross-site-scripting&#34;&gt;#&lt;/a&gt; XSS（跨站脚本攻击，Cross Site Scripting）&lt;/h1&gt;
+&lt;p&gt;XSS，跨站脚本攻击，为了不和&lt;span class=&#34;pink&#34;&gt;层叠样式表（Cascading Style Sheets）混淆&lt;/span&gt;，于是取名为 XSS。&lt;/p&gt;
+&lt;p&gt;它是发生在目标用户的浏览器层面上的，当渲染 DOM 树的过程中执行了不在预期内执行的 JS 代码时，就发生了 XSS 攻击。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;大多数 XSS 攻击的主要方式是嵌入一段远程的或者第三方域的代码，然后在目标网站上执行了这段代码&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id=&#34;常见场景&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#常见场景&#34;&gt;#&lt;/a&gt; 常见场景&lt;/h2&gt;
+&lt;p&gt;这里举一个简单的例子。&lt;/p&gt;
+&lt;p&gt;假设一个对 XSS 攻击不做任何防御的网站，有一个留言板，或者说是用户输入的地方。&lt;/p&gt;
+&lt;p&gt;一般来说，用户留下的留言肯定是正常的文字。&lt;mark&gt;倘若有些不怀好意的人留下这么一行&lt;/mark&gt;&lt;/p&gt;
+&lt;figure class=&#34;highlight html&#34;&gt;&lt;figcaption data-lang=&#34;HTML&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token tag&#34;&gt;&lt;span class=&#34;token tag&#34;&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;lt;&lt;/span&gt;script&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;token script&#34;&gt;&lt;span class=&#34;token language-javascript&#34;&gt;&lt;span class=&#34;token function&#34;&gt;alert&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token string&#34;&gt;&#39;你被攻击了&#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;token tag&#34;&gt;&lt;span class=&#34;token tag&#34;&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;lt;/&lt;/span&gt;script&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;这个时候界面的网页代码就会插进去这么一段 script，当浏览器解析到这一行的时候，就会弹出一个对话框。&lt;/p&gt;
+&lt;p&gt;当然现实攻击的人不可能只是这么做就完了，他们会去盗取一些敏感的信息。&lt;/p&gt;
+&lt;h2 id=&#34;危害&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#危害&#34;&gt;#&lt;/a&gt; 危害&lt;/h2&gt;
+&lt;p&gt;总的来说就是让网页执行不属于它的原本代码的代码。&lt;/p&gt;
+&lt;h3 id=&#34;窃取cookie&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#窃取cookie&#34;&gt;#&lt;/a&gt; 窃取 Cookie&lt;/h3&gt;
+&lt;p&gt;Cookie 访问是受同源限制的，通常 cookie 会存着一些用户的敏感信息。&lt;/p&gt;
+&lt;p&gt;如果被 XSS 攻击了，就可以通过 document.cookie 获取用户的身份信息，从而可能会导致被” 冒名顶替 “&lt;/p&gt;
+&lt;h3 id=&#34;劫持流量恶意跳转&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#劫持流量恶意跳转&#34;&gt;#&lt;/a&gt; 劫持流量，恶意跳转&lt;/h3&gt;
+&lt;figure class=&#34;highlight html&#34;&gt;&lt;figcaption data-lang=&#34;HTML&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token tag&#34;&gt;&lt;span class=&#34;token tag&#34;&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;lt;&lt;/span&gt;script&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;token script&#34;&gt;&lt;span class=&#34;token language-javascript&#34;&gt;window&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;localtion&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;href&lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;token string&#34;&gt;&#34;www.zyczxq.com&#34;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;token tag&#34;&gt;&lt;span class=&#34;token tag&#34;&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;lt;/&lt;/span&gt;script&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;所访问的网站就会被跳转到我的博客。&lt;/p&gt;
+&lt;h2 id=&#34;常用绕过方法&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#常用绕过方法&#34;&gt;#&lt;/a&gt; 常用绕过方法&lt;/h2&gt;
+&lt;h3 id=&#34;大小写绕过&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#大小写绕过&#34;&gt;#&lt;/a&gt; 大小写绕过&lt;/h3&gt;
+&lt;p&gt;如果网站只是过滤小写的 script 标签，就可以这样绕过，因为 html 是大小写不敏感的&lt;/p&gt;
+&lt;figure class=&#34;highlight html&#34;&gt;&lt;figcaption data-lang=&#34;HTML&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token tag&#34;&gt;&lt;span class=&#34;token tag&#34;&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;lt;&lt;/span&gt;SCriPt&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;token script&#34;&gt;&lt;span class=&#34;token language-javascript&#34;&gt;&lt;span class=&#34;token operator&#34;&gt;...&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;token tag&#34;&gt;&lt;span class=&#34;token tag&#34;&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;lt;/&lt;/span&gt;SCriPt&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;h3 id=&#34;过滤后的语句再次转成攻击语句&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#过滤后的语句再次转成攻击语句&#34;&gt;#&lt;/a&gt; 过滤后的语句再次转成攻击语句&lt;/h3&gt;
+&lt;p&gt;有时候网站的过滤并不是过滤完之后还看有没有 script 标签的，可能它只会进行一次过滤&lt;/p&gt;
+&lt;figure class=&#34;highlight html&#34;&gt;&lt;figcaption data-lang=&#34;HTML&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token tag&#34;&gt;&lt;span class=&#34;token tag&#34;&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;lt;&lt;/span&gt;scrscriptipt&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&gt;&lt;/span&gt;&lt;/span&gt;...&lt;span class=&#34;token tag&#34;&gt;&lt;span class=&#34;token tag&#34;&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;lt;/&lt;/span&gt;scrscriptipt&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;它过滤了一遍之后就会变成：&lt;/p&gt;
+&lt;figure class=&#34;highlight html&#34;&gt;&lt;figcaption data-lang=&#34;HTML&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token tag&#34;&gt;&lt;span class=&#34;token tag&#34;&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;lt;&lt;/span&gt;script&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;token script&#34;&gt;&lt;span class=&#34;token language-javascript&#34;&gt;&lt;span class=&#34;token operator&#34;&gt;...&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;token tag&#34;&gt;&lt;span class=&#34;token tag&#34;&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;lt;/&lt;/span&gt;script&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;h2 id=&#34;防范手段&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#防范手段&#34;&gt;#&lt;/a&gt; 防范手段&lt;/h2&gt;
+&lt;h3 id=&#34;防止窃取cookie&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#防止窃取cookie&#34;&gt;#&lt;/a&gt; 防止窃取 Cookie&lt;/h3&gt;
+&lt;p&gt;可以在 http 字段内设置 set-Cookie&lt;/p&gt;
+&lt;p&gt;Http-only:true、secure&lt;/p&gt;
+&lt;p&gt;达到只有在 https 下才传输、而且禁止 JavaScript 脚本访问 Cookie&lt;/p&gt;
+&lt;h3 id=&#34;常用防范方法&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#常用防范方法&#34;&gt;#&lt;/a&gt; 常用防范方法&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;过滤，对输入进行过滤，一般是 &amp;lt;script&amp;gt;、&amp;lt;a &amp;gt; 等标签进行过滤&lt;/li&gt;
+&lt;li&gt;编码，对一些常见的符号，进行转换编码，就不会执行了&lt;/li&gt;
+&lt;li&gt;限制，限制输入长度。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;csrf跨站请求伪造cross-site-request-forgery&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#csrf跨站请求伪造cross-site-request-forgery&#34;&gt;#&lt;/a&gt; CSRF（跨站请求伪造，Cross Site Request Forgery）&lt;/h1&gt;
+&lt;p&gt;CSRF 攻击就是字面意思，在别的站点伪造了一个请求，盗用了别人的身份，以别人的身份发送恶意请求，但对服务器来说是合法的。&lt;/p&gt;
+&lt;p&gt;在受害者访问一个网站时，其 Cookie 没有过期的情况下，攻击者伪造一个链接地址让受害者点击，从而形成 CSRF&lt;/p&gt;
+&lt;h2 id=&#34;常见场景-2&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#常见场景-2&#34;&gt;#&lt;/a&gt; 常见场景&lt;/h2&gt;
+&lt;p&gt;假设网站 A、网站 B、受害用户 C&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;受害用户 C 正常登录网站 A&lt;/li&gt;
+&lt;li&gt;用户信息通过验证后，网站 A 产生 Cookie 信息返回给浏览器，并登录成功，&lt;strong&gt;可以以用户 C 身份发送请求到网站 A&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;用户未退出网站 A 的情况下，打开另一个网站 B&lt;/li&gt;
+&lt;li&gt;网站 B 接收到用户请求后，返回一些攻击性代码，并发出一个请求要求访问第三方站点 A&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;pink&#34;&gt;浏览器接收到这些攻击性代码后，根据网站 B 的要求，在用户不知情的情况下携带 Cookie，即以用户 C 身份向网站 A 发出请求，这时候网站 A 会以用户 C 的权限进行处理&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;简单来说，就是利用后台有规律的接口，来诱导用户发出请求。&lt;/p&gt;
+&lt;h2 id=&#34;例子&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#例子&#34;&gt;#&lt;/a&gt; 例子&lt;/h2&gt;
+&lt;p&gt;假设 orange 在银行有一笔存款，通过对银行网站发送这样的请求，能把 100 块转到七海的账户上。&lt;/p&gt;
+&lt;figure class=&#34;highlight http&#34;&gt;&lt;figcaption data-lang=&#34;HTTP&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token header-name keyword&#34;&gt;http:&lt;/span&gt;//bank.com/transfer?account=orange&amp;amp;amount=100&amp;amp;to=nanami&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;某坏人 red 在银行也有自己的账户，而且他发现这样的链接能让用户转账操作。&lt;/p&gt;
+&lt;figure class=&#34;highlight http&#34;&gt;&lt;figcaption data-lang=&#34;HTTP&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token header-name keyword&#34;&gt;http:&lt;/span&gt;//back.com/transfer?account=orange&amp;amp;amount=100&amp;amp;to=red&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;但是他自己发起肯定不可能转成功，因为在转账之前银行肯定会检测用户身份（通过 cookie 之类的）&lt;/p&gt;
+&lt;p&gt;这样的话，通过 CSRF 不就可以成功了吗？他首先弄了一个网站，在里面某些图片或之类的带有 src 属性的地方放入这么一个玩意&lt;/p&gt;
+&lt;p&gt;以图片为例&lt;/p&gt;
+&lt;figure class=&#34;highlight html&#34;&gt;&lt;figcaption data-lang=&#34;HTML&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token tag&#34;&gt;&lt;span class=&#34;token tag&#34;&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;lt;&lt;/span&gt;img&lt;/span&gt; &lt;span class=&#34;token attr-name&#34;&gt;src&lt;/span&gt;&lt;span class=&#34;token attr-value&#34;&gt;&lt;span class=&#34;token punctuation attr-equals&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&#34;&lt;/span&gt;http://back.com/transfer?account=orange&amp;amp;amount=100&amp;amp;to=red&lt;span class=&#34;token punctuation&#34;&gt;&#34;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;/&gt;&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;当 orange 访问这个网站的时候，orange 的浏览器就会发一个请求，并附带 cookie 发向银行，在 cookie 等认证信息还没有过期情况下，就会成功完成转账操作，而银行也只会认为这确实是 orange 自己发出的请求&lt;/p&gt;
+&lt;h2 id=&#34;防范手段-2&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#防范手段-2&#34;&gt;#&lt;/a&gt; 防范手段&lt;/h2&gt;
+&lt;h3 id=&#34;设置验证码&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#设置验证码&#34;&gt;#&lt;/a&gt; 设置验证码&lt;/h3&gt;
+&lt;p&gt;让用户每次进行敏感操作的表单提交时都要输入验证码即可&lt;/p&gt;
+&lt;h3 id=&#34;验证http-referer字段&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#验证http-referer字段&#34;&gt;#&lt;/a&gt; 验证 HTTP Referer 字段&lt;/h3&gt;
+&lt;p&gt;在 http 协议中，头部有一个字段叫做 Referer 字段，&lt;span class=&#34;pink&#34;&gt;它记录了 http 请求的来源地址&lt;/span&gt;，一般来说，在一个安全受限页面，比如银行转帐，要触发这个操作应该是在银行的页面上点击按钮，也就是说，&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cDovL3huLS1iYWNrLWtmNWZrMzFhdzZmeGR6NzRlazNydmlwbTYyYTZjMmRiaGE4NnM0MmsuY29t&#34;&gt;发起这个请求的地址应该是 back.com&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;但是黑客如果要发起请求只能在自己的网站上，这样的话 Referer 值是不合法的，会被拒绝。&lt;/p&gt;
+&lt;p&gt;但是这样也有一些问题，有些用户设置了不发送 referer 值，这个时候可能会被认为是 csrf 攻击而拒绝合法用户请求。而且 Referer 值也不是一定安全的，IE6 中就有方法可以篡改这个值。&lt;/p&gt;
+&lt;h3 id=&#34;在请求地址中添加token并验证&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#在请求地址中添加token并验证&#34;&gt;#&lt;/a&gt; 在请求地址中添加 token 并验证&lt;/h3&gt;
+&lt;p&gt;CSRF 之所以成功，是因为黑客可以完全伪造用户的请求，用户验证信息全部都存在于 cookie 中，这个时候我们可以放入一些黑客不能伪造的信息，而且这个信息不能存在于 cookie 内。&lt;/p&gt;
+&lt;p&gt;所以就在 HTTP 请求中以参数的形式加入一个随机产生的 token，并在服务器端建立一个拦截器来验证这个 token，要是没有 token 或者 token 不正确，就说明不合法。&lt;/p&gt;
+&lt;p&gt;token 的添加相对 referer 字段要更加麻烦的多，而且他也不是绝对安全的。&lt;/p&gt;
+</content>
+        <category term="前端" scheme="http://zyczxq.com/categories/JavaScript/" />
+        <updated>2021-06-15T11:01:48.000Z</updated>
+    </entry>
     <entry>
         <id>http://zyczxq.com/2021/06/14/storage/</id>
         <title>前端存储笔记</title>
@@ -2187,15 +2261,5 @@ hexo deploy//也可以是hexo d
 </content>
         <category term="医学" scheme="http://zyczxq.com/categories/medical/" />
         <updated>2021-05-20T13:55:42.000Z</updated>
-    </entry>
-    <entry>
-        <id>http://zyczxq.com/2021/05/20/1943days/</id>
-        <title>和你一起的第1943天</title>
-        <link rel="alternate" href="http://zyczxq.com/2021/05/20/1943days/"/>
-        <content type="html">&lt;p&gt;也是和你在一起的第六个 520&lt;/p&gt;
-&lt;p&gt;&lt;img data-src=&#34;beauty.JPG&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
-</content>
-        <category term="life" scheme="http://zyczxq.com/categories/life/" />
-        <updated>2021-05-20T09:45:31.000Z</updated>
     </entry>
 </feed>
