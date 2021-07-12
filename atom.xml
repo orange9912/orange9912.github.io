@@ -174,7 +174,7 @@ class Parent extends React.Component&amp;#123;
 &lt;h2 id=&#34;diff算法&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#diff算法&#34;&gt;#&lt;/a&gt; DIff 算法&lt;/h2&gt;
 &lt;p&gt;每次组件的状态或属性更新，组件的 render 方法都会返回一个新的虚拟 DOM 对象。&lt;/p&gt;
 &lt;p&gt;React 会通过比较更新前后两份虚拟 DOM（新的虚拟 DOM 和旧的虚拟 DOM），来找出差异部分更新到真实 DOM 上，从而减少在真实 DOM 上的操作。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;正常情况下，比较两个树型结构差异的算法时间复杂度是 O（N&lt;span&gt;O(N)&lt;/span&gt;^3）&lt;/strong&gt;，但 React 通过总结 DOM 的实际使用场景，提出了两个绝大多数场景下都成立的假设。通过这两个假设，React 实现了&lt;span class=&#34;pink&#34;&gt; O (N)&lt;/span&gt; 复杂下完成两颗虚拟 DOM 树的比较。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;正常情况下，比较两个树型结构差异的算法时间复杂度是 O (N 的 3 次方)&lt;/strong&gt;，但 React 通过总结 DOM 的实际使用场景，提出了两个绝大多数场景下都成立的假设。通过这两个假设，React 实现了&lt;span class=&#34;pink&#34;&gt; O (N)&lt;/span&gt; 复杂下完成两颗虚拟 DOM 树的比较。&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;如果两个元素的类型不同，那么它们将生成两棵不同的树。&lt;/li&gt;
 &lt;li&gt;为列表中的元素设置 key 属性，用 key 标识对应元素多次 render 过程中是否发生变化。&lt;/li&gt;
