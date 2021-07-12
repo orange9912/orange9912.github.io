@@ -161,3 +161,18 @@ function getStyle(obj,attr){
 }
 ```
 
+# 按顺序执行Promise
+
+```javascript
+/**
+ * 依次执行数组中的每一个Promise。
+ * @param {Array} array 每一项都是一个函数，函数返回值是promise
+ * @param {string} value 
+ * @returns {object} 
+ * 
+ */
+const runPromiseInSequence = (array,value) => array.reduce(
+    (promiseChain,nowPromise) => promiseChain.then(nowPromise)
+    ,Promise.resolve(value));
+```
+
