@@ -651,6 +651,8 @@ const &amp;#123;username&amp;#125; = useContext(AppContext);
 &lt;h3 id=&#34;非简单请求&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#非简单请求&#34;&gt;#&lt;/a&gt; 非简单请求&lt;/h3&gt;
 &lt;p&gt;对于非简单请求，在正式通信之前，浏览器会发出一个预检请求，询问服务器是否允许该域等信息。&lt;/p&gt;
 &lt;p&gt;如果不同意，服务器会返回一个正常的回应，但不带有任何 CORS 相关字段。&lt;/p&gt;
+&lt;h3 id=&#34;优化非简单请求&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#优化非简单请求&#34;&gt;#&lt;/a&gt; 优化非简单请求&lt;/h3&gt;
+&lt;p&gt;优化 OPTIONS 预检请求的发送，CORS 中 Access-Control-Max-age 可以设置缓存的时间，表示多少秒内不会对同一个非简单请求去发送预检请求，这样的话就能够减少重复多次发送 options 请求的往返时间。&lt;/p&gt;
 &lt;h1 id=&#34;设置代理服务器进行转发&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#设置代理服务器进行转发&#34;&gt;#&lt;/a&gt; 设置代理服务器进行转发&lt;/h1&gt;
 &lt;p&gt;比如说 cli 工具中的代理&lt;/p&gt;
 &lt;h2 id=&#34;webpack中的proxy&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#webpack中的proxy&#34;&gt;#&lt;/a&gt; webpack 中的 proxy&lt;/h2&gt;
