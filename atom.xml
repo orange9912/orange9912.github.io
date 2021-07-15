@@ -1362,7 +1362,7 @@ const MyComponentWithPersistentData = withPersistentData(MyComponent);
 &lt;h2 id=&#34;数据劫持和数据代理的区别&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#数据劫持和数据代理的区别&#34;&gt;#&lt;/a&gt; 数据劫持和数据代理的区别&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Object.defineProperty 不能监听数组的变化，需要对数组方法进行重写。&lt;/li&gt;
-&lt;li&gt;Object.defineProperty 必须遍历对象的每个属性，且需要对嵌套结构进行深层便利。&lt;/li&gt;
+&lt;li&gt;Object.defineProperty 必须遍历对象的每个属性，且需要对嵌套结构进行深层遍历。&lt;/li&gt;
 &lt;li&gt;Proxy 的代理是针对整个对象的，一层代理可以监听同级结构下的所有属性变化。（深层结构仍然需要递归）&lt;/li&gt;
 &lt;li&gt;Proxy 支持代理数组的变化&lt;/li&gt;
 &lt;/ul&gt;
