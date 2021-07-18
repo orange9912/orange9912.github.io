@@ -206,6 +206,9 @@ class Parent extends React.Component&amp;#123;
   ...
 &amp;#125;
 &lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id=&#34;react-fiber&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#react-fiber&#34;&gt;#&lt;/a&gt; React Fiber&lt;/h1&gt;
+&lt;p&gt;JavaScript 是单线程的，如果调用栈运行一个很耗时的脚本，比如解析一个图片，可能会长时间阻塞，使得其他事件都无法得到响应。&lt;/p&gt;
+&lt;p&gt;为了突破这个瓶颈，React 中试着将耗时高、易阻塞的长任务进行切片，分成子任务并异步执行他们。这样，在每个子任务的空隙间就有机会处理其他任务，如 UI 更新。&lt;/p&gt;
 </content>
         <category term="前端" scheme="http://zyczxq.com/categories/JavaScript/" />
         <updated>2021-07-01T12:05:17.000Z</updated>
