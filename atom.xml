@@ -8,8 +8,48 @@
     <author>
       <name>orange</name>
     </author>
-    <updated>2021-07-01T12:05:17.000Z</updated>
+    <updated>2021-07-18T08:03:43.000Z</updated>
     <category term="个人博客" />
+    <entry>
+        <id>http://zyczxq.com/2021/07/18/youhua/</id>
+        <title>项目实践中的一些优化想法</title>
+        <link rel="alternate" href="http://zyczxq.com/2021/07/18/youhua/"/>
+        <content type="html">&lt;p&gt;抽出一点时间来稍微总结一下平时编写项目中使用过的一些性能优化的手段，还有很多没有尝试过，那些以后再补充&lt;/p&gt;
+&lt;h1 id=&#34;通用代码方面&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#通用代码方面&#34;&gt;#&lt;/a&gt; 通用代码方面&lt;/h1&gt;
+&lt;h2 id=&#34;防抖-节流&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#防抖-节流&#34;&gt;#&lt;/a&gt; 防抖、节流&lt;/h2&gt;
+&lt;p&gt;这两个函数的实现方式不再赘述了，其实比较简单，都是利用闭包。&lt;/p&gt;
+&lt;p&gt;只是防抖是当事件触发一定时间内不再触发才执行，而节流是无论触发多少次一定时间内只执行一次。&lt;/p&gt;
+&lt;p&gt;** 应用场景：** 比如说某些可能高频触发的事件，监听输入框用户输入以实时搜索、监听宽度改变之类的一些地方。&lt;/p&gt;
+&lt;h2 id=&#34;尾递归尾调用&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#尾递归尾调用&#34;&gt;#&lt;/a&gt; 尾递归 / 尾调用&lt;/h2&gt;
+&lt;p&gt;把函数改写成尾调用 / 尾递归可以优化调用栈空间占用，具体看我那篇详细介绍的博客。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;用于一些可能深层递归的计算函数&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id=&#34;减少重排重绘&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#减少重排重绘&#34;&gt;#&lt;/a&gt; 减少重排重绘&lt;/h2&gt;
+&lt;p&gt;每次布局的改变都需要浏览器 reflow 和 repaint，大量重排重绘会影响性能表现。&lt;/p&gt;
+&lt;p&gt;** 手段有：** 尽量统一修改样式，比如使用类来添加样式。尝试将修改样式的函数利用 window.requestAnimationFrame 来调用等。&lt;/p&gt;
+&lt;h2 id=&#34;事件委托&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#事件委托&#34;&gt;#&lt;/a&gt; 事件委托&lt;/h2&gt;
+&lt;p&gt;对于一个列表大量的同级元素进行事件监听的时候，由于涉及大量的创建和销毁操作，性能表现会较差。&lt;/p&gt;
+&lt;p&gt;可以利用事件委托，将事件监听器设置于他们的父元素上，利用事件 e.target 来获取到真正触发事件的元素&lt;/p&gt;
+&lt;p&gt;顺带一提 e.currentTarget 指向的是设置事件监听器的元素。&lt;/p&gt;
+&lt;h2 id=&#34;懒加载&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#懒加载&#34;&gt;#&lt;/a&gt; 懒加载&lt;/h2&gt;
+&lt;p&gt;有些不用马上加载的资源，可以等需要用到的时候再进行加载。&lt;/p&gt;
+&lt;p&gt;比如说图片，在视口之外的时候不加载，之内的时候才加载，一般都使用标签的.lazy 属性就可以实现。&lt;/p&gt;
+&lt;h1 id=&#34;框架代码方面&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#框架代码方面&#34;&gt;#&lt;/a&gt; 框架代码方面&lt;/h1&gt;
+&lt;h2 id=&#34;减少不必要渲染&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#减少不必要渲染&#34;&gt;#&lt;/a&gt; 减少不必要渲染&lt;/h2&gt;
+&lt;p&gt;利用 should Componentupdate 来进行比较，定义无需进行更新的场景。&lt;/p&gt;
+&lt;p&gt;通常只是浅比较下一次的 props 和 state 的话，可以让组件继承 Pure Component 来代替手写该方法。&lt;/p&gt;
+&lt;h2 id=&#34;运行时代码去除内联函数&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#运行时代码去除内联函数&#34;&gt;#&lt;/a&gt; 运行时代码去除内联函数&lt;/h2&gt;
+&lt;p&gt;** 优化场景：** 当组件内存在函数声明的逻辑（比如使用箭头函数或用 bind 声明函数）或闭包变量时，组件每刷新一次都会生成一个新的函数和闭包变量。这种不必要的函数就叫做内联函数。&lt;/p&gt;
+&lt;p&gt;可以利用 React 的新特性 useMemo 和 useCallback 来将这些变量包裹。&lt;/p&gt;
+&lt;p&gt;useMemo 和 useCallback 都会在组件第一次渲染时执行，之后会在其依赖的变量，也就是 useMemo 和 useCallback 第二个参数发生变化时再次执行。&lt;/p&gt;
+&lt;p&gt;useMemo 返回缓存的变量，useCallback 返回缓存的函数。&lt;/p&gt;
+&lt;h1 id=&#34;工程方面&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#工程方面&#34;&gt;#&lt;/a&gt; 工程方面&lt;/h1&gt;
+&lt;h2 id=&#34;分离入口中重复引入的模块&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#分离入口中重复引入的模块&#34;&gt;#&lt;/a&gt; 分离入口中重复引入的模块&lt;/h2&gt;
+&lt;p&gt;配置 optimization 中的 splitChunks 进行代码分离，可以将不同入口中分离重复引入的库，减少重复代码。&lt;/p&gt;
+&lt;h1 id=&#34;剩下的等待以后慢慢实践&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#剩下的等待以后慢慢实践&#34;&gt;#&lt;/a&gt; 剩下的等待以后慢慢实践……&lt;/h1&gt;
+</content>
+        <category term="前端" scheme="http://zyczxq.com/categories/JavaScript/" />
+        <updated>2021-07-18T08:03:43.000Z</updated>
+    </entry>
     <entry>
         <id>http://zyczxq.com/2021/07/01/reactNote2/</id>
         <title>React笔记2</title>
@@ -1611,23 +1651,5 @@ const MyComponentWithPersistentData = withPersistentData(MyComponent);
 &lt;figure class=&#34;highlight shell&#34;&gt;&lt;figcaption data-lang=&#34;Bash&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token number&#34;&gt;30&lt;/span&gt; &lt;span class=&#34;token number&#34;&gt;8&lt;/span&gt; * * * ~/startFtp.sh&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token number&#34;&gt;30&lt;/span&gt; &lt;span class=&#34;token number&#34;&gt;23&lt;/span&gt; * * * ~/closeFtp.sh&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;3&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token number&#34;&gt;30&lt;/span&gt; &lt;span class=&#34;token number&#34;&gt;8&lt;/span&gt;-23 * * * ~/pingBaidu.sh&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;4&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token number&#34;&gt;50&lt;/span&gt; &lt;span class=&#34;token number&#34;&gt;23&lt;/span&gt; * * * ~/backup.sh&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</content>
         <category term="Linux" scheme="http://zyczxq.com/categories/Linux/" />
         <updated>2021-06-03T08:32:03.000Z</updated>
-    </entry>
-    <entry>
-        <id>http://zyczxq.com/2021/06/03/Note1/</id>
-        <title>开发小知识笔记一</title>
-        <link rel="alternate" href="http://zyczxq.com/2021/06/03/Note1/"/>
-        <content type="html">&lt;h1 id=&#34;移动端产生300ms点击延迟现象&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#移动端产生300ms点击延迟现象&#34;&gt;#&lt;/a&gt; 移动端产生 300ms 点击延迟现象&lt;/h1&gt;
-&lt;p&gt;可以禁止混用 touch、click，或者增加一层透明遮罩&lt;/p&gt;
-&lt;h1 id=&#34;点击元素时禁止产生背景或边框&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#点击元素时禁止产生背景或边框&#34;&gt;#&lt;/a&gt; 点击元素时禁止产生背景或边框&lt;/h1&gt;
-&lt;figure class=&#34;highlight css&#34;&gt;&lt;figcaption data-lang=&#34;CSS&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token property&#34;&gt;-webkit-tap-highlight-color&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;rgba&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;0&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt;0&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt;0&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt;0&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;h1 id=&#34;禁止用户选中文字&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#禁止用户选中文字&#34;&gt;#&lt;/a&gt; 禁止用户选中文字&lt;/h1&gt;
-&lt;figure class=&#34;highlight css&#34;&gt;&lt;figcaption data-lang=&#34;CSS&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token property&#34;&gt;-webkit-user-select&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;:&lt;/span&gt;none&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token property&#34;&gt;user-select&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;:&lt;/span&gt;none&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;h1 id=&#34;开启硬件加速&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#开启硬件加速&#34;&gt;#&lt;/a&gt; 开启硬件加速&lt;/h1&gt;
-&lt;figure class=&#34;highlight css&#34;&gt;&lt;figcaption data-lang=&#34;CSS&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token property&#34;&gt;transform&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;translate3d&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;0&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt;0&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt;0&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;h1 id=&#34;css一行文本超出显示省略号&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#css一行文本超出显示省略号&#34;&gt;#&lt;/a&gt; CSS 一行文本超出显示省略号&lt;/h1&gt;
-&lt;figure class=&#34;highlight css&#34;&gt;&lt;figcaption data-lang=&#34;CSS&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token property&#34;&gt;overflow&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;:&lt;/span&gt;hidden&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token property&#34;&gt;text-overflow&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;:&lt;/span&gt;ellipsis&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;3&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token property&#34;&gt;white-space&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;:&lt;/span&gt;nowrap&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;h1 id=&#34;css多行文本超出显示省略号&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#css多行文本超出显示省略号&#34;&gt;#&lt;/a&gt; CSS 多行文本超出显示省略号&lt;/h1&gt;
-&lt;figure class=&#34;highlight css&#34;&gt;&lt;figcaption data-lang=&#34;CSS&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token property&#34;&gt;display&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;:&lt;/span&gt;-webkit-box&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token property&#34;&gt;-webkit-box-orient&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;:&lt;/span&gt;vertical&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;3&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token property&#34;&gt;-webkit-line-clamp&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;:&lt;/span&gt;3&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;//行数，自由控制&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;4&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token property&#34;&gt;overflow&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;:&lt;/span&gt;hidden&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;h1 id=&#34;修改滚动条样式&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#修改滚动条样式&#34;&gt;#&lt;/a&gt; 修改滚动条样式&lt;/h1&gt;
-&lt;p&gt;查看 div::-webkit-scrollbar 相关样式&lt;/p&gt;
-&lt;h1 id=&#34;css画三角形&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#css画三角形&#34;&gt;#&lt;/a&gt; CSS 画三角形&lt;/h1&gt;
-&lt;figure class=&#34;highlight css&#34;&gt;&lt;figcaption data-lang=&#34;CSS&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token selector&#34;&gt;#triangle&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token property&#34;&gt;width&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;:&lt;/span&gt; 0&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;3&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token property&#34;&gt;height&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;:&lt;/span&gt; 0&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;4&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token property&#34;&gt;border-top&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;:&lt;/span&gt;50px solid blue&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;5&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token property&#34;&gt;border-right&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;:&lt;/span&gt;0px&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;6&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token property&#34;&gt;border-left&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;:&lt;/span&gt;0px&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;7&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token property&#34;&gt;border-bottom&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;:&lt;/span&gt;0px&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;8&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</content>
-        <category term="前端" scheme="http://zyczxq.com/categories/JavaScript/" />
-        <updated>2021-06-03T04:02:28.000Z</updated>
     </entry>
 </feed>
