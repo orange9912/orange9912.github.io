@@ -182,7 +182,7 @@ class Parent extends React.Component&amp;#123;
 &lt;p&gt;&lt;strong&gt;正常情况下，比较两个树型结构差异的算法时间复杂度是 O (N 的 3 次方)&lt;/strong&gt;，但 React 通过总结 DOM 的实际使用场景，提出了两个绝大多数场景下都成立的假设。通过这两个假设，React 实现了&lt;span class=&#34;pink&#34;&gt; O (N)&lt;/span&gt; 复杂下完成两颗虚拟 DOM 树的比较。&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;如果两个元素的类型不同，那么它们将生成两棵不同的树。&lt;/li&gt;
-&lt;li&gt;为列表中的元素设置 key 属性，用 key 标识对应元素多次 render 过程中是否发生变化。&lt;/li&gt;
+&lt;li&gt;对 DOM 节点跨层级移动的情况忽略不计。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;比较过程：&lt;/p&gt;
 &lt;h3 id=&#34;当根结点不同类型时&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#当根结点不同类型时&#34;&gt;#&lt;/a&gt; 当根结点不同类型时&lt;/h3&gt;
