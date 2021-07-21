@@ -577,6 +577,7 @@ useEffect(() =&amp;gt; &amp;#123;
 const &amp;#123;username&amp;#125; = useContext(AppContext);
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h1 id=&#34;usecallback&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#usecallback&#34;&gt;#&lt;/a&gt; useCallback&lt;/h1&gt;
+&lt;p&gt;&lt;strong&gt;当组件内存在函数声明的逻辑或者闭包变量的时候，组件每刷新一次，都会生成一个新的函数或闭包变量&lt;/strong&gt;，为了减少生成量，我们可以使用 useCallback 来缓存一个函数，只有当参数的第二项（一个依赖项数组）改变的时候，才重新生成。&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-react&#34;&gt;const memoizedCallback = useCallback(
   () =&amp;gt; &amp;#123;
     doSomething(a, b);
@@ -585,7 +586,9 @@ const &amp;#123;username&amp;#125; = useContext(AppContext);
 );
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;它返回一个 memoized 回调函数。它只在依赖项更新的时候才会更新，可以避免不必要的重新渲染。&lt;/p&gt;
-&lt;h2 id=&#34;自定义hook&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#自定义hook&#34;&gt;#&lt;/a&gt; 自定义 hook&lt;/h2&gt;
+&lt;h1 id=&#34;usememo&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#usememo&#34;&gt;#&lt;/a&gt; useMemo&lt;/h1&gt;
+&lt;p&gt;类似 useCallback，不过 useMemo 用于缓存生成的闭包变量，减少刷新，只有依赖项改变时才重新生成，否则使用缓存的值。&lt;/p&gt;
+&lt;figure class=&#34;highlight javascript&#34;&gt;&lt;figcaption data-lang=&#34;javascript&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token keyword&#34;&gt;const&lt;/span&gt; transformData &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; React&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;useMemo&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;	&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;token operator&#34;&gt;=&gt;&lt;/span&gt; data&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;filter&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;rules&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;sort&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;3&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token punctuation&#34;&gt;[&lt;/span&gt;data&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt;data&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;filter&lt;span class=&#34;token punctuation&#34;&gt;]&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;4&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;h2 id=&#34;自定义hook&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#自定义hook&#34;&gt;#&lt;/a&gt; 自定义 hook&lt;/h2&gt;
 &lt;p&gt;自定义 hook 主要是利用在提取需要共享的逻辑，这部分还没怎么用过，先挖个坑以后补。&lt;/p&gt;
 </content>
         <category term="前端" scheme="http://zyczxq.com/categories/JavaScript/" />
