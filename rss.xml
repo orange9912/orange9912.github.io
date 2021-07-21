@@ -112,6 +112,9 @@
 &lt;li&gt;cookie（不能设置 Http only）&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;一般来说比较推荐存放在 session cookie 中（上面提到的临时 cookie），前两种存在跨域读取限制。&lt;/p&gt;
+&lt;div class=&#34;note primary&#34;&gt;
+&lt;p&gt;就算是存临时 cookie，也和上面传统的 cookie-session 机制是不一样的，我们只是存在那，并不是利用它去鉴权，实际上还是需要我们手动将 cookie 加到 header 上&lt;/p&gt;
+&lt;/div&gt;
 &lt;p&gt;当然其实也可以存在 localStorage，不过有几点不好就是：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;当用户关闭浏览器后，JWT 仍然会被存储在本地存储，除非手动更新或清理。&lt;/li&gt;
@@ -122,12 +125,10 @@
 &lt;h2 id=&#34;优点&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#优点&#34;&gt;#&lt;/a&gt; 优点&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;使用 json 作为数据传输，轻量级。&lt;/li&gt;
-&lt;li&gt;服务端无需保存状态，节省服务端资源。&lt;/li&gt;
+&lt;li&gt;服务端无需保存状态，节省服务端资源。也方便横向扩展&lt;/li&gt;
 &lt;li&gt;可以实现单点登录&lt;/li&gt;
 &lt;li&gt;防 CSRF（token 的优势）&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;其他问题&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#其他问题&#34;&gt;#&lt;/a&gt; 其他问题&lt;/h2&gt;
-&lt;p&gt;晚点填坑。&lt;/p&gt;
 &lt;h2 id=&#34;总结&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#总结&#34;&gt;#&lt;/a&gt; 总结&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;token 获取到后需要保存到某个地方待下次使用，最好是临时 cookie，或者 localstorage、sessionStorage&lt;/li&gt;
