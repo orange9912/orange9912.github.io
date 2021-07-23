@@ -80,7 +80,7 @@
 &lt;li&gt;下次客户端再次请求后，把 key 值附加到 header 或者请求体内。&lt;/li&gt;
 &lt;li&gt;服务端通过获取的 key 来从数据库中读取信息。&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;&lt;ins&gt;这样做其实还有一个好处，在用户登录后存 key 进入 localStorage 的时候，可以利用监听 storage 事件来实现单点登录&lt;/ins&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;ins&gt;这样做其实还有一个好处，在用户登录后存 key 进入 localStorage 的时候，可以利用监听 storage 事件来实现其他同源页面也保持登录状态&lt;/ins&gt;。&lt;/p&gt;
 &lt;h1 id=&#34;基于jwt的token验证&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#基于jwt的token验证&#34;&gt;#&lt;/a&gt; 基于 JWT 的 token 验证&lt;/h1&gt;
 &lt;p&gt;JWT（JSON Web Token），即用于验证的信息是由 JSON 数据格式组成，这个 Token 是一个字符串。&lt;/p&gt;
 &lt;p&gt;上述的认证，还是需要服务端和客户端这边维持一个状态信息，但是基于 JWT 的 token 认证方案可以省去这个过程。&lt;/p&gt;
