@@ -23,10 +23,11 @@
 &lt;p&gt;&lt;span class=&#34;pink&#34;&gt;一天更新一种～最近比较忙，慢慢写，闲的时候就多更新一些&lt;/span&gt;&lt;/p&gt;
 &lt;hr /&gt;
 &lt;p&gt;7-24 号：编写单例模式&lt;/p&gt;
+&lt;p&gt;7-25 号：外观模式&lt;/p&gt;
 &lt;h1 id=&#34;设计模式原则&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#设计模式原则&#34;&gt;#&lt;/a&gt; 设计模式原则&lt;/h1&gt;
 &lt;p&gt;主要有以下几种原则&lt;/p&gt;
 &lt;h2 id=&#34;开闭原则&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#开闭原则&#34;&gt;#&lt;/a&gt; 开闭原则&lt;/h2&gt;
-&lt;p&gt;** 开闭原则指的是对扩展开放、对修改关闭。** 能够对系统的功能进行扩展，但是不修改已有的代码。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;开闭原则指的是对扩展开放、对修改关闭&lt;/strong&gt;。能够对系统的功能进行扩展，但是不修改已有的代码。&lt;/p&gt;
 &lt;h2 id=&#34;里氏替换原则&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#里氏替换原则&#34;&gt;#&lt;/a&gt; 里氏替换原则&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;里氏替换原则其实是对开闭原则的补充，它要求任何基类可以发挥作用的地方，子类也可以发挥作用。&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;可能有点抽象，其实就是说派生类可以随时替换掉基类、且功能不被破坏，才是真的做到了继承。&lt;/p&gt;
@@ -69,6 +70,13 @@
 &lt;h2 id=&#34;组合模式&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#组合模式&#34;&gt;#&lt;/a&gt; 组合模式&lt;/h2&gt;
 &lt;h2 id=&#34;装饰器模式&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#装饰器模式&#34;&gt;#&lt;/a&gt; 装饰器模式&lt;/h2&gt;
 &lt;h2 id=&#34;外观模式&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#外观模式&#34;&gt;#&lt;/a&gt; 外观模式&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;现有系统的接口比较复杂，希望利用原有的功能重新定义新的接口&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;facade1.png&#34; alt=&#34;facade1&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;facade2.png&#34; alt=&#34;facade2&#34; /&gt;&lt;/p&gt;
+&lt;h3 id=&#34;应用场景&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#应用场景&#34;&gt;#&lt;/a&gt; 应用场景&lt;/h3&gt;
+&lt;p&gt;比如说，有一家店的客户，他通过目录下订单，就像一个外观模式。客户只需要联系客服，就可以完成下订单、检查仓储、发货等一系列流程。&lt;/p&gt;
+&lt;h3 id=&#34;优点-2&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#优点-2&#34;&gt;#&lt;/a&gt; 优点&lt;/h3&gt;
+&lt;p&gt;外观模式产生了一个新的、轻便的接口，它可能包装了多个接口和对象，&lt;strong&gt;可以简化复杂系统的使用&lt;/strong&gt;。&lt;/p&gt;
 &lt;h1 id=&#34;行为型&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#行为型&#34;&gt;#&lt;/a&gt; 行为型&lt;/h1&gt;
 &lt;p&gt;聚焦于对象和类之间的通信，大型应用必不可少的部分&lt;/p&gt;
 &lt;h2 id=&#34;观察者模式发布订阅模式&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#观察者模式发布订阅模式&#34;&gt;#&lt;/a&gt; 观察者模式（发布订阅模式）&lt;/h2&gt;
