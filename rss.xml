@@ -24,7 +24,7 @@
 &lt;hr /&gt;
 &lt;p&gt;7-24 号：编写单例模式&lt;/p&gt;
 &lt;p&gt;7-25 号：外观模式&lt;/p&gt;
-&lt;p&gt;7-30 号：简单工厂模式和工厂方法模式&lt;/p&gt;
+&lt;p&gt;7-30 号：简单工厂模式和工厂方法模式、抽象工厂&lt;/p&gt;
 &lt;h1 id=&#34;设计模式原则&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#设计模式原则&#34;&gt;#&lt;/a&gt; 设计模式原则&lt;/h1&gt;
 &lt;p&gt;主要有以下几种原则&lt;/p&gt;
 &lt;h2 id=&#34;开闭原则&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#开闭原则&#34;&gt;#&lt;/a&gt; 开闭原则&lt;/h2&gt;
@@ -100,6 +100,9 @@
 &lt;li&gt;工厂方法模式将创建对象的逻辑和任务交给了工厂类。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h2 id=&#34;抽象工厂模式&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#抽象工厂模式&#34;&gt;#&lt;/a&gt; 抽象工厂模式&lt;/h2&gt;
+&lt;p&gt;它和工厂方法模式不同的就在于，如果有一组相同类别的产品，抽象工厂模式也是层次类的结构，但它负责创建一组同类别的产品。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;每个实工厂类生产一组相关的产品类对象&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;应用场景：当客户要从一个相关的产品组中创建一个对象，而没有必要知道到底创建哪个对象时，就可以用抽象工厂模式。&lt;/p&gt;
 &lt;h1 id=&#34;结构型&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#结构型&#34;&gt;#&lt;/a&gt; 结构型&lt;/h1&gt;
 &lt;p&gt;关注类和对象的组合&lt;/p&gt;
 &lt;h2 id=&#34;适配器模式&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#适配器模式&#34;&gt;#&lt;/a&gt; 适配器模式&lt;/h2&gt;
