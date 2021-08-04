@@ -10,9 +10,103 @@
         </author>
         <description>博客</description>
         <language>zh-CN</language>
-        <pubDate>Sat, 24 Jul 2021 16:52:55 +0800</pubDate>
-        <lastBuildDate>Sat, 24 Jul 2021 16:52:55 +0800</lastBuildDate>
+        <pubDate>Wed, 04 Aug 2021 20:14:13 +0800</pubDate>
+        <lastBuildDate>Wed, 04 Aug 2021 20:14:13 +0800</lastBuildDate>
         <category term="个人博客" />
+        <item>
+            <guid isPermalink="true">http://zyczxq.com/2021/08/04/browser/</guid>
+            <title>浏览器渲染过程</title>
+            <link>http://zyczxq.com/2021/08/04/browser/</link>
+            <category term="前端" scheme="http://zyczxq.com/categories/JavaScript/" />
+            <pubDate>Wed, 04 Aug 2021 20:14:13 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;前面也说过，当在浏览器上输入一个 url，到页面加载出来，简单来说一共经历了这么几件事：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;DNS 查询&lt;/p&gt;
+&lt;p&gt;其实就是将一个域名，解析成 ip 地址的一个过程，它会先去找缓存（比如说浏览器缓存 -&amp;gt; 本机缓存 (hosts 文件)-&amp;gt; 路由器缓存）。找不到缓存的话，会跑去 DNS 服务器进行一个查询（具体怎么搞就不展开了），找到域名对应的 ip 地址之后，就进行第二步。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;TCP 连接&lt;/p&gt;
+&lt;p&gt;对服务端的 ip 地址建立一个 tcp 连接，主要就是三次握手的过程。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;HTTP 请求&lt;/p&gt;
+&lt;p&gt;发送一些请求来请求资源，最常见的就是请求 html 文档以及对应的图片、css 等资源了。这个过程还涉及到一些浏览器缓存（会先看本地有无缓存、强缓存协商缓存之类的，以前的博客也有，不详细展开）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;服务器响应&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;浏览器渲染&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;最后还有个释放 TCP 连接&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;这篇笔记就是用于整理我从找到的各位大牛的知识文章加以整理得来的。&lt;/p&gt;
+&lt;h1 id=&#34;解析html文档构建dom树&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#解析html文档构建dom树&#34;&gt;#&lt;/a&gt; 解析 HTML 文档，构建 DOM 树&lt;/h1&gt;
+&lt;p&gt;当浏览器接收到一份文档的时候，它会去将这个文档的 HTML 标记进行一个处理、解析，从而将其转换为一颗 DOM 树。&lt;/p&gt;
+&lt;h1 id=&#34;获取外部资源构建cssom树&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#获取外部资源构建cssom树&#34;&gt;#&lt;/a&gt; 获取外部资源，构建 CSSOM 树&lt;/h1&gt;
+&lt;p&gt;一份文档里面通常还会去下载一些外部的样式表、或者外部的 js 代码，这个阶段之下，有一些需要注意的点。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;当浏览器遇到一个 script 标签时，会暂停构建 DOM 直到脚本执行完毕&lt;/li&gt;
+&lt;li&gt;JavaScript 可以查询和修改 DOM 与 CSSOM。&lt;/li&gt;
+&lt;li&gt;CSSOM 构建时，会暂停执行 JavaScript 直到 CSSOM 构建完毕。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;总结来说，总而言之两句话：&lt;strong&gt;相比 JavaScript 资源，优先引入 CSS。而且 JavaScript 尽可能少的影响 DOM 的构建。&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id=&#34;css文件&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#css文件&#34;&gt;#&lt;/a&gt; CSS 文件&lt;/h2&gt;
+&lt;p&gt;** 默认情况下，CSS 会阻塞渲染，直到 CSSOM 树构建完毕。** 这是因为 CSSOM 树不能以增量方式构建，css 规则的特定性让他可以在各个不同的点相互覆盖，在所有规则解析、并构建完之前，浏览器不能知道每个元素的位置。&lt;/p&gt;
+&lt;div class=&#34;note primary&#34;&gt;
+&lt;p&gt;CSSOM（CSS 对象模型）是树形形式的所有 css 选择器和相关属性的映射，和 DOM 非常相似。&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;也可以进行预加载，&lt;/p&gt;
+&lt;figure class=&#34;highlight html&#34;&gt;&lt;figcaption data-lang=&#34;HTML&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token tag&#34;&gt;&lt;span class=&#34;token tag&#34;&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;lt;&lt;/span&gt;link&lt;/span&gt; &lt;span class=&#34;token attr-name&#34;&gt;href&lt;/span&gt;&lt;span class=&#34;token attr-value&#34;&gt;&lt;span class=&#34;token punctuation attr-equals&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&#39;&lt;/span&gt;style.css&lt;span class=&#34;token punctuation&#34;&gt;&#39;&lt;/span&gt;&lt;/span&gt; &lt;span class=&#34;token attr-name&#34;&gt;rel&lt;/span&gt;&lt;span class=&#34;token attr-value&#34;&gt;&lt;span class=&#34;token punctuation attr-equals&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&#39;&lt;/span&gt;preload&lt;span class=&#34;token punctuation&#34;&gt;&#39;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;/&gt;&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;preload 属性值表示这份资源在页面加载完即可需要，它会在页面加载的生命周期早期阶段就开始获取，尽早的加载，减少阻塞。&lt;/p&gt;
+&lt;h2 id=&#34;javascript文件&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#javascript文件&#34;&gt;#&lt;/a&gt; JavaScript 文件&lt;/h2&gt;
+&lt;p&gt;刚刚也提到，JavaScript 文件会阻塞文档的解析直到执行完毕，&lt;strong&gt;所以我们一般都会将 js 文件放在底部。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;当然，也有两种方法来改变这种阻塞的情况（只对外部 js 文件有效），分别是：defer 和 async&lt;/p&gt;
+&lt;h3 id=&#34;defer&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#defer&#34;&gt;#&lt;/a&gt; defer&lt;/h3&gt;
+&lt;p&gt;defer 表示延迟执行引入的 JS 文件代码（&lt;strong&gt;注意，是延迟执行，不是延迟加载&lt;/strong&gt;）。这使得加载这段 JS 文件时浏览器也未停止对 HTML 的解析，并行。当文档解析完毕后，按照顺序&lt;strong&gt;执行&lt;/strong&gt;所有 defer 的脚本。&lt;/p&gt;
+&lt;h3 id=&#34;async&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#async&#34;&gt;#&lt;/a&gt; async&lt;/h3&gt;
+&lt;p&gt;async 表示异步执行引入的 JS 文件。它和 defer 的区别主要是，async&lt;strong&gt; 如果加载完毕就立即执行&lt;/strong&gt;，这个执行的发生可能在解析过程或者解析过程之后。而且因为加载时间的不一，也无法保证异步脚本的执行顺序。&lt;/p&gt;
+&lt;p&gt;他们两种设置了之后都不会阻塞文档的解析。&lt;/p&gt;
+&lt;div class=&#34;note primary&#34;&gt;
+&lt;p&gt;需要注意的是，js 代码动态创建的 script 标签默认是异步加载的。&lt;/p&gt;
+&lt;/div&gt;
+&lt;h1 id=&#34;合并dom树和cssom树构建渲染树&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#合并dom树和cssom树构建渲染树&#34;&gt;#&lt;/a&gt; 合并 DOM 树和 CSSOM 树，构建渲染树&lt;/h1&gt;
+&lt;p&gt;渲染树是两棵树的结合，表示将要渲染到页面上的所有内容。&lt;/p&gt;
+&lt;h1 id=&#34;reflow-paint&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#reflow-paint&#34;&gt;#&lt;/a&gt; reflow、paint&lt;/h1&gt;
+&lt;p&gt;拿到渲染树之后，浏览器将会根据这一棵渲染树，来计算布局和绘制，&lt;strong&gt;这个过程就是 reflow（重排 / 回流）和 paint（绘制 / 重绘）。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;一般来说，每次涉及到元素宽度、高度等会影响到文档布局的修改，都会触发 reflow 和 paint。&lt;/p&gt;
+&lt;p&gt;如果只是涉及到元素背景色、透明度等不影响文档布局的修改，就只会触发 paint。&lt;/p&gt;
+&lt;h1 id=&#34;总结&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#总结&#34;&gt;#&lt;/a&gt; 总结&lt;/h1&gt;
+&lt;p&gt;浏览器渲染的过程主要有以下几点：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;处理 HTML 标签并构建 DOM 树&lt;/li&gt;
+&lt;li&gt;处理 CSS 样式并构建 CSSOM 树&lt;/li&gt;
+&lt;li&gt;将 DOM 与 CSSOM 合并成渲染树&lt;/li&gt;
+&lt;li&gt;根据渲染树计算布局，reflow&lt;/li&gt;
+&lt;li&gt;绘制，paint。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;这几个步骤中，并不一定是按照顺序一次性完成的，在 JS 文件中可能涉及多次对 DOM 和 CSSOM 的修改，就可能会重复执行以上的步骤。&lt;/p&gt;
+&lt;p&gt;而且 js 文件会阻塞文档解析，css 文件会阻塞文档渲染（因为需要构建 CSSOM 树）。&lt;/p&gt;
+&lt;h1 id=&#34;扩展为什么提倡将css的引入放在head-js的引入放在body底部&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#扩展为什么提倡将css的引入放在head-js的引入放在body底部&#34;&gt;#&lt;/a&gt; 扩展：为什么提倡将 CSS 的引入放在 head、js 的引入放在 body 底部？&lt;/h1&gt;
+&lt;p&gt;前面我们也说到，css 文件会阻塞浏览器的渲染，而 js 文件会阻塞对文档的解析。&lt;/p&gt;
+&lt;p&gt;之所以会阻塞渲染，是因为加载 css 的时候，会等解析完毕生成 CSSOM 树才能够生成渲染树。&lt;/p&gt;
+&lt;p&gt;js 文件加载、执行的过程中，这个时间一般是比较长的，而且可能文件本身比较大、一旦长期执行，就会一直阻塞 HTML 文档的解析，使得页面长时间白屏（性能指标的首屏时间），所以我们一般把 js 文件放在 body 底部。&lt;/p&gt;
+&lt;p&gt;而 CSS 文件放的位置不同，产生的效果也不同。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;如果把 CSS 文件放于 head 部分&lt;/p&gt;
+&lt;p&gt;虽然在 head 标签引入时，会阻塞 HTML 的渲染，这个时候表现为短暂的白屏之后，出现带有完整样式的页面。这个过程只发生&lt;strong&gt;一次解析渲染&lt;/strong&gt;：&lt;/p&gt;
+&lt;p&gt;DOM 树、CSSOM 树并行解析 -&amp;gt; 解析完毕合成渲染树 -&amp;gt;reflow-&amp;gt;paint&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;如果把 CSS 文件放于 body 部分，他会阻塞 HTML 的解析，但不阻塞 HTML 的渲染（&lt;strong&gt;在 css 完成下载之前把引入标签之前的 HTML 先进行解析渲染，并展现，但没有样式&lt;/strong&gt;），然后下载解析完成之后，页面重新解析渲染。这个过程表现为：更加短暂的白屏时间，但先出现没有样式的文档（或者说裸奔），然后再展现完整样式。&lt;/p&gt;
+&lt;p&gt;而这个过程会导致在后面重新解析渲染的过程中，多一次的 reflow 和 paint，一般来说性能会相对较差，&lt;strong&gt;所以我们多把 CSS 引入放于 head 处。&lt;/strong&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+ ]]></description>
+        </item>
         <item>
             <guid isPermalink="true">http://zyczxq.com/2021/07/24/designPatterns/</guid>
             <title>设计模式笔记</title>
@@ -1698,99 +1792,6 @@ const MyComponentWithPersistentData = withPersistentData(MyComponent);
 &lt;h2 id=&#34;vue框架响应式的原理&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#vue框架响应式的原理&#34;&gt;#&lt;/a&gt; Vue 框架响应式的原理&lt;/h2&gt;
 &lt;p&gt;Vue2 之中，首先对数据进行拦截（使用 Object.defineProperty），转化为 getter、setter，使得他们在被访问和变更时让 Vue 能够追踪，通知。每个组件实例都对应一个 &lt;strong&gt;watcher&lt;/strong&gt; 实例，它会在组件渲染的过程中把 “接触” 过的数据 property 记录为依赖。之后当依赖项的 setter 触发时，会通知 watcher，从而使它关联的组件重新渲染。&lt;/p&gt;
 &lt;p&gt;&lt;img data-src=&#34;data.png&#34; alt=&#34;data&#34; /&gt;&lt;/p&gt;
- ]]></description>
-        </item>
-        <item>
-            <guid isPermalink="true">http://zyczxq.com/2021/06/06/JSnote6/</guid>
-            <title>JavaScript运行机制笔记</title>
-            <link>http://zyczxq.com/2021/06/06/JSnote6/</link>
-            <category term="前端" scheme="http://zyczxq.com/categories/JavaScript/" />
-            <pubDate>Sun, 06 Jun 2021 14:26:48 +0800</pubDate>
-            <description><![CDATA[ &lt;p&gt;众所周知，JavaScript 是单线程的。同一时间任务肯定又有很多，而任务又分为同步任务和异步任务，在 JavaScript 里面，到底是怎么协调执行这些任务的呢？带着这个疑问，我打算好好的把这方面的知识根据自己的理解总结一下。&lt;/p&gt;
-&lt;h1 id=&#34;执行栈&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#执行栈&#34;&gt;#&lt;/a&gt; 执行栈&lt;/h1&gt;
-&lt;p&gt;&lt;mark&gt;任务分为同步任务和异步任务两种&lt;/mark&gt;。首先最简单的情况，就是没有异步任务，只有同步任务的情况，这个时候，就要引出执行栈这个概念。来看下面这么一段代码。&lt;/p&gt;
-&lt;figure class=&#34;highlight javascript&#34;&gt;&lt;figcaption data-lang=&#34;javascript&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token keyword&#34;&gt;function&lt;/span&gt; &lt;span class=&#34;token function&#34;&gt;myFunct&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token keyword&#34;&gt;throw&lt;/span&gt; &lt;span class=&#34;token keyword&#34;&gt;new&lt;/span&gt; &lt;span class=&#34;token class-name&#34;&gt;Error&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token string&#34;&gt;&#39;error&#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;3&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;4&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token keyword&#34;&gt;function&lt;/span&gt; &lt;span class=&#34;token function&#34;&gt;myFun2&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;5&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token function&#34;&gt;myFunct&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;6&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;7&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token function&#34;&gt;myFun2&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;结果是：&lt;/p&gt;
-&lt;p&gt;&lt;img data-src=&#34;stack.png&#34; alt=&#34;stack&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;span class=&#34;pink&#34;&gt;执行栈是一个存储函数调用的栈结构，它遵循先进后出的原则&lt;/span&gt;。&lt;/p&gt;
-&lt;p&gt;当开始执行 js 代码的时候，首先会执行一个主函数，然后执行我们的代码，后执行的函数先弹出栈，从上图结果中也可以看出。&lt;/p&gt;
-&lt;p&gt;&lt;mark&gt;所有同步任务是在主线程上执行，并且形成一个执行栈的&lt;/mark&gt;。&lt;/p&gt;
-&lt;h1 id=&#34;任务队列&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#任务队列&#34;&gt;#&lt;/a&gt; 任务队列&lt;/h1&gt;
-&lt;p&gt;任务队列，顾名思义，就是一个事件的队列，每完成一项异步任务，就会向任务队列中添加一个事件，表示这个异步任务可以进入执行栈执行了（执行异步任务的回调函数）。&lt;/p&gt;
-&lt;p&gt;当同步任务被执行完毕，主线程空闲下来的时候，系统就会执行任务队列中的任务，即异步任务。&lt;/p&gt;
-&lt;p&gt;所以，&lt;ins&gt;加入任务队列不等于马上就能执行&lt;/ins&gt;，还要看执行栈是否空。&lt;/p&gt;
-&lt;figure class=&#34;highlight javascript&#34;&gt;&lt;figcaption data-lang=&#34;javascript&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token function&#34;&gt;setTimeout&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token operator&#34;&gt;=&gt;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  console&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;log&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token string&#34;&gt;&#39;1&#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;3&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;token number&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;4&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;console&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;log&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token string&#34;&gt;&#39;2&#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;上面的代码并不会先输出 1，而是会先输出 2。&lt;/p&gt;
-&lt;p&gt;虽然 setTimeout 定时器定时为 0ms，但是计时完成后任务只是被加入的任务队列，JavaScript 仍然会先执行完主线程中的同步任务，只有当同步任务全部执行完毕后，才会去执行任务队列中的任务。&lt;/p&gt;
-&lt;div class=&#34;note primary&#34;&gt;
-&lt;p&gt;同时也要注意，如果邻近的定时器设置 0ms、1ms 之类的非常小的延迟时间时，还真不好说谁先执行，可能会得到预想之外的结果，需要注意。&lt;/p&gt;
-&lt;/div&gt;
-&lt;p&gt;总之，异步执行的机制如下：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;所有同步任务都在主线程上执行，形成一个执行栈&lt;/li&gt;
-&lt;li&gt;主线程之外，有一个任务队列，只要异步任务有了运行结果，就在任务队列之中放一个任务。&lt;/li&gt;
-&lt;li&gt;一旦执行栈中的同步任务执行完毕，系统就会读取任务队列中的任务并执行。&lt;/li&gt;
-&lt;li&gt;不断重复前三步。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h1 id=&#34;执行栈任务队列的结合&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#执行栈任务队列的结合&#34;&gt;#&lt;/a&gt; 执行栈 + 任务队列的结合&lt;/h1&gt;
-&lt;p&gt;来看这么一段代码。&lt;/p&gt;
-&lt;figure class=&#34;highlight javascript&#34;&gt;&lt;figcaption data-lang=&#34;javascript&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;console&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;log&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token string&#34;&gt;&#39;start&#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;3&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token keyword&#34;&gt;new&lt;/span&gt; &lt;span class=&#34;token class-name&#34;&gt;Promise&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token parameter&#34;&gt;resolve&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt;reject&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;token operator&#34;&gt;=&gt;&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;4&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  console&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;log&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token string&#34;&gt;&#39;first Promise constructor&#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;5&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token function&#34;&gt;resolve&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;6&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;then&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;token operator&#34;&gt;=&gt;&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;7&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  console&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;log&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token string&#34;&gt;&#39;first promise then&#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;8&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token keyword&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;token keyword&#34;&gt;new&lt;/span&gt; &lt;span class=&#34;token class-name&#34;&gt;Promise&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token parameter&#34;&gt;resolve&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt;reject&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token operator&#34;&gt;=&gt;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;9&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    console&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;log&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token string&#34;&gt;&#39;second Promise constructor&#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;10&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token function&#34;&gt;resolve&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;11&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;then&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token operator&#34;&gt;=&gt;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;12&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    console&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;log&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token string&#34;&gt;&#39;second Promise then&#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;13&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;14&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;then&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;token operator&#34;&gt;=&gt;&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;15&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  console&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;log&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token string&#34;&gt;&#39;last promise then&#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;16&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;17&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;console&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;log&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token string&#34;&gt;&#39;end&#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;根据 Promise 的特性，Promise 构造函数是同步的，而 then 的执行是异步的。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;首先输出 start。&lt;/li&gt;
-&lt;li&gt;然后执行 Promise 的构造函数，输出 first Promise constructor，并将第一个 promise 的 then 函数处理逻辑放入任务队列&lt;/li&gt;
-&lt;li&gt;然后输出 end&lt;/li&gt;
-&lt;li&gt;执行栈空，读取任务队列，输出 first promise then 和 second promise constructor，并将 then 内构造的 promise 的 then 方法放入任务队列。&lt;/li&gt;
-&lt;li&gt;输出 second promise then&lt;/li&gt;
-&lt;li&gt;最后输出 last promise then&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1 id=&#34;事件循环&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#事件循环&#34;&gt;#&lt;/a&gt; 事件循环&lt;/h1&gt;
-&lt;p&gt;&lt;mark&gt;主线程从任务队列中读取事件，这个过程是循环不断的，这个机制又称为事件循环（Event Loop）&lt;/mark&gt;，每一次事件循环操作，都称为 tick。&lt;/p&gt;
-&lt;h2 id=&#34;异步任务分类&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#异步任务分类&#34;&gt;#&lt;/a&gt; 异步任务分类&lt;/h2&gt;
-&lt;p&gt;实际上，异步任务又分为宏任务和微任务，而且他们所在的任务队列其实是不同的。&lt;/p&gt;
-&lt;h3 id=&#34;宏任务macrotask&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#宏任务macrotask&#34;&gt;#&lt;/a&gt; 宏任务（macrotask）&lt;/h3&gt;
-&lt;p&gt;宏任务一般是由宿主（node、或者是浏览器）发起的，它包含：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;script（整体代码）&lt;/li&gt;
-&lt;li&gt;setTimeout、setInterval&lt;/li&gt;
-&lt;li&gt;UI 渲染&lt;/li&gt;
-&lt;li&gt;I/O&lt;/li&gt;
-&lt;li&gt;postMessage 嘛，MessageChannel&lt;/li&gt;
-&lt;li&gt;事件&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;微任务microtask&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#微任务microtask&#34;&gt;#&lt;/a&gt; 微任务（microtask）&lt;/h3&gt;
-&lt;p&gt;微任务一般由 JavaScript 自身发起，它包含：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Promise&lt;/li&gt;
-&lt;li&gt;MutationObserver&lt;/li&gt;
-&lt;li&gt;Object.observe（已废弃）&lt;/li&gt;
-&lt;li&gt;process.nextTick(node.js)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;优先级&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#优先级&#34;&gt;#&lt;/a&gt; 优先级&lt;/h3&gt;
-&lt;p&gt;&lt;span class=&#34;pink&#34;&gt;微任务的优先级比宏任务要高&lt;/span&gt;。但宏任务才会触发新一轮 tick。&lt;/p&gt;
-&lt;h2 id=&#34;事件循环模型&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#事件循环模型&#34;&gt;#&lt;/a&gt; 事件循环模型&lt;/h2&gt;
-&lt;p&gt;&lt;img data-src=&#34;image.jpg&#34; alt=&#34;image&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;如上图所示。&lt;/p&gt;
-&lt;p&gt;在每一次 Event Loop 当中的任务如下：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;执行一个宏任务（栈中没有就从任务队列中获取）&lt;/li&gt;
-&lt;li&gt;执行过程中遇到微任务，将它添加到微任务的任务队列中。&lt;/li&gt;
-&lt;li&gt;宏任务执行完毕后，将会检查是否存在微任务，有则按顺序执行当前微任务队列中所有微任务&lt;/li&gt;
-&lt;li&gt;若宿主为浏览器，可能会渲染页面&lt;/li&gt;
-&lt;li&gt;开启下一轮 tick&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;例子&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#例子&#34;&gt;#&lt;/a&gt; 例子&lt;/h3&gt;
-&lt;figure class=&#34;highlight javascript&#34;&gt;&lt;figcaption data-lang=&#34;javascript&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;console&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;log&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token string&#34;&gt;&#39;start&#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;3&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token keyword&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;token function-variable function&#34;&gt;foo&lt;/span&gt; &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;token operator&#34;&gt;=&gt;&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;4&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token keyword&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;token keyword&#34;&gt;new&lt;/span&gt; &lt;span class=&#34;token class-name&#34;&gt;Promise&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token parameter&#34;&gt;resolve&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt;reject&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;token operator&#34;&gt;=&gt;&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;5&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    console&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;log&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token string&#34;&gt;&#39;first promise constructor&#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;6&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;7&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token keyword&#34;&gt;let&lt;/span&gt; promise1 &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;token keyword&#34;&gt;new&lt;/span&gt; &lt;span class=&#34;token class-name&#34;&gt;Promise&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token parameter&#34;&gt;resolve&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt;reject&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;token operator&#34;&gt;=&gt;&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;8&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;      console&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;log&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token string&#34;&gt;&#39;second promise constructor&#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;9&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;      &lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;10&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;      &lt;span class=&#34;token function&#34;&gt;setTimeout&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token operator&#34;&gt;=&gt;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;11&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;        console&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;log&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token string&#34;&gt;&#39;setTimeout here&#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;12&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;        &lt;span class=&#34;token function&#34;&gt;resolve&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;13&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;      &lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;token number&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;14&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;      &lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;15&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;			&lt;span class=&#34;token function&#34;&gt;resolve&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token string&#34;&gt;&#39;promise1&#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;16&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;17&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;      &lt;span class=&#34;token function&#34;&gt;resolve&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token string&#34;&gt;&#39;promise0&#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;18&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;      promise1&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;then&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token parameter&#34;&gt;arg&lt;/span&gt; &lt;span class=&#34;token operator&#34;&gt;=&gt;&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;19&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;        console&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;log&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;arg&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;20&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;      &lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;21&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;22&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;23&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token function&#34;&gt;foo&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;then&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token parameter&#34;&gt;arg&lt;/span&gt; &lt;span class=&#34;token operator&#34;&gt;=&gt;&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;24&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  console&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;log&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;arg&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;25&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;26&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;console&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;log&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token string&#34;&gt;&#39;end&#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;ul&gt;
-&lt;li&gt;首先执行 start，接着同步输出 first promise constructor、second promise constructor，setTimeout 回调进入任务队列（宏任务），promise1 的完成处理函数进入任务队列（微任务），promise0（匿名 promise）的完成处理函数进入微任务队列&lt;/li&gt;
-&lt;li&gt;虽然 settimeout 宏任务先进入任务队列，但微任务优先度更高，先输出 promise1 的结果，在输出 promise0&lt;/li&gt;
-&lt;li&gt;最后输出 setTimeout here。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1 id=&#34;总结&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#总结&#34;&gt;#&lt;/a&gt; 总结&lt;/h1&gt;
-&lt;p&gt;总之，JavaScript 是单线程的，有着执行栈、任务队列、同步任务、异步任务的概念。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;同步任务都在主线程上执行，形成一个执行栈。&lt;/li&gt;
-&lt;li&gt;主线程之外有一个任务队列，异步任务有了运行结果都会放到对应的任务队列之中&lt;/li&gt;
-&lt;li&gt;执行栈中的所有同步任务执行完毕之后，读取任务队列&lt;/li&gt;
-&lt;li&gt;会优先执行微任务队列中的所有微任务，执行完毕后渲染。&lt;/li&gt;
-&lt;li&gt;然后执行宏任务。&lt;/li&gt;
-&lt;/ul&gt;
  ]]></description>
         </item>
     </channel>
