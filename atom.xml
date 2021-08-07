@@ -196,15 +196,98 @@
 &lt;h1 id=&#34;结构型&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#结构型&#34;&gt;#&lt;/a&gt; 结构型&lt;/h1&gt;
 &lt;p&gt;关注类和对象的组合&lt;/p&gt;
 &lt;h2 id=&#34;适配器模式&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#适配器模式&#34;&gt;#&lt;/a&gt; 适配器模式&lt;/h2&gt;
+&lt;h3 id=&#34;背景&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#背景&#34;&gt;#&lt;/a&gt; 背景&lt;/h3&gt;
+&lt;p&gt;当现有的系统需要使用旧系统的类功能，但是旧系统的类功能又不符合现在的需要的时候，&lt;strong&gt;就要使用适配器，将旧系统的接口转换为客户类需要的格式&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;一个经典场景就是：两根口径不一样的水管，如何连接在一起呢？&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;adapter@2x.png&#34; alt=&#34;adapter@2x&#34; /&gt;&lt;/p&gt;
+&lt;h3 id=&#34;使用场景&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#使用场景&#34;&gt;#&lt;/a&gt; 使用场景&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;当系统想要使用现有的类，但是现有的类不符合系统的需要。&lt;/li&gt;
+&lt;li&gt;需要通过一个可复用的类，使得本来接口不相容并且无关的类结合在一起时。&lt;/li&gt;
+&lt;li&gt;在设计时需要改变多个子类接口，作用相同但名称不同的类或方法之间进行适配时。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;实现方式&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#实现方式&#34;&gt;#&lt;/a&gt; 实现方式&lt;/h3&gt;
+&lt;h4 id=&#34;类适配器模式&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#类适配器模式&#34;&gt;#&lt;/a&gt; 类适配器模式&lt;/h4&gt;
+&lt;p&gt;类适配器模式利用的是继承，有三个要素&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Target，用户所期望的接口&lt;/li&gt;
+&lt;li&gt;Adaptee，旧接口的类&lt;/li&gt;
+&lt;li&gt;Adapter，将 Adaptee 转化为增加了新功能的 Target 接口。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;对象适配器模式&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#对象适配器模式&#34;&gt;#&lt;/a&gt; 对象适配器模式&lt;/h4&gt;
+&lt;p&gt;对象适配器模式利用的是聚合&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Target，用户所期望的接口&lt;/li&gt;
+&lt;li&gt;Adaptee，旧接口的类&lt;/li&gt;
+&lt;li&gt;Adapter，新接口的类，但是不继承，涉及到需要转化的地方时调用 Adaptee。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;类适配器or对象适配器&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#类适配器or对象适配器&#34;&gt;#&lt;/a&gt; 类适配器 or 对象适配器？&lt;/h4&gt;
+&lt;p&gt;在 Java 内由于是单继承的，所以相对来说对象适配器可以把多种不同的源类都适配到同一个 Target 接口。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;若被适配的源类 Adaptee 有大量的方法，使用类适配器模式更为合适。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;与外观模式的区别&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#与外观模式的区别&#34;&gt;#&lt;/a&gt; 与外观模式的区别&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;外观模式定义了新的接口，而适配器使用旧的接口&lt;/li&gt;
+&lt;li&gt;适配器使得两种不一致的接口协同工作，而不是产生新的接口。&lt;/li&gt;
+&lt;li&gt;外观模式本意是产生一个轻便的接口，适配器是把现有的接口转换一下。&lt;/li&gt;
+&lt;li&gt;一个外观接口可能包装了多个现有系统的对象、也可能增加了一些新功能，而适配器只是包装一个对象&lt;/li&gt;
+&lt;li&gt;多数情况下，外观是单实例的&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h2 id=&#34;组合模式&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#组合模式&#34;&gt;#&lt;/a&gt; 组合模式&lt;/h2&gt;
 &lt;h2 id=&#34;装饰器模式&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#装饰器模式&#34;&gt;#&lt;/a&gt; 装饰器模式&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;装饰器模式允许向一个现有的对象添加新的功能，同时不改变它的内部结构&lt;/strong&gt;。其实就是对现有的类的包装。&lt;/p&gt;
+&lt;h3 id=&#34;应用场景-2&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#应用场景-2&#34;&gt;#&lt;/a&gt; 应用场景&lt;/h3&gt;
+&lt;p&gt;当我们想要给一个对象额外的添加职责、功能的时候，就可以使用这个设计模式。&lt;/p&gt;
+&lt;h3 id=&#34;优点-4&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#优点-4&#34;&gt;#&lt;/a&gt; 优点&lt;/h3&gt;
+&lt;p&gt;一般来说，为了扩展一个类的功能（且不修改源代码）我们常常会使用继承的方式来实现。随着功能的增多，子类会变得越来越 “臃肿 “，而使用装饰器模式的话，能够更加灵活的分配职责。&lt;/p&gt;
+&lt;p&gt;而且很多情况下，装饰类和被装饰类是独立的，不会相互耦合，可以替代继承。&lt;/p&gt;
+&lt;h3 id=&#34;实现&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#实现&#34;&gt;#&lt;/a&gt; 实现&lt;/h3&gt;
+&lt;p&gt;前端中广泛应用装饰器模式的地方莫过于 React 的&lt;strong&gt;高阶组件（HOC）&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;高阶组件是干什么用的就不再赘述了，之前的笔记也说过。&lt;/p&gt;
+&lt;p&gt;高阶组件可以提取组件中常用的行为逻辑（如从数据源获取数据）、或者添加一些方法等。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-react&#34;&gt;function withSubscription(WrappedComponent, selectData) &amp;#123;
+  // ...并返回另一个组件...
+  return class extends React.Component &amp;#123;
+    constructor(props) &amp;#123;
+      super(props);
+      this.handleChange = this.handleChange.bind(this);
+      this.state = &amp;#123;
+        data: selectData(DataSource, props)
+      &amp;#125;;
+    &amp;#125;
+
+    componentDidMount() &amp;#123;
+      // ...负责订阅相关的操作...
+      DataSource.addChangeListener(this.handleChange);
+    &amp;#125;
+
+    componentWillUnmount() &amp;#123;
+      DataSource.removeChangeListener(this.handleChange);
+    &amp;#125;
+
+    handleChange() &amp;#123;
+      this.setState(&amp;#123;
+        data: selectData(DataSource, this.props)
+      &amp;#125;);
+    &amp;#125;
+
+    render() &amp;#123;
+      // ... 并使用新数据渲染被包装的组件!
+      // 请注意，我们可能还会传递其他属性
+      return &amp;lt;WrappedComponent data=&amp;#123;this.state.data&amp;#125; &amp;#123;...this.props&amp;#125; /&amp;gt;;
+    &amp;#125;
+  &amp;#125;;
+&amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;就像这里，在原有的基础上增强了 Wrapped Component，又不改变内部结构。而且也还可以增加方法。&lt;/p&gt;
 &lt;h2 id=&#34;外观模式&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#外观模式&#34;&gt;#&lt;/a&gt; 外观模式&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;现有系统的接口比较复杂，希望利用原有的功能重新定义新的接口&lt;/strong&gt;。&lt;/p&gt;
 &lt;p&gt;&lt;img data-src=&#34;facade1.png&#34; alt=&#34;facade1&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img data-src=&#34;facade2.png&#34; alt=&#34;facade2&#34; /&gt;&lt;/p&gt;
-&lt;h3 id=&#34;应用场景-2&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#应用场景-2&#34;&gt;#&lt;/a&gt; 应用场景&lt;/h3&gt;
+&lt;h3 id=&#34;应用场景-3&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#应用场景-3&#34;&gt;#&lt;/a&gt; 应用场景&lt;/h3&gt;
 &lt;p&gt;比如说，有一家店的客户，他通过目录下订单，就像一个外观模式。客户只需要联系客服，就可以完成下订单、检查仓储、发货等一系列流程。&lt;/p&gt;
-&lt;h3 id=&#34;优点-4&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#优点-4&#34;&gt;#&lt;/a&gt; 优点&lt;/h3&gt;
+&lt;h3 id=&#34;优点-5&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#优点-5&#34;&gt;#&lt;/a&gt; 优点&lt;/h3&gt;
 &lt;p&gt;外观模式产生了一个新的、轻便的接口，它可能包装了多个接口和对象，&lt;strong&gt;可以简化复杂系统的使用&lt;/strong&gt;。&lt;/p&gt;
 &lt;h1 id=&#34;行为型&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#行为型&#34;&gt;#&lt;/a&gt; 行为型&lt;/h1&gt;
 &lt;p&gt;聚焦于对象和类之间的通信，大型应用必不可少的部分&lt;/p&gt;
