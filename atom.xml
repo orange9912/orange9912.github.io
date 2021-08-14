@@ -304,6 +304,12 @@
 &lt;p&gt;聚焦于对象和类之间的通信，大型应用必不可少的部分&lt;/p&gt;
 &lt;h2 id=&#34;观察者模式发布订阅模式&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#观察者模式发布订阅模式&#34;&gt;#&lt;/a&gt; 观察者模式（发布订阅模式）&lt;/h2&gt;
 &lt;h2 id=&#34;策略模式&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#策略模式&#34;&gt;#&lt;/a&gt; 策略模式&lt;/h2&gt;
+&lt;h3 id=&#34;设计思想&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#设计思想&#34;&gt;#&lt;/a&gt; 设计思想&lt;/h3&gt;
+&lt;p&gt;根据语境的不同，使用不同的算法。&lt;strong&gt;就是将对算法的选择和算法的实现相分离开来&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;celue.png&#34; alt=&#34;celue&#34; /&gt;&lt;/p&gt;
+&lt;h3 id=&#34;应用场景-4&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#应用场景-4&#34;&gt;#&lt;/a&gt; 应用场景&lt;/h3&gt;
+&lt;p&gt;将一组相关的算法封装，把实现隐藏起来，灵活扩展。&lt;/p&gt;
+&lt;p&gt;我觉得 React 中的 render props 模式也有点策略模式的思想，render props 将数据的获取和渲染职责相分离，可以灵活替换、扩展渲染的组件&lt;/p&gt;
 &lt;h1 id=&#34;总结&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#总结&#34;&gt;#&lt;/a&gt; 总结&lt;/h1&gt;
 </content>
         <updated>2021-07-24T08:52:55.000Z</updated>
