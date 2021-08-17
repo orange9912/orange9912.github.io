@@ -1075,6 +1075,10 @@ const &amp;#123;username&amp;#125; = useContext(AppContext);
 &lt;p&gt;Webpack 是当下最流行的前端工程构建工具，它是用于打包一个工程项目静态模块的打包工具，它的出现大大方便了日常开发。&lt;/p&gt;
 &lt;p&gt;各种新特性、新语言、新框架的出现，提高了我们的开发效率，如 typescript、sass、babel、vue 等。但是我们开发出来的项目文件最终还是应该打包成一堆 html、css、js 文件，尽管这些新特性的创造者会提供一个工具来进行转换，但是一个个转换我们的开发文件的工作量是巨大的，这个时候 webpack 就开始发挥它的威力了。&lt;/p&gt;
 &lt;p&gt;Webpack 的出现极大的简化了转换文件的流程，更好的去开发，现在各种新特性通常都会有可以集成到 webpack 开发的 loader。&lt;/p&gt;
+&lt;h1 id=&#34;面试题&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#面试题&#34;&gt;#&lt;/a&gt; 面试题&lt;/h1&gt;
+&lt;h2 id=&#34;loader和plugin的区别&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#loader和plugin的区别&#34;&gt;#&lt;/a&gt; loader 和 plugin 的区别？&lt;/h2&gt;
+&lt;p&gt;loader 主要是提供了一个文件转换的能力。webpack 原生只支持解析 js 和 json 文件，而 loader 让 webpack 有了加载其他模块的能力。&lt;/p&gt;
+&lt;p&gt;plugin 主要是插件，用于扩展 webpack 的功能，比如抽离代码、压缩、配置开发工具等功能。&lt;/p&gt;
 </content>
         <category term="前端" scheme="http://zyczxq.com/categories/JavaScript/" />
         <updated>2021-06-22T06:57:41.000Z</updated>
