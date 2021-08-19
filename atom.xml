@@ -1739,7 +1739,6 @@ const MyComponentWithPersistentData = withPersistentData(MyComponent);
 &lt;li&gt;执行拥塞避免算法。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;&lt;img data-src=&#34;%E5%BF%AB%E6%81%A2%E5%A4%8D.png&#34; alt=&#34;快恢复&#34; /&gt;&lt;/p&gt;
-&lt;h1 id=&#34;&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#&#34;&gt;#&lt;/a&gt; &lt;/h1&gt;
 &lt;h1 id=&#34;http协议&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#http协议&#34;&gt;#&lt;/a&gt; http 协议&lt;/h1&gt;
 &lt;h2 id=&#34;基本概念&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#基本概念&#34;&gt;#&lt;/a&gt; 基本概念&lt;/h2&gt;
 &lt;p&gt;&lt;mark&gt;http 协议，全称 Hypertext Transfer Protocol，超文本传输协议&lt;/mark&gt;，它是基于 TCP/IP 协议，运行于应用层上的、世界上应用的最广泛的网络协议。&lt;/p&gt;
