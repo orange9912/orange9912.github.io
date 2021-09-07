@@ -11,9 +11,9 @@
     <updated>2021-09-01T06:34:36.000Z</updated>
     <category term="个人博客" />
     <entry>
-        <id>http://zyczxq.com/2021/09/01/axios/</id>
+        <id>http://zyczxq.com/2021/09/01/JavaScript/axios/</id>
         <title>Axios源码解析</title>
-        <link rel="alternate" href="http://zyczxq.com/2021/09/01/axios/"/>
+        <link rel="alternate" href="http://zyczxq.com/2021/09/01/JavaScript/axios/"/>
         <content type="html">&lt;p&gt;前几天面试，和面试官聊天的时候&lt;/p&gt;
 &lt;p&gt;面试官：“你有没有想过看一下源码，而不是看那些分析文章，可能直接看源码收益来的直接一点”&lt;/p&gt;
 &lt;p&gt;我：“以前尝试过看的框架源码，不过觉得好晦涩，看不懂，打算等水平提升一点再看”&lt;/p&gt;
@@ -202,9 +202,9 @@
         <updated>2021-09-01T06:34:36.000Z</updated>
     </entry>
     <entry>
-        <id>http://zyczxq.com/2021/08/25/HeadSort/</id>
+        <id>http://zyczxq.com/2021/08/25/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/HeadSort/</id>
         <title>堆排序学习笔记</title>
-        <link rel="alternate" href="http://zyczxq.com/2021/08/25/HeadSort/"/>
+        <link rel="alternate" href="http://zyczxq.com/2021/08/25/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/HeadSort/"/>
         <content type="html">&lt;h1 id=&#34;堆排序&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#堆排序&#34;&gt;#&lt;/a&gt; 堆排序&lt;/h1&gt;
 &lt;p&gt;堆排序是一种树形选择排序，在排序过程中，它将待排序的记录看成是一颗完全二叉树的结构，由于它在最坏情况下表现也十分好，所以广泛使用在各个语言下的 sort 源码中。&lt;/p&gt;
 &lt;h1 id=&#34;堆排序的定义&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#堆排序的定义&#34;&gt;#&lt;/a&gt; 堆排序的定义&lt;/h1&gt;
@@ -270,9 +270,9 @@
         <updated>2021-08-25T06:37:48.000Z</updated>
     </entry>
     <entry>
-        <id>http://zyczxq.com/2021/08/04/browser/</id>
+        <id>http://zyczxq.com/2021/08/04/JavaScript/browser/</id>
         <title>浏览器渲染过程</title>
-        <link rel="alternate" href="http://zyczxq.com/2021/08/04/browser/"/>
+        <link rel="alternate" href="http://zyczxq.com/2021/08/04/JavaScript/browser/"/>
         <content type="html">&lt;p&gt;前面也说过，当在浏览器上输入一个 url，到页面加载出来，简单来说一共经历了这么几件事：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;
@@ -364,9 +364,9 @@
         <updated>2021-08-04T12:14:13.000Z</updated>
     </entry>
     <entry>
-        <id>http://zyczxq.com/2021/07/24/designPatterns/</id>
+        <id>http://zyczxq.com/2021/07/24/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/designPatterns/</id>
         <title>设计模式笔记</title>
-        <link rel="alternate" href="http://zyczxq.com/2021/07/24/designPatterns/"/>
+        <link rel="alternate" href="http://zyczxq.com/2021/07/24/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/designPatterns/"/>
         <content type="html">&lt;p&gt;设计模式是对软件设计中普遍存在，或者说反复出现的各种问题提出的解决方案。在学校的时候我通过软件体系结构和实际上参与项目的时候也了解过一下（我觉得设计模式的知识真的是编程思想的精粹之一，非常值得深入学习）。&lt;/p&gt;
 &lt;p&gt;内容会持续更新，设计模式毕竟那么多，不可能一次全学完，暂时记录我学过的、或者使用过的&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;pink&#34;&gt;一天更新一种～最近比较忙，慢慢写，闲的时候就多更新一些&lt;/span&gt;&lt;/p&gt;
@@ -579,9 +579,9 @@
         <updated>2021-07-24T08:52:55.000Z</updated>
     </entry>
     <entry>
-        <id>http://zyczxq.com/2021/07/20/Authorization/</id>
+        <id>http://zyczxq.com/2021/07/20/JavaScript/Authorization/</id>
         <title>单页应用鉴权问题</title>
-        <link rel="alternate" href="http://zyczxq.com/2021/07/20/Authorization/"/>
+        <link rel="alternate" href="http://zyczxq.com/2021/07/20/JavaScript/Authorization/"/>
         <content type="html">&lt;p&gt;面试中被问到的时候，才发现这块是个知识盲区，于是专门花了一点时间去搜集资料，然后自己理解、再整理出来自己的一篇笔记。来总结一下一些鉴权的方法，还有它们的优缺点。&lt;/p&gt;
 &lt;h1 id=&#34;背景&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#背景&#34;&gt;#&lt;/a&gt; 背景&lt;/h1&gt;
 &lt;p&gt;Http 本身是一个无状态的协议，这个不用多说了，单从网络连接上，服务器无法获知客户的身份。&lt;/p&gt;
@@ -727,9 +727,9 @@
         <updated>2021-07-20T10:24:01.000Z</updated>
     </entry>
     <entry>
-        <id>http://zyczxq.com/2021/07/18/youhua/</id>
+        <id>http://zyczxq.com/2021/07/18/JavaScript/youhua/</id>
         <title>项目实践中的一些优化想法</title>
-        <link rel="alternate" href="http://zyczxq.com/2021/07/18/youhua/"/>
+        <link rel="alternate" href="http://zyczxq.com/2021/07/18/JavaScript/youhua/"/>
         <content type="html">&lt;p&gt;抽出一点时间来稍微总结一下平时编写项目中使用过的一些性能优化的手段，还有很多没有尝试过，那些以后再补充&lt;/p&gt;
 &lt;h1 id=&#34;通用代码方面&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#通用代码方面&#34;&gt;#&lt;/a&gt; 通用代码方面&lt;/h1&gt;
 &lt;h2 id=&#34;防抖-节流&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#防抖-节流&#34;&gt;#&lt;/a&gt; 防抖、节流&lt;/h2&gt;
@@ -767,9 +767,9 @@
         <updated>2021-07-18T08:03:43.000Z</updated>
     </entry>
     <entry>
-        <id>http://zyczxq.com/2021/07/01/reactNote2/</id>
+        <id>http://zyczxq.com/2021/07/01/JavaScript/reactNote2/</id>
         <title>React笔记2</title>
-        <link rel="alternate" href="http://zyczxq.com/2021/07/01/reactNote2/"/>
+        <link rel="alternate" href="http://zyczxq.com/2021/07/01/JavaScript/reactNote2/"/>
         <content type="html">&lt;p&gt;读《react 进阶》时做的一些内容的笔记&lt;/p&gt;
 &lt;h1 id=&#34;组件生命周期&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#组件生命周期&#34;&gt;#&lt;/a&gt; 组件生命周期&lt;/h1&gt;
 &lt;p&gt;&lt;span class=&#34;pink&#34;&gt;类组件才有生命周期，函数组件是没有的！&lt;/span&gt;&lt;/p&gt;
@@ -970,9 +970,9 @@ class Parent extends React.Component&amp;#123;
         <updated>2021-07-01T12:05:17.000Z</updated>
     </entry>
     <entry>
-        <id>http://zyczxq.com/2021/06/27/compare/</id>
+        <id>http://zyczxq.com/2021/06/27/JavaScript/compare/</id>
         <title>简单的比较vue、react思想</title>
-        <link rel="alternate" href="http://zyczxq.com/2021/06/27/compare/"/>
+        <link rel="alternate" href="http://zyczxq.com/2021/06/27/JavaScript/compare/"/>
         <content type="html">&lt;p&gt;学习了 React 之后，我不自觉地会将 vue 和 react 相对比，而且也在思考使用框架的同时我学习的开发思想。&lt;/p&gt;
 &lt;h1 id=&#34;数据绑定&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#数据绑定&#34;&gt;#&lt;/a&gt; 数据绑定&lt;/h1&gt;
 &lt;p&gt;他们都是响应式的框架，但他们 “实现响应式 “的方法有所不同。&lt;/p&gt;
@@ -1011,9 +1011,9 @@ class Parent extends React.Component&amp;#123;
         <updated>2021-06-27T11:17:11.000Z</updated>
     </entry>
     <entry>
-        <id>http://zyczxq.com/2021/06/26/JSnote8/</id>
+        <id>http://zyczxq.com/2021/06/26/JavaScript/JSnote8/</id>
         <title>尾调用/递归优化</title>
-        <link rel="alternate" href="http://zyczxq.com/2021/06/26/JSnote8/"/>
+        <link rel="alternate" href="http://zyczxq.com/2021/06/26/JavaScript/JSnote8/"/>
         <content type="html">&lt;p&gt;之前偶然接触到了这么一个知识点，一开始还以为是非常晦涩的概念，不过熟悉之后其实也比较简单。&lt;/p&gt;
 &lt;h1 id=&#34;前言&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#前言&#34;&gt;#&lt;/a&gt; 前言&lt;/h1&gt;
 &lt;p&gt;我们都知道在调用栈这么一个东西，每个函数的调用，实际上会创建一个调用帧放入调用栈之中，等调用结束，这个帧就从栈中 “弹出”&lt;/p&gt;
@@ -1044,9 +1044,9 @@ class Parent extends React.Component&amp;#123;
         <updated>2021-06-26T08:09:43.000Z</updated>
     </entry>
     <entry>
-        <id>http://zyczxq.com/2021/06/25/reacthook/</id>
+        <id>http://zyczxq.com/2021/06/25/JavaScript/reacthook/</id>
         <title>react Hooks简单笔记</title>
-        <link rel="alternate" href="http://zyczxq.com/2021/06/25/reacthook/"/>
+        <link rel="alternate" href="http://zyczxq.com/2021/06/25/JavaScript/reacthook/"/>
         <content type="html">&lt;p&gt;在实习的时候参与项目需求编写的时候就是使用 React 的函数式组件 + Hooks 进行编写，来总结一下我常常用到的 hooks 来进行进一步印象的加深。&lt;/p&gt;
 &lt;p&gt;在此之前，首先要说说 React 的组件发展史。&lt;/p&gt;
 &lt;h1 id=&#34;createclass创建组件时期&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#createclass创建组件时期&#34;&gt;#&lt;/a&gt; createClass 创建组件时期&lt;/h1&gt;
@@ -1163,9 +1163,9 @@ const &amp;#123;username&amp;#125; = useContext(AppContext);
         <updated>2021-06-25T08:41:29.000Z</updated>
     </entry>
     <entry>
-        <id>http://zyczxq.com/2021/06/24/CSSnote2/</id>
+        <id>http://zyczxq.com/2021/06/24/JavaScript/CSSnote2/</id>
         <title>CSS选择器优先级笔记</title>
-        <link rel="alternate" href="http://zyczxq.com/2021/06/24/CSSnote2/"/>
+        <link rel="alternate" href="http://zyczxq.com/2021/06/24/JavaScript/CSSnote2/"/>
         <content type="html">&lt;p&gt;在 css 中，我们可以使用多种不同的方法选择元素。实际上，我们总会碰到同一个元素被选中多次的情况，而且选择器不尽相同，这个时候到底哪一个选择器选中的规则生效呢，就需要看选择器的优先级。&lt;/p&gt;
 &lt;p&gt;本文参考了我之前大二看的一本书，《CSS 权威指南》。&lt;/p&gt;
 &lt;h1 id=&#34;各类选择器&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#各类选择器&#34;&gt;#&lt;/a&gt; 各类选择器&lt;/h1&gt;
@@ -1229,9 +1229,9 @@ const &amp;#123;username&amp;#125; = useContext(AppContext);
         <updated>2021-06-24T07:18:14.000Z</updated>
     </entry>
     <entry>
-        <id>http://zyczxq.com/2021/06/23/vue-lifecycle/</id>
+        <id>http://zyczxq.com/2021/06/23/JavaScript/vue-lifecycle/</id>
         <title>vue生命周期笔记</title>
-        <link rel="alternate" href="http://zyczxq.com/2021/06/23/vue-lifecycle/"/>
+        <link rel="alternate" href="http://zyczxq.com/2021/06/23/JavaScript/vue-lifecycle/"/>
         <content type="html">&lt;p&gt;不多说，直接上官方图&lt;/p&gt;
 &lt;p&gt;&lt;img data-src=&#34;vue%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png&#34; alt=&#34;vue生命周期&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;从上到下，共分四个大阶段、八个钩子&lt;/p&gt;
@@ -1258,9 +1258,9 @@ const &amp;#123;username&amp;#125; = useContext(AppContext);
         <updated>2021-06-23T09:26:12.000Z</updated>
     </entry>
     <entry>
-        <id>http://zyczxq.com/2021/06/22/webpack1/</id>
+        <id>http://zyczxq.com/2021/06/22/JavaScript/webpack1/</id>
         <title>webpack概念笔记</title>
-        <link rel="alternate" href="http://zyczxq.com/2021/06/22/webpack1/"/>
+        <link rel="alternate" href="http://zyczxq.com/2021/06/22/JavaScript/webpack1/"/>
         <content type="html">&lt;p&gt;webpack 是我做前端开发时一个非常重要的工具，也是现在前端工程化一个非常重要的工具&lt;/p&gt;
 &lt;p&gt;之前使用的时候基本只是知道它大概怎么使用，但并没有深入探究。这次想深入总结一下自己对 webpack 的学习&lt;/p&gt;
 &lt;h1 id=&#34;webpack是什么&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#webpack是什么&#34;&gt;#&lt;/a&gt; webpack 是什么？&lt;/h1&gt;
@@ -1344,9 +1344,9 @@ const &amp;#123;username&amp;#125; = useContext(AppContext);
         <updated>2021-06-22T06:57:41.000Z</updated>
     </entry>
     <entry>
-        <id>http://zyczxq.com/2021/06/21/crosssite/</id>
+        <id>http://zyczxq.com/2021/06/21/JavaScript/crosssite/</id>
         <title>跨域方法笔记</title>
-        <link rel="alternate" href="http://zyczxq.com/2021/06/21/crosssite/"/>
+        <link rel="alternate" href="http://zyczxq.com/2021/06/21/JavaScript/crosssite/"/>
         <content type="html">&lt;p&gt;以前开发的时候在本地请求接口总是会遇到跨域问题，当时基础也不扎实，也不懂的怎么解决，现在趁机会总结一下跨域的概念和几种方法。&lt;/p&gt;
 &lt;h1 id=&#34;同源策略&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#同源策略&#34;&gt;#&lt;/a&gt; 同源策略&lt;/h1&gt;
 &lt;p&gt;&lt;strong&gt;要知道什么是跨域，首先得了解一下浏览器的同源策略&lt;/strong&gt;&lt;/p&gt;
@@ -1430,9 +1430,9 @@ const &amp;#123;username&amp;#125; = useContext(AppContext);
         <updated>2021-06-21T11:55:13.000Z</updated>
     </entry>
     <entry>
-        <id>http://zyczxq.com/2021/06/21/sass/</id>
+        <id>http://zyczxq.com/2021/06/21/JavaScript/sass/</id>
         <title>sass</title>
-        <link rel="alternate" href="http://zyczxq.com/2021/06/21/sass/"/>
+        <link rel="alternate" href="http://zyczxq.com/2021/06/21/JavaScript/sass/"/>
         <content type="html">&lt;p&gt;最近在实习的时候开发使用到 Sass，虽然之前从未使用过，不过看了下文档也比较快的上手了。使用之后真香，给我最大的感受就是写父子关系的选择器不再这么麻烦了，可以通过嵌套来选择，而且变量、混合器的引入也让我减少了重复写冗余代码的工作。总结一下开发的时候经常用到的几个特性&lt;/p&gt;
 &lt;h1 id=&#34;变量的使用和引入&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#变量的使用和引入&#34;&gt;#&lt;/a&gt; 变量的使用和引入&lt;/h1&gt;
 &lt;p&gt;使用变量的好处非常的大，假设我们有一个屏幕宽度，很多地方的样式都需要根据这个宽度来调整，如果用传统的 css 写法，那就只能每个地方都：&lt;/p&gt;
@@ -1453,9 +1453,9 @@ const &amp;#123;username&amp;#125; = useContext(AppContext);
         <updated>2021-06-21T08:40:16.000Z</updated>
     </entry>
     <entry>
-        <id>http://zyczxq.com/2021/06/20/react1/</id>
+        <id>http://zyczxq.com/2021/06/20/JavaScript/react1/</id>
         <title>react开发笔记1</title>
-        <link rel="alternate" href="http://zyczxq.com/2021/06/20/react1/"/>
+        <link rel="alternate" href="http://zyczxq.com/2021/06/20/JavaScript/react1/"/>
         <content type="html">&lt;p&gt;记录一下实习中使用 React 开发需求时候遇到的一些困难和解决方案。&lt;/p&gt;
 &lt;h1 id=&#34;条件渲染&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#条件渲染&#34;&gt;#&lt;/a&gt; 条件渲染&lt;/h1&gt;
 &lt;p&gt;开发的时候经常遇到根据某个条件进行组件的渲染&lt;/p&gt;
@@ -1576,9 +1576,9 @@ const MyComponentWithPersistentData = withPersistentData(MyComponent);
         <updated>2021-06-20T07:38:05.000Z</updated>
     </entry>
     <entry>
-        <id>http://zyczxq.com/2021/06/17/module/</id>
+        <id>http://zyczxq.com/2021/06/17/JavaScript/module/</id>
         <title>Javascript模块化笔记</title>
-        <link rel="alternate" href="http://zyczxq.com/2021/06/17/module/"/>
+        <link rel="alternate" href="http://zyczxq.com/2021/06/17/JavaScript/module/"/>
         <content type="html">&lt;p&gt;在前端飞速发展的现状，模块化是一个非常重要的概念，像在 webpack 里，每一个文件就是一个模块。&lt;/p&gt;
 &lt;p&gt;模块之所以重要，是因为一个大程序如果只写在一个文件里，会非常的复杂、而且功能分割不够明确，难以在外部复用。&lt;/p&gt;
 &lt;p&gt;有了模块，我们就可以把一个大的程序按照功能拆分成一个个小模块，可以很方便的进行复用，也可以方便的提供给别人使用。&lt;/p&gt;
@@ -1629,9 +1629,9 @@ const MyComponentWithPersistentData = withPersistentData(MyComponent);
         <updated>2021-06-17T09:07:19.000Z</updated>
     </entry>
     <entry>
-        <id>http://zyczxq.com/2021/06/15/webSafe1/</id>
+        <id>http://zyczxq.com/2021/06/15/JavaScript/webSafe1/</id>
         <title>前端安全笔记一_xss和csrf</title>
-        <link rel="alternate" href="http://zyczxq.com/2021/06/15/webSafe1/"/>
+        <link rel="alternate" href="http://zyczxq.com/2021/06/15/JavaScript/webSafe1/"/>
         <content type="html">&lt;p&gt;在互联网不断发展的今天，随着 web 端页面的庞大化，互动性越来越强，网络安全也变得越来越重要。通过简单总结两种常见的攻击，来初步学习一下。&lt;/p&gt;
 &lt;h1 id=&#34;xss跨站脚本攻击cross-site-scripting&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#xss跨站脚本攻击cross-site-scripting&#34;&gt;#&lt;/a&gt; XSS（跨站脚本攻击，Cross Site Scripting）&lt;/h1&gt;
 &lt;p&gt;XSS，跨站脚本攻击，为了不和&lt;span class=&#34;pink&#34;&gt;层叠样式表（Cascading Style Sheets）混淆&lt;/span&gt;，于是取名为 XSS。&lt;/p&gt;
@@ -1703,9 +1703,9 @@ const MyComponentWithPersistentData = withPersistentData(MyComponent);
         <updated>2021-06-15T11:01:48.000Z</updated>
     </entry>
     <entry>
-        <id>http://zyczxq.com/2021/06/14/storage/</id>
+        <id>http://zyczxq.com/2021/06/14/JavaScript/storage/</id>
         <title>前端存储笔记</title>
-        <link rel="alternate" href="http://zyczxq.com/2021/06/14/storage/"/>
+        <link rel="alternate" href="http://zyczxq.com/2021/06/14/JavaScript/storage/"/>
         <content type="html">&lt;h1 id=&#34;cookie&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#cookie&#34;&gt;#&lt;/a&gt; Cookie&lt;/h1&gt;
 &lt;h2 id=&#34;cookie是什么&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#cookie是什么&#34;&gt;#&lt;/a&gt; Cookie 是什么？&lt;/h2&gt;
 &lt;p&gt;cookie 是一些数据，用于存储 web 端的用户数据。它用于解决 “&lt;span class=&#34;pink&#34;&gt;如何记录客户端的用户信息&lt;/span&gt; “&lt;/p&gt;
@@ -1767,9 +1767,9 @@ const MyComponentWithPersistentData = withPersistentData(MyComponent);
         <updated>2021-06-14T09:06:26.000Z</updated>
     </entry>
     <entry>
-        <id>http://zyczxq.com/2021/06/13/http2/</id>
+        <id>http://zyczxq.com/2021/06/13/JavaScript/http2/</id>
         <title>浏览器缓存学习笔记</title>
-        <link rel="alternate" href="http://zyczxq.com/2021/06/13/http2/"/>
+        <link rel="alternate" href="http://zyczxq.com/2021/06/13/JavaScript/http2/"/>
         <content type="html">&lt;p&gt;浏览器缓存是前端一个重要的知识点，为了搞清楚强缓存、协商缓存，我决定写一篇博客来提取我零碎的理解并整理。&lt;/p&gt;
 &lt;h1 id=&#34;浏览器缓存的概念&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#浏览器缓存的概念&#34;&gt;#&lt;/a&gt; 浏览器缓存的概念？&lt;/h1&gt;
 &lt;p&gt;简单来说，就是浏览器将通过 HTTP 请求获取到的资源存储在本地的一种行为。&lt;/p&gt;

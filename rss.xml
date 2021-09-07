@@ -14,9 +14,9 @@
         <lastBuildDate>Wed, 01 Sep 2021 14:34:36 +0800</lastBuildDate>
         <category term="个人博客" />
         <item>
-            <guid isPermalink="true">http://zyczxq.com/2021/09/01/axios/</guid>
+            <guid isPermalink="true">http://zyczxq.com/2021/09/01/JavaScript/axios/</guid>
             <title>Axios源码解析</title>
-            <link>http://zyczxq.com/2021/09/01/axios/</link>
+            <link>http://zyczxq.com/2021/09/01/JavaScript/axios/</link>
             <category term="前端" scheme="http://zyczxq.com/categories/JavaScript/" />
             <pubDate>Wed, 01 Sep 2021 14:34:36 +0800</pubDate>
             <description><![CDATA[ &lt;p&gt;前几天面试，和面试官聊天的时候&lt;/p&gt;
@@ -205,9 +205,9 @@
  ]]></description>
         </item>
         <item>
-            <guid isPermalink="true">http://zyczxq.com/2021/08/25/HeadSort/</guid>
+            <guid isPermalink="true">http://zyczxq.com/2021/08/25/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/HeadSort/</guid>
             <title>堆排序学习笔记</title>
-            <link>http://zyczxq.com/2021/08/25/HeadSort/</link>
+            <link>http://zyczxq.com/2021/08/25/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/HeadSort/</link>
             <category term="计算机基础" scheme="http://zyczxq.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" />
             <pubDate>Wed, 25 Aug 2021 14:37:48 +0800</pubDate>
             <description><![CDATA[ &lt;h1 id=&#34;堆排序&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#堆排序&#34;&gt;#&lt;/a&gt; 堆排序&lt;/h1&gt;
@@ -273,9 +273,9 @@
 &lt;figure class=&#34;highlight javascript&#34;&gt;&lt;figcaption data-lang=&#34;javascript&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token keyword&#34;&gt;function&lt;/span&gt; &lt;span class=&#34;token function&#34;&gt;HeapAdjust&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token parameter&#34;&gt;list&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt;s&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt;m&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token comment&#34;&gt;// 假设 list [s+1...m] 已经是堆，将 list [s...m] 调整为以 list [s] 为根的大根堆&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;3&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token keyword&#34;&gt;let&lt;/span&gt; rc &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; list&lt;span class=&#34;token punctuation&#34;&gt;[&lt;/span&gt;s&lt;span class=&#34;token punctuation&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;4&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token keyword&#34;&gt;for&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token keyword&#34;&gt;let&lt;/span&gt; j &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;token number&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;token operator&#34;&gt;*&lt;/span&gt;s&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;j&lt;span class=&#34;token operator&#34;&gt;&amp;lt;=&lt;/span&gt;m&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;j&lt;span class=&#34;token operator&#34;&gt;*=&lt;/span&gt;&lt;span class=&#34;token number&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;5&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;        &lt;span class=&#34;token keyword&#34;&gt;if&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;j&lt;span class=&#34;token operator&#34;&gt;&amp;lt;&lt;/span&gt;m&lt;span class=&#34;token operator&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt;list&lt;span class=&#34;token punctuation&#34;&gt;[&lt;/span&gt;j&lt;span class=&#34;token punctuation&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;token operator&#34;&gt;&amp;lt;&lt;/span&gt;list&lt;span class=&#34;token punctuation&#34;&gt;[&lt;/span&gt;j&lt;span class=&#34;token operator&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;token number&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token operator&#34;&gt;++&lt;/span&gt;j&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;6&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;        &lt;span class=&#34;token keyword&#34;&gt;if&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;rc&lt;span class=&#34;token operator&#34;&gt;&gt;=&lt;/span&gt;list&lt;span class=&#34;token punctuation&#34;&gt;[&lt;/span&gt;j&lt;span class=&#34;token punctuation&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token keyword&#34;&gt;break&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;7&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;        list&lt;span class=&#34;token punctuation&#34;&gt;[&lt;/span&gt;s&lt;span class=&#34;token punctuation&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt;list&lt;span class=&#34;token punctuation&#34;&gt;[&lt;/span&gt;j&lt;span class=&#34;token punctuation&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;8&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;        s&lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt;j&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;9&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;10&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    list&lt;span class=&#34;token punctuation&#34;&gt;[&lt;/span&gt;s&lt;span class=&#34;token punctuation&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; rc&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;11&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;12&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token comment&#34;&gt;// 建初堆&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;13&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token keyword&#34;&gt;function&lt;/span&gt; &lt;span class=&#34;token function&#34;&gt;CreateHeap&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token parameter&#34;&gt;list&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;14&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token keyword&#34;&gt;let&lt;/span&gt; n &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; list&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;length&lt;span class=&#34;token operator&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;token number&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;15&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token keyword&#34;&gt;let&lt;/span&gt; mid &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; Math&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;floor&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;n&lt;span class=&#34;token operator&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;token number&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;16&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token keyword&#34;&gt;for&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token keyword&#34;&gt;let&lt;/span&gt; i &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; mid&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;i&lt;span class=&#34;token operator&#34;&gt;&gt;=&lt;/span&gt;&lt;span class=&#34;token number&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;i&lt;span class=&#34;token operator&#34;&gt;--&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;17&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;        &lt;span class=&#34;token function&#34;&gt;HeapAdjust&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;list&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt;i&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt;n&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;18&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;19&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;20&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token comment&#34;&gt;// 堆排序，先把无序序列建成堆，然后每次把堆顶元素抽出来放到对应的位置&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;21&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token keyword&#34;&gt;function&lt;/span&gt; &lt;span class=&#34;token function&#34;&gt;HeapSort&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token parameter&#34;&gt;list&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;22&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token function&#34;&gt;CreateHeap&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;list&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;23&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token keyword&#34;&gt;for&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token keyword&#34;&gt;let&lt;/span&gt; i &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; list&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;length&lt;span class=&#34;token operator&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;token number&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;i&lt;span class=&#34;token operator&#34;&gt;&gt;&lt;/span&gt;&lt;span class=&#34;token number&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;token operator&#34;&gt;--&lt;/span&gt;i&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;24&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;        &lt;span class=&#34;token keyword&#34;&gt;let&lt;/span&gt; x &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; list&lt;span class=&#34;token punctuation&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;token number&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;token comment&#34;&gt;// 堆顶记录和当前未经排序子序列最后一个记录互换&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;25&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;        list&lt;span class=&#34;token punctuation&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;token number&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; list&lt;span class=&#34;token punctuation&#34;&gt;[&lt;/span&gt;i&lt;span class=&#34;token punctuation&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;26&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;        list&lt;span class=&#34;token punctuation&#34;&gt;[&lt;/span&gt;i&lt;span class=&#34;token punctuation&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; x&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;27&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;      &lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;28&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;        &lt;span class=&#34;token function&#34;&gt;HeapAdjust&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;list&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;token number&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt;i&lt;span class=&#34;token operator&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;token number&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;token comment&#34;&gt;// 将 list [0...i-1] 重新调整为大根堆&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;29&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;30&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt; ]]></description>
         </item>
         <item>
-            <guid isPermalink="true">http://zyczxq.com/2021/08/04/browser/</guid>
+            <guid isPermalink="true">http://zyczxq.com/2021/08/04/JavaScript/browser/</guid>
             <title>浏览器渲染过程</title>
-            <link>http://zyczxq.com/2021/08/04/browser/</link>
+            <link>http://zyczxq.com/2021/08/04/JavaScript/browser/</link>
             <category term="前端" scheme="http://zyczxq.com/categories/JavaScript/" />
             <pubDate>Wed, 04 Aug 2021 20:14:13 +0800</pubDate>
             <description><![CDATA[ &lt;p&gt;前面也说过，当在浏览器上输入一个 url，到页面加载出来，简单来说一共经历了这么几件事：&lt;/p&gt;
@@ -367,9 +367,9 @@
  ]]></description>
         </item>
         <item>
-            <guid isPermalink="true">http://zyczxq.com/2021/07/24/designPatterns/</guid>
+            <guid isPermalink="true">http://zyczxq.com/2021/07/24/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/designPatterns/</guid>
             <title>设计模式笔记</title>
-            <link>http://zyczxq.com/2021/07/24/designPatterns/</link>
+            <link>http://zyczxq.com/2021/07/24/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/designPatterns/</link>
             <category term="计算机基础" scheme="http://zyczxq.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" />
             <pubDate>Sat, 24 Jul 2021 16:52:55 +0800</pubDate>
             <description><![CDATA[ &lt;p&gt;设计模式是对软件设计中普遍存在，或者说反复出现的各种问题提出的解决方案。在学校的时候我通过软件体系结构和实际上参与项目的时候也了解过一下（我觉得设计模式的知识真的是编程思想的精粹之一，非常值得深入学习）。&lt;/p&gt;
@@ -582,9 +582,9 @@
  ]]></description>
         </item>
         <item>
-            <guid isPermalink="true">http://zyczxq.com/2021/07/20/Authorization/</guid>
+            <guid isPermalink="true">http://zyczxq.com/2021/07/20/JavaScript/Authorization/</guid>
             <title>单页应用鉴权问题</title>
-            <link>http://zyczxq.com/2021/07/20/Authorization/</link>
+            <link>http://zyczxq.com/2021/07/20/JavaScript/Authorization/</link>
             <category term="前端" scheme="http://zyczxq.com/categories/JavaScript/" />
             <pubDate>Tue, 20 Jul 2021 18:24:01 +0800</pubDate>
             <description><![CDATA[ &lt;p&gt;面试中被问到的时候，才发现这块是个知识盲区，于是专门花了一点时间去搜集资料，然后自己理解、再整理出来自己的一篇笔记。来总结一下一些鉴权的方法，还有它们的优缺点。&lt;/p&gt;
@@ -730,9 +730,9 @@
  ]]></description>
         </item>
         <item>
-            <guid isPermalink="true">http://zyczxq.com/2021/07/18/youhua/</guid>
+            <guid isPermalink="true">http://zyczxq.com/2021/07/18/JavaScript/youhua/</guid>
             <title>项目实践中的一些优化想法</title>
-            <link>http://zyczxq.com/2021/07/18/youhua/</link>
+            <link>http://zyczxq.com/2021/07/18/JavaScript/youhua/</link>
             <category term="前端" scheme="http://zyczxq.com/categories/JavaScript/" />
             <pubDate>Sun, 18 Jul 2021 16:03:43 +0800</pubDate>
             <description><![CDATA[ &lt;p&gt;抽出一点时间来稍微总结一下平时编写项目中使用过的一些性能优化的手段，还有很多没有尝试过，那些以后再补充&lt;/p&gt;
@@ -770,9 +770,9 @@
  ]]></description>
         </item>
         <item>
-            <guid isPermalink="true">http://zyczxq.com/2021/07/01/reactNote2/</guid>
+            <guid isPermalink="true">http://zyczxq.com/2021/07/01/JavaScript/reactNote2/</guid>
             <title>React笔记2</title>
-            <link>http://zyczxq.com/2021/07/01/reactNote2/</link>
+            <link>http://zyczxq.com/2021/07/01/JavaScript/reactNote2/</link>
             <category term="前端" scheme="http://zyczxq.com/categories/JavaScript/" />
             <pubDate>Thu, 01 Jul 2021 20:05:17 +0800</pubDate>
             <description><![CDATA[ &lt;p&gt;读《react 进阶》时做的一些内容的笔记&lt;/p&gt;
@@ -973,9 +973,9 @@ class Parent extends React.Component&amp;#123;
  ]]></description>
         </item>
         <item>
-            <guid isPermalink="true">http://zyczxq.com/2021/06/27/compare/</guid>
+            <guid isPermalink="true">http://zyczxq.com/2021/06/27/JavaScript/compare/</guid>
             <title>简单的比较vue、react思想</title>
-            <link>http://zyczxq.com/2021/06/27/compare/</link>
+            <link>http://zyczxq.com/2021/06/27/JavaScript/compare/</link>
             <category term="前端" scheme="http://zyczxq.com/categories/JavaScript/" />
             <pubDate>Sun, 27 Jun 2021 19:17:11 +0800</pubDate>
             <description><![CDATA[ &lt;p&gt;学习了 React 之后，我不自觉地会将 vue 和 react 相对比，而且也在思考使用框架的同时我学习的开发思想。&lt;/p&gt;
@@ -1014,9 +1014,9 @@ class Parent extends React.Component&amp;#123;
  ]]></description>
         </item>
         <item>
-            <guid isPermalink="true">http://zyczxq.com/2021/06/26/JSnote8/</guid>
+            <guid isPermalink="true">http://zyczxq.com/2021/06/26/JavaScript/JSnote8/</guid>
             <title>尾调用/递归优化</title>
-            <link>http://zyczxq.com/2021/06/26/JSnote8/</link>
+            <link>http://zyczxq.com/2021/06/26/JavaScript/JSnote8/</link>
             <category term="前端" scheme="http://zyczxq.com/categories/JavaScript/" />
             <pubDate>Sat, 26 Jun 2021 16:09:43 +0800</pubDate>
             <description><![CDATA[ &lt;p&gt;之前偶然接触到了这么一个知识点，一开始还以为是非常晦涩的概念，不过熟悉之后其实也比较简单。&lt;/p&gt;
@@ -1047,9 +1047,9 @@ class Parent extends React.Component&amp;#123;
 &lt;figure class=&#34;highlight javascript&#34;&gt;&lt;figcaption data-lang=&#34;javascript&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token comment&#34;&gt;// 写一个将参数函数柯里化的工具函数&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token keyword&#34;&gt;function&lt;/span&gt; &lt;span class=&#34;token function&#34;&gt;currying&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token parameter&#34;&gt;fn&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt;n&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;3&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token keyword&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;token keyword&#34;&gt;function&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token parameter&#34;&gt;m&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;4&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token keyword&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;token function&#34;&gt;fn&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;call&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token keyword&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt;m&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt;n&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;token comment&#34;&gt;//n 是固定参数&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;5&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;6&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;7&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;8&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token keyword&#34;&gt;const&lt;/span&gt; factorial &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;token function&#34;&gt;currying&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;factorial&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;token number&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;9&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token function&#34;&gt;factorial&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token number&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;token comment&#34;&gt;//24&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt; ]]></description>
         </item>
         <item>
-            <guid isPermalink="true">http://zyczxq.com/2021/06/25/reacthook/</guid>
+            <guid isPermalink="true">http://zyczxq.com/2021/06/25/JavaScript/reacthook/</guid>
             <title>react Hooks简单笔记</title>
-            <link>http://zyczxq.com/2021/06/25/reacthook/</link>
+            <link>http://zyczxq.com/2021/06/25/JavaScript/reacthook/</link>
             <category term="前端" scheme="http://zyczxq.com/categories/JavaScript/" />
             <pubDate>Fri, 25 Jun 2021 16:41:29 +0800</pubDate>
             <description><![CDATA[ &lt;p&gt;在实习的时候参与项目需求编写的时候就是使用 React 的函数式组件 + Hooks 进行编写，来总结一下我常常用到的 hooks 来进行进一步印象的加深。&lt;/p&gt;
@@ -1166,9 +1166,9 @@ const &amp;#123;username&amp;#125; = useContext(AppContext);
  ]]></description>
         </item>
         <item>
-            <guid isPermalink="true">http://zyczxq.com/2021/06/24/CSSnote2/</guid>
+            <guid isPermalink="true">http://zyczxq.com/2021/06/24/JavaScript/CSSnote2/</guid>
             <title>CSS选择器优先级笔记</title>
-            <link>http://zyczxq.com/2021/06/24/CSSnote2/</link>
+            <link>http://zyczxq.com/2021/06/24/JavaScript/CSSnote2/</link>
             <category term="前端" scheme="http://zyczxq.com/categories/JavaScript/" />
             <pubDate>Thu, 24 Jun 2021 15:18:14 +0800</pubDate>
             <description><![CDATA[ &lt;p&gt;在 css 中，我们可以使用多种不同的方法选择元素。实际上，我们总会碰到同一个元素被选中多次的情况，而且选择器不尽相同，这个时候到底哪一个选择器选中的规则生效呢，就需要看选择器的优先级。&lt;/p&gt;
@@ -1232,9 +1232,9 @@ const &amp;#123;username&amp;#125; = useContext(AppContext);
  ]]></description>
         </item>
         <item>
-            <guid isPermalink="true">http://zyczxq.com/2021/06/23/vue-lifecycle/</guid>
+            <guid isPermalink="true">http://zyczxq.com/2021/06/23/JavaScript/vue-lifecycle/</guid>
             <title>vue生命周期笔记</title>
-            <link>http://zyczxq.com/2021/06/23/vue-lifecycle/</link>
+            <link>http://zyczxq.com/2021/06/23/JavaScript/vue-lifecycle/</link>
             <category term="前端" scheme="http://zyczxq.com/categories/JavaScript/" />
             <pubDate>Wed, 23 Jun 2021 17:26:12 +0800</pubDate>
             <description><![CDATA[ &lt;p&gt;不多说，直接上官方图&lt;/p&gt;
@@ -1261,9 +1261,9 @@ const &amp;#123;username&amp;#125; = useContext(AppContext);
  ]]></description>
         </item>
         <item>
-            <guid isPermalink="true">http://zyczxq.com/2021/06/22/webpack1/</guid>
+            <guid isPermalink="true">http://zyczxq.com/2021/06/22/JavaScript/webpack1/</guid>
             <title>webpack概念笔记</title>
-            <link>http://zyczxq.com/2021/06/22/webpack1/</link>
+            <link>http://zyczxq.com/2021/06/22/JavaScript/webpack1/</link>
             <category term="前端" scheme="http://zyczxq.com/categories/JavaScript/" />
             <pubDate>Tue, 22 Jun 2021 14:57:41 +0800</pubDate>
             <description><![CDATA[ &lt;p&gt;webpack 是我做前端开发时一个非常重要的工具，也是现在前端工程化一个非常重要的工具&lt;/p&gt;
@@ -1347,9 +1347,9 @@ const &amp;#123;username&amp;#125; = useContext(AppContext);
  ]]></description>
         </item>
         <item>
-            <guid isPermalink="true">http://zyczxq.com/2021/06/21/crosssite/</guid>
+            <guid isPermalink="true">http://zyczxq.com/2021/06/21/JavaScript/crosssite/</guid>
             <title>跨域方法笔记</title>
-            <link>http://zyczxq.com/2021/06/21/crosssite/</link>
+            <link>http://zyczxq.com/2021/06/21/JavaScript/crosssite/</link>
             <category term="前端" scheme="http://zyczxq.com/categories/JavaScript/" />
             <pubDate>Mon, 21 Jun 2021 19:55:13 +0800</pubDate>
             <description><![CDATA[ &lt;p&gt;以前开发的时候在本地请求接口总是会遇到跨域问题，当时基础也不扎实，也不懂的怎么解决，现在趁机会总结一下跨域的概念和几种方法。&lt;/p&gt;
@@ -1433,9 +1433,9 @@ const &amp;#123;username&amp;#125; = useContext(AppContext);
  ]]></description>
         </item>
         <item>
-            <guid isPermalink="true">http://zyczxq.com/2021/06/21/sass/</guid>
+            <guid isPermalink="true">http://zyczxq.com/2021/06/21/JavaScript/sass/</guid>
             <title>sass</title>
-            <link>http://zyczxq.com/2021/06/21/sass/</link>
+            <link>http://zyczxq.com/2021/06/21/JavaScript/sass/</link>
             <category term="前端" scheme="http://zyczxq.com/categories/JavaScript/" />
             <pubDate>Mon, 21 Jun 2021 16:40:16 +0800</pubDate>
             <description><![CDATA[ &lt;p&gt;最近在实习的时候开发使用到 Sass，虽然之前从未使用过，不过看了下文档也比较快的上手了。使用之后真香，给我最大的感受就是写父子关系的选择器不再这么麻烦了，可以通过嵌套来选择，而且变量、混合器的引入也让我减少了重复写冗余代码的工作。总结一下开发的时候经常用到的几个特性&lt;/p&gt;
@@ -1456,9 +1456,9 @@ const &amp;#123;username&amp;#125; = useContext(AppContext);
 &lt;figure class=&#34;highlight scss&#34;&gt;&lt;figcaption data-lang=&#34;Sass (Scss)&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token selector&#34;&gt;.bg&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt; &lt;span class=&#34;token keyword&#34;&gt;@include&lt;/span&gt; &lt;span class=&#34;token function&#34;&gt;bg&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;url&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;3&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt; ]]></description>
         </item>
         <item>
-            <guid isPermalink="true">http://zyczxq.com/2021/06/20/react1/</guid>
+            <guid isPermalink="true">http://zyczxq.com/2021/06/20/JavaScript/react1/</guid>
             <title>react开发笔记1</title>
-            <link>http://zyczxq.com/2021/06/20/react1/</link>
+            <link>http://zyczxq.com/2021/06/20/JavaScript/react1/</link>
             <category term="前端" scheme="http://zyczxq.com/categories/JavaScript/" />
             <pubDate>Sun, 20 Jun 2021 15:38:05 +0800</pubDate>
             <description><![CDATA[ &lt;p&gt;记录一下实习中使用 React 开发需求时候遇到的一些困难和解决方案。&lt;/p&gt;
@@ -1579,9 +1579,9 @@ const MyComponentWithPersistentData = withPersistentData(MyComponent);
  ]]></description>
         </item>
         <item>
-            <guid isPermalink="true">http://zyczxq.com/2021/06/17/module/</guid>
+            <guid isPermalink="true">http://zyczxq.com/2021/06/17/JavaScript/module/</guid>
             <title>Javascript模块化笔记</title>
-            <link>http://zyczxq.com/2021/06/17/module/</link>
+            <link>http://zyczxq.com/2021/06/17/JavaScript/module/</link>
             <category term="前端" scheme="http://zyczxq.com/categories/JavaScript/" />
             <pubDate>Thu, 17 Jun 2021 17:07:19 +0800</pubDate>
             <description><![CDATA[ &lt;p&gt;在前端飞速发展的现状，模块化是一个非常重要的概念，像在 webpack 里，每一个文件就是一个模块。&lt;/p&gt;
@@ -1632,9 +1632,9 @@ const MyComponentWithPersistentData = withPersistentData(MyComponent);
  ]]></description>
         </item>
         <item>
-            <guid isPermalink="true">http://zyczxq.com/2021/06/15/webSafe1/</guid>
+            <guid isPermalink="true">http://zyczxq.com/2021/06/15/JavaScript/webSafe1/</guid>
             <title>前端安全笔记一_xss和csrf</title>
-            <link>http://zyczxq.com/2021/06/15/webSafe1/</link>
+            <link>http://zyczxq.com/2021/06/15/JavaScript/webSafe1/</link>
             <category term="前端" scheme="http://zyczxq.com/categories/JavaScript/" />
             <pubDate>Tue, 15 Jun 2021 19:01:48 +0800</pubDate>
             <description><![CDATA[ &lt;p&gt;在互联网不断发展的今天，随着 web 端页面的庞大化，互动性越来越强，网络安全也变得越来越重要。通过简单总结两种常见的攻击，来初步学习一下。&lt;/p&gt;
@@ -1706,9 +1706,9 @@ const MyComponentWithPersistentData = withPersistentData(MyComponent);
  ]]></description>
         </item>
         <item>
-            <guid isPermalink="true">http://zyczxq.com/2021/06/14/storage/</guid>
+            <guid isPermalink="true">http://zyczxq.com/2021/06/14/JavaScript/storage/</guid>
             <title>前端存储笔记</title>
-            <link>http://zyczxq.com/2021/06/14/storage/</link>
+            <link>http://zyczxq.com/2021/06/14/JavaScript/storage/</link>
             <category term="前端" scheme="http://zyczxq.com/categories/JavaScript/" />
             <pubDate>Mon, 14 Jun 2021 17:06:26 +0800</pubDate>
             <description><![CDATA[ &lt;h1 id=&#34;cookie&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#cookie&#34;&gt;#&lt;/a&gt; Cookie&lt;/h1&gt;
@@ -1770,9 +1770,9 @@ const MyComponentWithPersistentData = withPersistentData(MyComponent);
  ]]></description>
         </item>
         <item>
-            <guid isPermalink="true">http://zyczxq.com/2021/06/13/http2/</guid>
+            <guid isPermalink="true">http://zyczxq.com/2021/06/13/JavaScript/http2/</guid>
             <title>浏览器缓存学习笔记</title>
-            <link>http://zyczxq.com/2021/06/13/http2/</link>
+            <link>http://zyczxq.com/2021/06/13/JavaScript/http2/</link>
             <category term="前端" scheme="http://zyczxq.com/categories/JavaScript/" />
             <pubDate>Sun, 13 Jun 2021 15:16:06 +0800</pubDate>
             <description><![CDATA[ &lt;p&gt;浏览器缓存是前端一个重要的知识点，为了搞清楚强缓存、协商缓存，我决定写一篇博客来提取我零碎的理解并整理。&lt;/p&gt;
