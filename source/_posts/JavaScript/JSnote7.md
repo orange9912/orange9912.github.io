@@ -154,7 +154,7 @@ data.hobby.name = 'orange2';
 ## 数据劫持和数据代理的区别
 
 - Object.defineProperty不能监听数组的变化，需要对数组方法进行重写。
-- Object.defineProperty必须遍历对象的每个属性，且需要对嵌套结构进行深层便利。
+- Object.defineProperty必须遍历对象的每个属性，且需要对嵌套结构进行深层遍历。
 - Proxy的代理是针对整个对象的，一层代理可以监听同级结构下的所有属性变化。（深层结构仍然需要递归）
 - Proxy支持代理数组的变化
 

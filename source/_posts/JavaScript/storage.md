@@ -55,6 +55,50 @@ function getCookie(cname)
 }
 ```
 
+## Cookie相关字段
+
+### Expires
+
+这个值用于设置Cookie的过期时间，通常是一个绝对时间。如果不指定，则表示是一个临时会话的cookie。浏览器关闭时会失效
+
+### Max-age
+
+和Expires作用类似，但是他的值是一个相对时间（秒为单位）。并且他的优先级比expires更高。
+
+当它的值为负数的时候表示是一个临时会话cookie。
+
+### Domain
+
+Domain指定cookie可以送达的域名。如果不指定，默认为当前文档访问地址的域名。
+
+子域名一般可以使用指定为父域名的cookie。比如taobao.com下的cookie，a.taobao.com可以使用。
+
+### Path
+
+Path指定一个资源路径，请求的资源路径必须出现该路径才可以发送cookie。
+
+如指定为/docs，则/docs/a可以使用，但/test不可以。
+
+**Domain和Path共同指定了Cookie的作用域**。
+
+### Http-only
+
+设置 HTTPOnly 属性可以防止客户端脚本通过 document.cookie 等方式访问 Cookie，有助于避免 XSS 攻击。
+
+### Secure
+
+标记为 Secure 的 Cookie 只应通过被HTTPS协议加密过的请求发送给服务端。
+
+### SameSite
+
+它的值有三个：Strict,Lax,None.
+
+在Strict下，会完全禁止第三方cookie。只在当前网页和请求目标网页的URL完全一致时才可发送请求网页的cookie
+
+这个属性可以避免csrf，因为以往csrf在访问某一个网站时，这个网站向另外一个网站发送的请求，默认会发送请求的那个网站的cookie。
+
+但是如果设置了samesite的strict，必须当前网页和请求网页的url完全一致，才能发送请求网页的cookie。
+
 # LocalStorage和SessionStorage
 
 ## 相同点
@@ -86,3 +130,4 @@ localStorage.clear();
 - 有效范围不同。不跨域情况下本地存储可以跨页签生效，而会话存储只在当前页签有效。
 
 其实还有一个前端数据库IndexDB，不过现在的我暂时用不上，先不去看，等要用上的时候再去学习总结。
+

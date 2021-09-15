@@ -53,12 +53,10 @@ prismjs:
 default_category: uncategorized
 category_map: # edit for Theme.shoka
   生活: life
-  医学: medical
   计算机科学: computer-science
   前端: JavaScript
   各种配置: configs
   Linux: Linux
-  Theme Shoka Documentation: theme-shoka-doc
 tag_map:
 
 # Date / Time format

@@ -148,6 +148,8 @@ const {username} = useContext(AppContext);
 
 # useCallback
 
+**当组件内存在函数声明的逻辑或者闭包变量的时候，组件每刷新一次，都会生成一个新的函数或闭包变量**，为了减少生成量，我们可以使用useCallback来缓存一个函数，只有当参数的第二项（一个依赖项数组）改变的时候，才重新生成。
+
 ```react
 const memoizedCallback = useCallback(
   () => {
@@ -158,6 +160,17 @@ const memoizedCallback = useCallback(
 ```
 
 它返回一个memoized回调函数。它只在依赖项更新的时候才会更新，可以避免不必要的重新渲染。
+
+# useMemo
+
+类似useCallback，不过useMemo用于缓存生成的闭包变量，减少刷新，只有依赖项改变时才重新生成，否则使用缓存的值。
+
+```javascript
+const transformData = React.useMemo(
+	() => data.filter(rules).sort(),
+  [data,data.filter]
+);
+```
 
 ## 自定义hook
 

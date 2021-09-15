@@ -93,6 +93,16 @@ Cache-Control和Expires可以同时启用，但Cache-Control优先级更高
 
 Last-Modified和ETag可以同时使用，不过服务器会优先验证ETag，Etag一致的情况下，才会继续比对Last-Modified。
 
+## 启发式缓存
+
+当一份资源响应返回时没有Cache-Control，也没有Expires，但其实它可以被缓存。
+
+可缓存的时间是：Date响应头的时间减去Last-Modified的时间之后再除以10（只是规范推荐，实际上每个浏览器不一样）
+
+如果没有强缓存的两个字段的话，浏览器就会用这个来做缓存方式。
+
+**如果要禁用启发式缓存，需要Cache-Control：no-cache**
+
 # 浏览器缓存的工作流程
 
 ![cache](cache.png)

@@ -176,3 +176,10 @@ Webpack是当下最流行的前端工程构建工具，它是用于打包一个�
 
 Webpack的出现极大的简化了转换文件的流程，更好的去开发，现在各种新特性通常都会有可以集成到webpack开发的loader。
 
+# 面试题
+
+## loader和plugin的区别？
+
+loader主要是提供了一个文件转换的能力。webpack原生只支持解析js和json文件，而loader让webpack有了加载其他模块的能力。
+
+plugin主要是插件，用于扩展webpack的功能，比如抽离代码、压缩、配置开发工具等功能。
