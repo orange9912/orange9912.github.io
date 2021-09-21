@@ -8,8 +8,149 @@
     <author>
       <name>orange</name>
     </author>
-    <updated>2021-09-15T13:30:22.000Z</updated>
+    <updated>2021-09-21T07:34:58.000Z</updated>
     <category term="个人博客" />
+    <entry>
+        <id>http://zyczxq.com/2021/09/21/Node/Node1/</id>
+        <title>Node学习笔记一</title>
+        <link rel="alternate" href="http://zyczxq.com/2021/09/21/Node/Node1/"/>
+        <content type="html">&lt;p&gt;这段时间在学习 Node，看书、看文档资料的时候概念感觉太乱了，于是打算写一篇文章来整理自己学到的知识，就有了这篇文章）&lt;/p&gt;
+&lt;h1 id=&#34;node简介&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#node简介&#34;&gt;#&lt;/a&gt; Node 简介&lt;/h1&gt;
+&lt;p&gt;Node.js 是一个开源、跨平台的 JavaScript 运行时环境。2009 年的时候，Ryan Dahl 想开发一个高性能的 web 服务器，经过一番深思熟虑，他最终选择了 JavaScript 作为 Node 的实现语言。时至今日，Node 已经成为最火热的技术之一。&lt;/p&gt;
+&lt;h1 id=&#34;node的特点&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#node的特点&#34;&gt;#&lt;/a&gt; Node 的特点&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;事件驱动&lt;/p&gt;
+&lt;p&gt;和浏览器端 JavaScript 类似，&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;异步 I/O&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;单线程&lt;/p&gt;
+&lt;p&gt;准确来说是 JavaScript 的执行是单线程的，其实 Node 中不同平台内部完成 I/O 任务另有线程池&lt;/p&gt;
+&lt;p&gt;但其实类似前端浏览器中的&lt;strong&gt; Web Workers&lt;/strong&gt;，Node 也提供了创建子进程的方法来高效的利用 CPU 和 I/O&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;跨平台&lt;/p&gt;
+&lt;p&gt;Node 基于&lt;strong&gt; libuv&lt;/strong&gt; 实现跨平台（libuv 是一个跨平台的异步 I/O 库，它提供的内容不仅是 I/O，还有进程、线程、定时器、线程池等。）&lt;/p&gt;
+&lt;p&gt;Node 用 libuv 作为抽象封装层，使得所有平台兼容性的判断由该层来完成。&lt;strong&gt;Node 在编译时会判断平台条件，选择性编译 unix 目录或 win 目录下的源文件到目标程序中&lt;/strong&gt;。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;node与浏览器上的javascript不同之处&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#node与浏览器上的javascript不同之处&#34;&gt;#&lt;/a&gt; Node 与浏览器上的 JavaScript 不同之处&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;面向范围不同&lt;/p&gt;
+&lt;p&gt;浏览器上的 JavaScript 是用于前端开发的，而 Node 是用于 Web 服务器开发的&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;语言组成不同&lt;/p&gt;
+&lt;p&gt;在前端中，&lt;strong&gt;JavaScript = ECMAScript + DOM + BOM&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;Node 中的语言（按我的理解）是等于&lt;strong&gt; ECMAScript + 和操作系统交互的 API（诸如读取文件等）&lt;/strong&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;运行环境不同&lt;/p&gt;
+&lt;p&gt;前端的 JavaScript 跑在浏览器中的 js 引擎 (不同浏览器的 js 引擎不同，如最经典的 Chrome 的引擎是 V8，除此之外还有 SpiderMonkey、Nitro 等)，是被限制在浏览器中的沙箱的。&lt;/p&gt;
+&lt;p&gt;Node.js 在浏览器外运行&lt;strong&gt; V8&lt;/strong&gt;（Chrome 的 JavaScript 引擎）。基于 V8 的执行效率，Node 的计算能力也是比较优秀的。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;node应用场景&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#node应用场景&#34;&gt;#&lt;/a&gt; Node 应用场景&lt;/h1&gt;
+&lt;p&gt;显然，异步 I/O 的使用场景最大就是&lt;strong&gt; I/O 密集型场景&lt;/strong&gt;。它的优势主要在于 Node 利用事件循环的处理能力。&lt;/p&gt;
+&lt;h1 id=&#34;node零碎基础知识&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#node零碎基础知识&#34;&gt;#&lt;/a&gt; Node（零碎）基础知识&lt;/h1&gt;
+&lt;h2 id=&#34;从命令行接收输入&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#从命令行接收输入&#34;&gt;#&lt;/a&gt; 从命令行接收输入&lt;/h2&gt;
+&lt;p&gt;利用 readline 模块创建一个接口从 process.stdin 读取&lt;/p&gt;
+&lt;figure class=&#34;highlight javascript&#34;&gt;&lt;figcaption data-lang=&#34;javascript&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token keyword&#34;&gt;const&lt;/span&gt; readline &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;token function&#34;&gt;require&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token string&#34;&gt;&#39;readline&#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;createInterface&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  input&lt;span class=&#34;token operator&#34;&gt;:&lt;/span&gt;process&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;stdin&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;3&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  output&lt;span class=&#34;token operator&#34;&gt;:&lt;/span&gt;process&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;stdout&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;4&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;5&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;6&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;readline&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;question&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token string&#34;&gt;&#39;what\&#39;s your name? \n&#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;token parameter&#34;&gt;name&lt;/span&gt; &lt;span class=&#34;token operator&#34;&gt;=&gt;&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;7&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  console&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;log&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token template-string&#34;&gt;&lt;span class=&#34;token template-punctuation string&#34;&gt;`&lt;/span&gt;&lt;span class=&#34;token string&#34;&gt;hello! &lt;/span&gt;&lt;span class=&#34;token interpolation&#34;&gt;&lt;span class=&#34;token interpolation-punctuation punctuation&#34;&gt;$&amp;#123;&lt;/span&gt;name&lt;span class=&#34;token interpolation-punctuation punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;token string&#34;&gt;!&lt;/span&gt;&lt;span class=&#34;token template-punctuation string&#34;&gt;`&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;8&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  readline&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;close&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;9&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;h2 id=&#34;node模块规范&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#node模块规范&#34;&gt;#&lt;/a&gt; Node 模块规范&lt;/h2&gt;
+&lt;p&gt;Node 中模块规范用的是 CommonJS 规范，它的使用方式大致如下：&lt;/p&gt;
+&lt;figure class=&#34;highlight javascript&#34;&gt;&lt;figcaption data-lang=&#34;javascript&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token comment&#34;&gt;// 模块引用&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token keyword&#34;&gt;const&lt;/span&gt; http &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;token function&#34;&gt;require&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token string&#34;&gt;&#39;http&#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;3&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token comment&#34;&gt;// 导出一&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;4&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;exports&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;token function-variable function&#34;&gt;add&lt;/span&gt; &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token parameter&#34;&gt;a&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt;b&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;token operator&#34;&gt;=&gt;&lt;/span&gt; a&lt;span class=&#34;token operator&#34;&gt;+&lt;/span&gt;b&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;5&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token comment&#34;&gt;// 导出二&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;6&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;module&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;exports &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;7&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token operator&#34;&gt;...&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;8&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;它的特点有以下几个：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;CommonJS 以同步的方式加载模块。这一点其实可以理解，因为 Node 通常是运行于服务端，而在服务端模块文件通常存放在本地磁盘，读取速度比起前端通过网络下载要快得多，所以一般没有什么问题（但是因此也不适用于前端）&lt;/li&gt;
+&lt;li&gt;CommonJS 输出的是模块的拷贝，这一点与 ESNext 模块不同。模块一旦输出后便独立（即后续更改不影响）&lt;/li&gt;
+&lt;li&gt;Node 中对引入过的模块都会进行缓存，减少后续引入的开销。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;核心模块&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#核心模块&#34;&gt;#&lt;/a&gt; 核心模块&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;util，提供常用函数的集合。如 util.inspect (将任意对象转换为字符串)、util.isArray 等等。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;fs，文件系统 API，用于操作文件。&lt;/p&gt;
+&lt;p&gt;如 fs.readFile (用于异步读取文件)、fs.open、&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;http，用于创建服务器。如 http.createServer&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;url，提供一些操作 url 的方法，如获取 url 中的参数&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;path，用于处理和转换文件路径的工具。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;还有等等非常多的模块。&lt;/p&gt;
+&lt;h2 id=&#34;全局对象&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#全局对象&#34;&gt;#&lt;/a&gt; 全局对象&lt;/h2&gt;
+&lt;p&gt;在浏览器中的 JavaScript，全局对象通常是 window。而在 Node 中，全局对象是 global。&lt;/p&gt;
+&lt;p&gt;一般来说我们有几个常常使用的变量&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;process，用于描述当前 Node 进程状态的对象。经常用的有很多，如 process.env.NODE_ENV 用于描述是开发环境（development）或者生产环境（production）&lt;/li&gt;
+&lt;li&gt;__filename，它表示当前正在执行的文件名。它会输出文件所在位置的绝对路径。&lt;/li&gt;
+&lt;li&gt;__dirname，它表示当前执行脚本的目录。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1 id=&#34;node重点知识&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#node重点知识&#34;&gt;#&lt;/a&gt; Node 重点知识&lt;/h1&gt;
+&lt;h2 id=&#34;node事件循环&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#node事件循环&#34;&gt;#&lt;/a&gt; Node 事件循环&lt;/h2&gt;
+&lt;p&gt;Node 中的事件循环与浏览器中的事件循环不太一样，浏览器环境下的就不详细讲了，见我的其他博客：&lt;a href=&#34;https://zyczxq.com/2021/06/06/JavaScript/JSnote6/&#34;&gt;JavaScript 运行机制笔记 - 前端 | orange&#39;s blog = orange&#39;s blog = 橙子的博客 (zyczxq.com)&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;事件循环是 Node 处理非阻塞 I/O 的机制。&lt;/p&gt;
+&lt;p&gt;Node 中使用 libuv 来进行 I/O 处理，Node 中的 Event Loop 也是基于 libuv 实现的。&lt;/p&gt;
+&lt;p&gt;Node 中的 Event loop 共分为 6 个阶段，如下：&lt;/p&gt;
+&lt;figure class=&#34;highlight tex&#34;&gt;&lt;figcaption data-lang=&#34;TeX&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;┌───────────────────────────┐&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;┌─&gt;│           timers          │&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;3&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;│  └─────────────┬─────────────┘&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;4&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;│  ┌─────────────┴─────────────┐&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;5&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;│  │     pending callbacks     │&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;6&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;│  └─────────────┬─────────────┘&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;7&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;│  ┌─────────────┴─────────────┐&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;8&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;│  │       idle, prepare       │&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;9&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;│  └─────────────┬─────────────┘      ┌───────────────┐&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;10&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;│  ┌─────────────┴─────────────┐      │   incoming:   │&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;11&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;│  │           poll            │&amp;lt;─────┤  connections, │&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;12&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;│  └─────────────┬─────────────┘      │   data, etc.  │&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;13&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;│  ┌─────────────┴─────────────┐      └───────────────┘&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;14&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;│  │           check           │&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;15&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;│  └─────────────┬─────────────┘&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;16&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;│  ┌─────────────┴─────────────┐&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;17&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;└──┤      close callbacks      │&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;18&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;   └───────────────────────────┘&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;timers（&lt;strong&gt;定时器&lt;/strong&gt;）。执行 setTimeout、setInterval 中到期的 callback。这里其实是由轮询阶段来控制定时器何时执行，而且不是精确的时间，有可能因为操作系统调度而被延迟。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;pending callback（&lt;strong&gt;待定回调&lt;/strong&gt;）。执行延迟到下一个循环迭代的 I/O 回调。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;idle，prepare。仅内部使用&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;poll（&lt;strong&gt;轮询&lt;/strong&gt;）。检索新的 I/O 事件；执行与 I/O 相关的回调（几乎所有情况下，除了关闭的回调函数，那些由计时器和  &lt;code&gt;setImmediate()&lt;/code&gt;  调度的之外），其余情况 node 将在适当的时候在此阻塞。&lt;/p&gt;
+&lt;p&gt;如果轮询队列不为空，事件循环将循环访问队列并同步执行直到空。&lt;/p&gt;
+&lt;p&gt;如果轮询队列是空的，有两件事：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;如果脚本被 setImmediate 调度，则事件循环结束轮询，进入 check（检查）阶段执行那些被调度的脚本&lt;/li&gt;
+&lt;li&gt;如果没有被 setImmediate 调度，则事件循环会等待回调被添加到队列中，然后立即执行&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;在这个过程中，一旦轮询队列为空，&lt;strong&gt;事件循环还会检查已经到达时间阈值（或者超时）的计时器，如果有就回到定时器阶段执行对应的回调（相比上面两件事优先级低一点）&lt;/strong&gt;。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;check（&lt;strong&gt;检测&lt;/strong&gt;）。执行 setImmediate 回调。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;close callbacks（关闭的回调函数）&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;note primary&#34;&gt;
+&lt;p&gt;process.nextTick () 不是事件循环的一部分，它在事件循环的每个阶段完成之后，和微任务一样去执行（&lt;strong&gt;但它比其他的微任务优先级都要高&lt;/strong&gt;）&lt;/p&gt;
+&lt;/div&gt;
+&lt;h3 id=&#34;setimmediate对比settimeout&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#setimmediate对比settimeout&#34;&gt;#&lt;/a&gt; setImmediate () 对比 setTimeout ()&lt;/h3&gt;
+&lt;p&gt;主要是调用时机不同。&lt;/p&gt;
+&lt;p&gt;setImmediate 在当前轮询阶段完成后，就执行脚本。而 setTimeout 在最小阈值过后运行脚本。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;执行计时器的顺序将根据调用他们的上下文而异。如果两者都从主模块内调用，则受进程性能的约束（顺序是非确定性的）&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;但是在异步 I/O callback 内部调用时，总是先执行 setImmediate，再执行 setTimeout&lt;/strong&gt;。因为 I/O 回调在 poll 阶段执行，当执行完后队列为空时，存在 setImmediate 回调的话会先跳转到 check 阶段去执行回调。&lt;/p&gt;
+&lt;h3 id=&#34;processnexttick-setimmediate&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#processnexttick-setimmediate&#34;&gt;#&lt;/a&gt; process.nextTick()、setImmediate()&lt;/h3&gt;
+&lt;p&gt;process.nexttick () 比 setImmediate () 触发的更快。如果想设置立即异步执行一个任务，最好不要使用 setTimeout (fn,0)，而是使用 process.nextTick () 或 setImmediate ()。&lt;/p&gt;
+&lt;p&gt;定时器不够准确，很多时候会超时，而且嵌套调用最小单位 4ms、未激活页面最小间隔 1000ms 等都不够精确、底层红黑树的操作时间复杂度为 O（lg (n)），而 nextTick 为 O (1)，更高效。&lt;/p&gt;
+&lt;h3 id=&#34;与浏览器事件循环的差异&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#与浏览器事件循环的差异&#34;&gt;#&lt;/a&gt; 与浏览器事件循环的差异？&lt;/h3&gt;
+&lt;p&gt;浏览器会在每个宏任务执行完毕后清空微任务队列&lt;/p&gt;
+&lt;p&gt;而 Node 中微任务（microtask）在事件循环的各个阶段执行。即每个阶段执行完毕，就会去执行 microtask 队列的任务。&lt;/p&gt;
+&lt;h2 id=&#34;异步编程&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#异步编程&#34;&gt;#&lt;/a&gt; 异步编程&lt;/h2&gt;
+&lt;h2 id=&#34;内存控制&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#内存控制&#34;&gt;#&lt;/a&gt; 内存控制&lt;/h2&gt;
+&lt;h1 id=&#34;参考资料&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#参考资料&#34;&gt;#&lt;/a&gt; 参考资料&lt;/h1&gt;
+&lt;p&gt;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cDovL25vZGVqcy5jbi8=&#34;&gt;Node.js 中文网 (nodejs.cn)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;朴灵的《深入浅出 nodejs》&lt;/p&gt;
+</content>
+        <category term="Node" scheme="http://zyczxq.com/categories/Node/" />
+        <updated>2021-09-21T07:34:58.000Z</updated>
+    </entry>
     <entry>
         <id>http://zyczxq.com/2021/09/15/medical/waike50/</id>
         <title>第五十篇 泌尿、男生殖系统结核</title>
@@ -2693,28 +2834,5 @@ const &amp;#123;username&amp;#125; = useContext(AppContext);
 </content>
         <category term="前端" scheme="http://zyczxq.com/categories/JavaScript/" />
         <updated>2021-06-21T11:55:13.000Z</updated>
-    </entry>
-    <entry>
-        <id>http://zyczxq.com/2021/06/21/JavaScript/sass/</id>
-        <title>sass</title>
-        <link rel="alternate" href="http://zyczxq.com/2021/06/21/JavaScript/sass/"/>
-        <content type="html">&lt;p&gt;最近在实习的时候开发使用到 Sass，虽然之前从未使用过，不过看了下文档也比较快的上手了。使用之后真香，给我最大的感受就是写父子关系的选择器不再这么麻烦了，可以通过嵌套来选择，而且变量、混合器的引入也让我减少了重复写冗余代码的工作。总结一下开发的时候经常用到的几个特性&lt;/p&gt;
-&lt;h1 id=&#34;变量的使用和引入&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#变量的使用和引入&#34;&gt;#&lt;/a&gt; 变量的使用和引入&lt;/h1&gt;
-&lt;p&gt;使用变量的好处非常的大，假设我们有一个屏幕宽度，很多地方的样式都需要根据这个宽度来调整，如果用传统的 css 写法，那就只能每个地方都：&lt;/p&gt;
-&lt;figure class=&#34;highlight css&#34;&gt;&lt;figcaption data-lang=&#34;CSS&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token property&#34;&gt;width&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;:&lt;/span&gt;1470px&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;这样子不仅非常不优雅，最重要的是修改的时候非常不方便。&lt;span class=&#34;pink&#34;&gt;试想一下如果我们屏幕宽度变化了，岂不是要每一处都要重新修改？&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;但是如果我们使用 Sass，将这个宽度定义为变量&lt;/p&gt;
-&lt;figure class=&#34;highlight scss&#34;&gt;&lt;figcaption data-lang=&#34;Sass (Scss)&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token property&#34;&gt;&lt;span class=&#34;token variable&#34;&gt;$screenwidth&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;:&lt;/span&gt;1470px&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token selector&#34;&gt;.selected &lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;3&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token property&#34;&gt;width&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;token variable&#34;&gt;$screenwidth&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;4&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;这样子统一引用这个变量，不仅修改方便，而且来源也很容易看出来。&lt;/p&gt;
-&lt;h1 id=&#34;嵌套css&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#嵌套css&#34;&gt;#&lt;/a&gt; 嵌套 CSS&lt;/h1&gt;
-&lt;p&gt;正常 css 中如果要对某个元素下的元素给样式，要这样：&lt;/p&gt;
-&lt;figure class=&#34;highlight css&#34;&gt;&lt;figcaption data-lang=&#34;CSS&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token selector&#34;&gt;#content div h1&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  ...&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;3&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;4&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token selector&#34;&gt;#content div p&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;5&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  ...&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;6&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;7&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token selector&#34;&gt;#content div:hover&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;8&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  ...&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;9&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;但如果我们使用 Sass，就可以减少很多写选择器的工作量&lt;/p&gt;
-&lt;figure class=&#34;highlight scss&#34;&gt;&lt;figcaption data-lang=&#34;Sass (Scss)&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token selector&#34;&gt;#content&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token selector&#34;&gt;div&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;3&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    h1&lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;...&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;4&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    p&lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;...&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;5&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &amp;amp;&lt;span class=&#34;token punctuation&#34;&gt;:&lt;/span&gt;hover&lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;...&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;6&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;7&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;其他选择器也是这样，简直是方便多了&lt;/p&gt;
-&lt;h1 id=&#34;混合器mixin&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#混合器mixin&#34;&gt;#&lt;/a&gt; 混合器 mixin&lt;/h1&gt;
-&lt;p&gt;在开发过程中实际上有很多地方需要重用大段代码，变量是没法做到的，这个时候就要引入混合器了。&lt;/p&gt;
-&lt;p&gt;比如说，我们经常需要引入图片，这个时候，每次都要编写：&lt;/p&gt;
-&lt;figure class=&#34;highlight css&#34;&gt;&lt;figcaption data-lang=&#34;CSS&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token selector&#34;&gt;.bg&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token property&#34;&gt;background-image&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;token url&#34;&gt;&lt;span class=&#34;token function&#34;&gt;url&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;url&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;3&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token property&#34;&gt;background-repeat&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;:&lt;/span&gt; no-repeat&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;4&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token property&#34;&gt;background-position&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;:&lt;/span&gt; center&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;5&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token property&#34;&gt;background-size&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;:&lt;/span&gt; 100% 100%&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;6&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;其实是非常冗余的，我们可以把它抽出来&lt;/p&gt;
-&lt;figure class=&#34;highlight scss&#34;&gt;&lt;figcaption data-lang=&#34;Sass (Scss)&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token keyword&#34;&gt;@mixin&lt;/span&gt; &lt;span class=&#34;token function&#34;&gt;bg&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token variable&#34;&gt;$url&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token property&#34;&gt;background-image&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;token url&#34;&gt;url&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token variable&#34;&gt;$url&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;3&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token property&#34;&gt;background-repeat&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;:&lt;/span&gt; no-repeat&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;4&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token property&#34;&gt;background-position&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;:&lt;/span&gt; center&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;5&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token property&#34;&gt;background-size&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;:&lt;/span&gt; 100% 100%&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;6&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;使用的时候:&lt;/p&gt;
-&lt;figure class=&#34;highlight scss&#34;&gt;&lt;figcaption data-lang=&#34;Sass (Scss)&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token selector&#34;&gt;.bg&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt; &lt;span class=&#34;token keyword&#34;&gt;@include&lt;/span&gt; &lt;span class=&#34;token function&#34;&gt;bg&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;url&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;3&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</content>
-        <category term="前端" scheme="http://zyczxq.com/categories/JavaScript/" />
-        <updated>2021-06-21T08:40:16.000Z</updated>
     </entry>
 </feed>
