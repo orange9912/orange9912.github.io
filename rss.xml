@@ -124,7 +124,7 @@
 &lt;li&gt;如果脚本被 setImmediate 调度，则事件循环结束轮询，进入 check（检查）阶段执行那些被调度的脚本&lt;/li&gt;
 &lt;li&gt;如果没有被 setImmediate 调度，则事件循环会等待回调被添加到队列中，然后立即执行&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;在这个过程中，一旦轮询队列为空，&lt;strong&gt;事件循环还会检查已经到达时间阈值（或者超时）的计时器，如果有就回到定时器阶段执行对应的回调（相比上面两件事优先级低一点）&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;在这个过程中，一旦轮询队列为空，&lt;strong&gt;事件循环还会检查已经到达时间阈值（或者超时）的计时器，如果有就回到定时器阶段执行对应的回调&lt;/strong&gt;。&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;check（&lt;strong&gt;检测&lt;/strong&gt;）。执行 setImmediate 回调。&lt;/p&gt;
