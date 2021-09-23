@@ -16,7 +16,7 @@
         <link rel="alternate" href="http://zyczxq.com/2021/09/23/JavaScript/v8-memoryManage/"/>
         <content type="html">&lt;p&gt;这里主要讲的是 Chrome 的 JavaScript 引擎 V8 的垃圾回收机制。&lt;/p&gt;
 &lt;h1 id=&#34;内存限制&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#内存限制&#34;&gt;#&lt;/a&gt; 内存限制&lt;/h1&gt;
-&lt;p&gt;**V8 之中，对内存的使用有限制（64 位下约 1.4G、32 位下约 0.7G）——《深入浅出 Nodejs》 **。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;V8 之中，对内存的使用有限制（64 位下约 1.4G、32 位下约 0.7G）——《深入浅出 Nodejs》&lt;/strong&gt;。&lt;/p&gt;
 &lt;p&gt;因为 V8 的内存管理机制是为浏览器而设计，而且为了避免长时间的垃圾回收阻塞 JavaScript 线程，所以就有这么一套限制。&lt;/p&gt;
 &lt;p&gt;当然，也可以在启动时传递 --max-old-space-size 或 --max-new-space-size 来调整这个限制大小。但是只能在初始化 / 启动时指定，无法运行过程中扩充&lt;/p&gt;
 &lt;h1 id=&#34;v8的垃圾回收机制&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#v8的垃圾回收机制&#34;&gt;#&lt;/a&gt; V8 的垃圾回收机制&lt;/h1&gt;
@@ -26,10 +26,12 @@
 &lt;li&gt;老生代：生存时间较长的对象&lt;/li&gt;
 &lt;li&gt;新生代空间较小，老生代空间较大&lt;/li&gt;
 &lt;/ul&gt;
-&lt;figure class=&#34;highlight tex&#34;&gt;&lt;figcaption data-lang=&#34;TeX&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;----------------------------------------------&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;|	新生代内存空间 |					老生代内存空间					|&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;3&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;----------------------------------------------&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;4&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;							V8的分代示意图&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;h2 id=&#34;新生代垃圾回收&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#新生代垃圾回收&#34;&gt;#&lt;/a&gt; 新生代垃圾回收&lt;/h2&gt;
+&lt;p&gt;&lt;img data-src=&#34;1.png&#34; alt=&#34;1&#34; /&gt;&lt;/p&gt;
+&lt;h2 id=&#34;新生代垃圾回收&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#新生代垃圾回收&#34;&gt;#&lt;/a&gt; 新生代垃圾回收&lt;/h2&gt;
 &lt;p&gt;新生代的垃圾回收算法主要通过&lt;strong&gt; Scavenge&lt;/strong&gt; 算法进行垃圾回收，该算法的流程主要是：&lt;/p&gt;
 &lt;p&gt;将堆内存一分为二，一个处于使用中 (from)，一个处于闲置中 (To)。&lt;/p&gt;
-&lt;figure class=&#34;highlight tex&#34;&gt;&lt;figcaption data-lang=&#34;TeX&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;新生代内存空间					老生代内存空间&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;----------------------------------------------&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;3&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;|	 semi  |  semi |                    			 |&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;4&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;| space  | space |                           |&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;5&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;| (from) |  (To) |                           |&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;6&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;----------------------------------------------&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;分配内存时，会先分配到使用中的内存（from 空间），当开始进行垃圾回收的时候，回收生命周期结束的对象。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;2.png&#34; alt=&#34;2&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;分配内存时，会先分配到使用中的内存（from 空间），当开始进行垃圾回收的时候，回收生命周期结束的对象。&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;对对象区域进行垃圾回收（标记清除），留下在使用中的活跃对象&lt;/li&gt;
 &lt;li&gt;把对象区域中剩下的活跃对象复制到空闲区域（复制过程会消除内存碎片）&lt;/li&gt;
@@ -342,7 +344,7 @@
 &lt;p&gt;idle，prepare。仅内部使用&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;poll（&lt;strong&gt;轮询&lt;/strong&gt;）。检索新的 I/O 事件；执行与 I/O 相关的回调（几乎所有情况下，除了关闭的回调函数，那些由计时器和  &lt;code&gt;setImmediate()&lt;/code&gt;  调度的之外），其余情况 node 将在适当的时候在此阻塞。&lt;/p&gt;
+&lt;p&gt;poll（&lt;strong&gt;轮询&lt;/strong&gt;）。检索新的 I/O 事件；执行与 I/O 相关的回调（几乎所有情况下，除了关闭的回调函数，那些由计时器和  &lt;code&gt;setImmediate()&lt;/code&gt;  调度的之外），其余情况 node 将在适当的时候在此阻塞。也就是说，如果执行的时间比较长，有可能定时器超时都还没返回 timers 阶段执行定时器。&lt;/p&gt;
 &lt;p&gt;如果轮询队列不为空，事件循环将循环访问队列并同步执行直到空。&lt;/p&gt;
 &lt;p&gt;如果轮询队列是空的，有两件事：&lt;/p&gt;
 &lt;ul&gt;
@@ -358,6 +360,7 @@
 &lt;p&gt;close callbacks（关闭的回调函数）&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
+&lt;p&gt;在每次运行的事件循环之间，Node.js 检查它是否在等待任何异步 I/O 或计时器，如果没有的话，则完全关闭。&lt;/p&gt;
 &lt;div class=&#34;note primary&#34;&gt;
 &lt;p&gt;process.nextTick () 不是事件循环的一部分，它在事件循环的每个阶段完成之后，和微任务一样去执行（&lt;strong&gt;但它比其他的微任务优先级都要高&lt;/strong&gt;）&lt;/p&gt;
 &lt;/div&gt;
@@ -372,8 +375,8 @@
 &lt;h3 id=&#34;与浏览器事件循环的差异&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#与浏览器事件循环的差异&#34;&gt;#&lt;/a&gt; 与浏览器事件循环的差异？&lt;/h3&gt;
 &lt;p&gt;浏览器会在每个宏任务执行完毕后清空微任务队列&lt;/p&gt;
 &lt;p&gt;而 Node 中微任务（microtask）在事件循环的各个阶段执行。即每个阶段执行完毕，就会去执行 microtask 队列的任务。&lt;/p&gt;
-&lt;h2 id=&#34;异步编程&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#异步编程&#34;&gt;#&lt;/a&gt; 异步编程&lt;/h2&gt;
 &lt;h2 id=&#34;内存控制&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#内存控制&#34;&gt;#&lt;/a&gt; 内存控制&lt;/h2&gt;
+&lt;p&gt;Node 的内存控制基于 V8 的内存控制，基本是一样的，不再重复，见：&lt;a href=&#34;https://zyczxq.com/2021/09/23/JavaScript/v8-memoryManage/&#34;&gt;https://zyczxq.com/2021/09/23/JavaScript/v8-memoryManage/&lt;/a&gt;&lt;/p&gt;
 &lt;h1 id=&#34;参考资料&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#参考资料&#34;&gt;#&lt;/a&gt; 参考资料&lt;/h1&gt;
 &lt;p&gt;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cDovL25vZGVqcy5jbi8=&#34;&gt;Node.js 中文网 (nodejs.cn)&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;朴灵的《深入浅出 nodejs》&lt;/p&gt;
