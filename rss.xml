@@ -10,9 +10,112 @@
         </author>
         <description>博客</description>
         <language>zh-CN</language>
-        <pubDate>Wed, 22 Sep 2021 21:30:47 +0800</pubDate>
-        <lastBuildDate>Wed, 22 Sep 2021 21:30:47 +0800</lastBuildDate>
+        <pubDate>Thu, 23 Sep 2021 19:32:56 +0800</pubDate>
+        <lastBuildDate>Thu, 23 Sep 2021 19:32:56 +0800</lastBuildDate>
         <category term="个人博客" />
+        <item>
+            <guid isPermalink="true">http://zyczxq.com/2021/09/23/JavaScript/v8-memoryManage/</guid>
+            <title>V8的垃圾回收机制</title>
+            <link>http://zyczxq.com/2021/09/23/JavaScript/v8-memoryManage/</link>
+            <category term="前端" scheme="http://zyczxq.com/categories/JavaScript/" />
+            <pubDate>Thu, 23 Sep 2021 19:32:56 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;这里主要讲的是 Chrome 的 JavaScript 引擎 V8 的垃圾回收机制。&lt;/p&gt;
+&lt;h1 id=&#34;内存限制&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#内存限制&#34;&gt;#&lt;/a&gt; 内存限制&lt;/h1&gt;
+&lt;p&gt;**V8 之中，对内存的使用有限制（64 位下约 1.4G、32 位下约 0.7G）——《深入浅出 Nodejs》 **。&lt;/p&gt;
+&lt;p&gt;因为 V8 的内存管理机制是为浏览器而设计，而且为了避免长时间的垃圾回收阻塞 JavaScript 线程，所以就有这么一套限制。&lt;/p&gt;
+&lt;p&gt;当然，也可以在启动时传递 --max-old-space-size 或 --max-new-space-size 来调整这个限制大小。但是只能在初始化 / 启动时指定，无法运行过程中扩充&lt;/p&gt;
+&lt;h1 id=&#34;v8的垃圾回收机制&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#v8的垃圾回收机制&#34;&gt;#&lt;/a&gt; V8 的垃圾回收机制&lt;/h1&gt;
+&lt;p&gt;V8 的垃圾回收策略主要基于&lt;strong&gt;分代式垃圾回收机制&lt;/strong&gt;。在这个机制中，主要将内存分为&lt;strong&gt;新生代&lt;/strong&gt;和&lt;strong&gt;老生代&lt;/strong&gt;两代。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;新生代：生存时间较短的对象&lt;/li&gt;
+&lt;li&gt;老生代：生存时间较长的对象&lt;/li&gt;
+&lt;li&gt;新生代空间较小，老生代空间较大&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&#34;highlight tex&#34;&gt;&lt;figcaption data-lang=&#34;TeX&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;----------------------------------------------&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;|	新生代内存空间 |					老生代内存空间					|&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;3&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;----------------------------------------------&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;4&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;							V8的分代示意图&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;h2 id=&#34;新生代垃圾回收&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#新生代垃圾回收&#34;&gt;#&lt;/a&gt; 新生代垃圾回收&lt;/h2&gt;
+&lt;p&gt;新生代的垃圾回收算法主要通过&lt;strong&gt; Scavenge&lt;/strong&gt; 算法进行垃圾回收，该算法的流程主要是：&lt;/p&gt;
+&lt;p&gt;将堆内存一分为二，一个处于使用中 (from)，一个处于闲置中 (To)。&lt;/p&gt;
+&lt;figure class=&#34;highlight tex&#34;&gt;&lt;figcaption data-lang=&#34;TeX&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;新生代内存空间					老生代内存空间&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;----------------------------------------------&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;3&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;|	 semi  |  semi |                    			 |&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;4&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;| space  | space |                           |&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;5&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;| (from) |  (To) |                           |&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;6&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;----------------------------------------------&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;分配内存时，会先分配到使用中的内存（from 空间），当开始进行垃圾回收的时候，回收生命周期结束的对象。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;对对象区域进行垃圾回收（标记清除），留下在使用中的活跃对象&lt;/li&gt;
+&lt;li&gt;把对象区域中剩下的活跃对象复制到空闲区域（复制过程会消除内存碎片）&lt;/li&gt;
+&lt;li&gt;翻转，使用区域（from）和空闲区域 (To)&lt;strong&gt; 身份互换&lt;/strong&gt;。循环重复&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;这个算法是典型的牺牲空间换时间的算法（因为只能使用堆内存的一半）。&lt;/p&gt;
+&lt;p&gt;该算法只复制存活的对象，而实际应用中新生代大多数对象的存活时间都是比较短的，所以时间效率上相对来说比较优异。但是每次都需要复制，而复制操作需要时间成本，如果新生区空间设置得太大了，那么每次清理的时间就会过久，所以为了执行效率，&lt;strong&gt;一般新生区的空间会被设置得比较小&lt;/strong&gt;（1～8m）。这也是为什么新生代内存空间相对老生代来说比较小。&lt;/p&gt;
+&lt;h2 id=&#34;对象晋升策略&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#对象晋升策略&#34;&gt;#&lt;/a&gt; 对象晋升策略&lt;/h2&gt;
+&lt;p&gt;当一个对象经过新生代垃圾回收中多次复制仍然存活时，它就会被认为是&lt;strong&gt;生命周期较长&lt;/strong&gt;的对象，随后会被移动到老生代内存空间中（也就是&lt;mark&gt;晋升&lt;/mark&gt;）。&lt;/p&gt;
+&lt;p&gt;在上面新生代垃圾回收过程中，并不是每一次都会把对象复制到闲置空间（To）中，而是在复制之前，会先判断两个条件，如果满足条件，则会触发对象晋升，而不是复制到闲置空间中。&lt;/p&gt;
+&lt;p&gt;这两个条件分别是：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;是否经历过 Scavenge 回收（主要是通过内存地址判断）&lt;/li&gt;
+&lt;li&gt;To 空间的内存占用比是否超过限制&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;两个条件达成其一即可。&lt;/p&gt;
+&lt;p&gt;对象晋升后，会在老生代中被新的回收算法处理。&lt;/p&gt;
+&lt;h2 id=&#34;老生代垃圾回收&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#老生代垃圾回收&#34;&gt;#&lt;/a&gt; 老生代垃圾回收&lt;/h2&gt;
+&lt;p&gt;在老生代中，存活对象通常占的比重较大，所以复制的效率会相对较低，不适用 Scavenge 算法。&lt;/p&gt;
+&lt;p&gt;V8 中老生代的垃圾回收主要采用了 **Mark-Sweep (标记 - 清除)&lt;strong&gt; 和&lt;/strong&gt; Mark-Compact (标记 - 整理)** 相结合的方式。&lt;/p&gt;
+&lt;h3 id=&#34;mark-sweep标记-清除&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#mark-sweep标记-清除&#34;&gt;#&lt;/a&gt; Mark-Sweep（标记 - 清除）&lt;/h3&gt;
+&lt;p&gt;顾名思义，Mark-Sweep 叫做标记 - 清除，它分为两个阶段：&lt;strong&gt;标记&lt;/strong&gt;和&lt;strong&gt;清除&lt;/strong&gt;。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;标记阶段，Mark-Sweep 遍历堆中的所有对象，并标记活着的对象&lt;/li&gt;
+&lt;li&gt;清除阶段，Mark-Sweep 清除没有被标记的对象&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;可以对比出，Scavenge 只复制活着的对象，而 Mark-Sweep 只清理死亡对象。所以前者适合（&lt;strong&gt;复制场合少，即存活少的区域&lt;/strong&gt;）新生代，后者适合（&lt;strong&gt;清理场合少，即存活多的区域&lt;/strong&gt;）老生代。&lt;/p&gt;
+&lt;p&gt;但是 Mark-Sweep 有一个比较严重的问题，就是清除后可能会有很多内存碎片，造成这些内存空间无法合理的利用，要消除内存碎片，就需要进行内存整理。&lt;/p&gt;
+&lt;h3 id=&#34;mark-compact标记-整理&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#mark-compact标记-整理&#34;&gt;#&lt;/a&gt; Mark-Compact（标记 - 整理）&lt;/h3&gt;
+&lt;p&gt;Mark-Compact 就是为了解决 Mark-Sweep 的问题而提出的。&lt;/p&gt;
+&lt;p&gt;Mark-Compact，即标记 - 整理，是在标记 - 清除的基础上演变来的。它和 Mark-Sweep 的差别在于，&lt;strong&gt;当对象在标记为死亡后，在整理的过程中，将活着的对象往一端移动（整理），移动完成后，直接清理边界外的内存&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;因为 Mark-Compact 需要移动对象再进行清除，很明显，它比 Mark-Sweep 要慢。&lt;/p&gt;
+&lt;h3 id=&#34;v8的策略&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#v8的策略&#34;&gt;#&lt;/a&gt; V8 的策略&lt;/h3&gt;
+&lt;p&gt;通过上面三种算法，我们可以得出一个对比表格：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;回收算法&lt;/th&gt;
+&lt;th&gt;Scavenge&lt;/th&gt;
+&lt;th&gt;Mark-Sweep&lt;/th&gt;
+&lt;th&gt;Mark-Compact&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;速度&lt;/td&gt;
+&lt;td&gt;最快&lt;/td&gt;
+&lt;td&gt;快&lt;/td&gt;
+&lt;td&gt;慢&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;是否有碎片&lt;/td&gt;
+&lt;td&gt;没有 (复制黏贴过程中消除)&lt;/td&gt;
+&lt;td&gt;有&lt;/td&gt;
+&lt;td&gt;没有&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;适用场景&lt;/td&gt;
+&lt;td&gt;新生代 (存活对象少的地方)&lt;/td&gt;
+&lt;td&gt;老生代 (存活对象多的地方)&lt;/td&gt;
+&lt;td&gt;老生代&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Mark-Compact 慢，Mark-Sweep 有碎片，而 V8 在取舍上结合两种：&lt;strong&gt;主要使用 Mark-Sweep，当空间不足以分配空间给新生代中晋升的对象时，使用 Mark-Compact 消除内存碎片&lt;/strong&gt;。&lt;/p&gt;
+&lt;h2 id=&#34;总结&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#总结&#34;&gt;#&lt;/a&gt; 总结&lt;/h2&gt;
+&lt;p&gt;V8 根据代际假说，将对象分为两部分：&lt;strong&gt;新生代与老生代&lt;/strong&gt;。并且对两部分使用不同的算法&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;新生代使用 Scavenge 算法进行垃圾回收，这种算法牺牲空间来换取时间，实际上只利用了新生代一半的空间进行存储。但优点在于面对生命周期短的对象时速度较快，而且不会产生内存碎片。&lt;/li&gt;
+&lt;li&gt;新生代中的对象一旦满足两个条件之一，就会进行对象晋升，将其移动到老生代区域。&lt;/li&gt;
+&lt;li&gt;老生代使用 Mark-Sweep 及 Mark-Compact 两种结合。主要使用 Mark-Sweep，当碎片太多、不足以分配一块内存给晋升的对象时，就利用 Mark-Compact 进行整理。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;v8垃圾回收算法的问题和解决方法&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#v8垃圾回收算法的问题和解决方法&#34;&gt;#&lt;/a&gt; V8 垃圾回收算法的问题和解决方法&lt;/h1&gt;
+&lt;p&gt;为了避免出现回收逻辑和 JavaScript 逻辑不一致的情况，当垃圾回收进行时，需要暂停 JavaScript 的应用逻辑，这种现象叫做&lt;strong&gt;全停顿&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;在老生代的垃圾回收中，因为空间比较大，运行一次垃圾回收可能要占用相当长的一段时间，这段停顿时间可能会造成卡顿。&lt;/p&gt;
+&lt;p&gt;为了减小停顿时间带来的影响，V8 引入了增量标记，即将一个同步一口气完成的动作分为许多个 “step”，在这些 step 之间可以穿插一些 JavaScript 应用逻辑（其实我总觉得和操作系统调度、React fiber 的改进思想有些异曲同工，都是分片），这样就不会长时间无响应。&lt;/p&gt;
+&lt;h1 id=&#34;参考资料&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#参考资料&#34;&gt;#&lt;/a&gt; 参考资料&lt;/h1&gt;
+&lt;p&gt;《深入浅出 Nodejs》—— 朴灵&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9ibG9nLnBvZXRyaWVzLnRvcC9icm93c2VyLXdvcmtpbmctcHJpbmNpcGxlL2d1aWRlL3BhcnQzL2xlc3NvbjEzLmh0bWw=&#34;&gt;https://blog.poetries.top/browser-working-principle/guide/part3/lesson13.html&lt;/span&gt;&lt;/p&gt;
+ ]]></description>
+        </item>
         <item>
             <guid isPermalink="true">http://zyczxq.com/2021/09/22/medical/waike51/</guid>
             <title>第五十一篇  尿路梗阻</title>
@@ -2791,92 +2894,6 @@ const &amp;#123;username&amp;#125; = useContext(AppContext);
 &lt;p&gt;发生在实例销毁之后，这个时候只剩下了 dom 空壳。组件已被拆解，数据绑定被卸除，监听被移出，子实例也统统被销毁。&lt;/p&gt;
 &lt;h1 id=&#34;总结&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#总结&#34;&gt;#&lt;/a&gt; 总结&lt;/h1&gt;
 &lt;p&gt;其实我自己常常使用的也就 Created，用于获取初始数据，或者在 beforeDestroy 去清除一些数据。&lt;/p&gt;
- ]]></description>
-        </item>
-        <item>
-            <guid isPermalink="true">http://zyczxq.com/2021/06/22/JavaScript/webpack1/</guid>
-            <title>webpack概念笔记</title>
-            <link>http://zyczxq.com/2021/06/22/JavaScript/webpack1/</link>
-            <category term="前端" scheme="http://zyczxq.com/categories/JavaScript/" />
-            <pubDate>Tue, 22 Jun 2021 14:57:41 +0800</pubDate>
-            <description><![CDATA[ &lt;p&gt;webpack 是我做前端开发时一个非常重要的工具，也是现在前端工程化一个非常重要的工具&lt;/p&gt;
-&lt;p&gt;之前使用的时候基本只是知道它大概怎么使用，但并没有深入探究。这次想深入总结一下自己对 webpack 的学习&lt;/p&gt;
-&lt;h1 id=&#34;webpack是什么&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#webpack是什么&#34;&gt;#&lt;/a&gt; webpack 是什么？&lt;/h1&gt;
-&lt;p&gt;官网上是这么介绍 webpack 的：&lt;strong&gt;本质上，webpack 是一个用于现代 Javascript 应用程序的静态模块打包工具。当 webpack 处理应用程序时，它会在内部构建一个依赖图，这个依赖图对应映射到项目所需的每一个模块，并生成一个或多个 bundle。&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img data-src=&#34;webpack.png&#34; alt=&#34;webpack&#34; title=&#34;官方图&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;现代前端开发技术不断的增长，为了提高开发效率，新的工具和技术也不断的出现，比如 scss、typescript 等，他们这些都有一个共同点，就是源代码是无法直接执行的，需要特定的工具进行转换才可以执行，而 webpack 正是做了这一件事情。&lt;/p&gt;
-&lt;p&gt;简单来说，就是能将项目中的各个不同类型的文件，通过构建、打包将其打包成可执行的 js、css、html 文件和静态资源文件。&lt;/p&gt;
-&lt;p&gt;发展到现在，webpack 的功能越来越强大，它的功能有以下这些：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;代码转换：将 Scss 文件编译成 css、将 typescript 文件编译成 JavaScript 等&lt;/li&gt;
-&lt;li&gt;文件优化：压缩 JS、CSS、HTML 代码，压缩合并图片&lt;/li&gt;
-&lt;li&gt;代码分割：提取多个页面的公共代码，懒加载资源&lt;/li&gt;
-&lt;li&gt;模块合并：构建时将模块分类合并成一个文件&lt;/li&gt;
-&lt;li&gt;热重载：监听本地代码的变化，自动重新构建、刷新，便于开发。&lt;/li&gt;
-&lt;li&gt;自动发布：更新代码后，自动构建出线上发布代码并传输给发布系统。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1 id=&#34;webpack核心概念&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#webpack核心概念&#34;&gt;#&lt;/a&gt; webpack 核心概念&lt;/h1&gt;
-&lt;p&gt;要了解 webpack 的工作原理和流程，首先需要了解一些基本的核心概念。&lt;/p&gt;
-&lt;p&gt;webpack 虽然不配置也可以使用，但是我们经常需要用配置做一些调整，一般在项目根目录下新建一个 webpack.config.js 来添加配置项。&lt;/p&gt;
-&lt;h2 id=&#34;入口entry&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#入口entry&#34;&gt;#&lt;/a&gt; 入口（entry）&lt;/h2&gt;
-&lt;p&gt;既然是打包，总得有个打包的起点，&lt;strong&gt;这个起点就称为入口&lt;/strong&gt;。入口是 webpack 构建的起点，它会从这个起点中构建一个内部依赖图，找出依赖的所有模块。&lt;/p&gt;
-&lt;p&gt;它的默认值是&lt;span class=&#34;pink&#34;&gt;./src/index.js&lt;/span&gt;，但是我们可以在 webpack 配置文件中修改它，比如&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;webpack.config.js&lt;/strong&gt;&lt;/p&gt;
-&lt;figure class=&#34;highlight javascript&#34;&gt;&lt;figcaption data-lang=&#34;javascript&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;module&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;exports &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  entry&lt;span class=&#34;token operator&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;token string&#34;&gt;&#39;./src/entry.js&#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;3&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;而且，入口可以不止一个，按照经验，通常在多页应用中，一个 HTML 文档使用一个入口。&lt;/p&gt;
-&lt;h2 id=&#34;chunk&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#chunk&#34;&gt;#&lt;/a&gt; chunk&lt;/h2&gt;
-&lt;p&gt;chunk 是代码块的意思，一个 chunk 由多个模块组合而成，一般一个入口及这个入口依赖的所有模块对应一个 chunk。&lt;/p&gt;
-&lt;h2 id=&#34;出口output&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#出口output&#34;&gt;#&lt;/a&gt; 出口（output）&lt;/h2&gt;
-&lt;p&gt;打包肯定是有结果的，就是所谓的出口。output 告诉 webpack 在哪里输出它所创建的 bundle 还有命名规范。&lt;/p&gt;
-&lt;p&gt;它的默认值是&lt;span class=&#34;pink&#34;&gt;./dist/main.js&lt;/span&gt;，但是也可以像入口一样进行配置&lt;/p&gt;
-&lt;figure class=&#34;highlight javascript&#34;&gt;&lt;figcaption data-lang=&#34;javascript&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token keyword&#34;&gt;const&lt;/span&gt; path &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;token function&#34;&gt;require&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token string&#34;&gt;&#39;path&#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;module&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;exports &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;3&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token operator&#34;&gt;...&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;4&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  output&lt;span class=&#34;token operator&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;5&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    path&lt;span class=&#34;token operator&#34;&gt;:&lt;/span&gt;path&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;resolve&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;__dirname&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;token string&#34;&gt;&#39;dist&#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;6&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    filename&lt;span class=&#34;token operator&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;token string&#34;&gt;&#39;my.bundle.js&#39;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;7&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;8&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;如果配置文件中设置了多个入口，那就需要修改 filename 为占位符来对应生成不同名字。&lt;/p&gt;
-&lt;h2 id=&#34;loader&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#loader&#34;&gt;#&lt;/a&gt; loader&lt;/h2&gt;
-&lt;p&gt;webpack 原本只能理解 JS 文件和 JSON 文件，如果要处理其他类型，就需要用到 loader。&lt;/p&gt;
-&lt;p&gt;简单来说，可以把 loader 比喻成一个翻译，它识别特定的文件类型，并将其转换成另外一种类型，供程序使用及添加到依赖图之中。&lt;/p&gt;
-&lt;p&gt;像我们刚刚说到的 Scss、typescript 源代码文件在 webpack 中都需要对应的 loader 进行转换。&lt;/p&gt;
-&lt;p&gt;在 webpack 的配置中，loader 有两个属性：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;test：识别那些文件需要被转换&lt;/li&gt;
-&lt;li&gt;use：那些文件要使用什么 loader 进行转换。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;webpack.config.js&lt;/strong&gt;&lt;/p&gt;
-&lt;figure class=&#34;highlight javascript&#34;&gt;&lt;figcaption data-lang=&#34;javascript&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token keyword&#34;&gt;const&lt;/span&gt; path &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;token function&#34;&gt;require&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token string&#34;&gt;&#39;path&#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;3&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;module&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;exports &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;4&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;	&lt;span class=&#34;token comment&#34;&gt;// 其他配置项省略&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;5&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  module&lt;span class=&#34;token operator&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;6&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    rules&lt;span class=&#34;token operator&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;[&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;7&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;			&lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;8&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;        test&lt;span class=&#34;token operator&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;token regex&#34;&gt;&lt;span class=&#34;token regex-delimiter&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;token regex-source language-regex&#34;&gt;\.scss$&lt;/span&gt;&lt;span class=&#34;token regex-delimiter&#34;&gt;/&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;9&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;        use&lt;span class=&#34;token operator&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;token string&#34;&gt;&#39;style-loader&#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;token string&#34;&gt;&#39;css-loader&#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;token string&#34;&gt;&#39;scss-loader&#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;]&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;10&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;      &lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;11&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token punctuation&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;12&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;13&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;这里就是告诉 webpack：“webpack，你遇到 scss 结尾的文件时使用 scss-loader、css-loader、style-loader 来帮我把它转换”&lt;/p&gt;
-&lt;div class=&#34;note primary&#34;&gt;
-&lt;p&gt;需要注意的是，use 的属性是一个数组，表示要使用的 loader，而且执行顺序是由后到前。&lt;/p&gt;
-&lt;/div&gt;
-&lt;p&gt;loader 接收一个文件和配置项作为输入，然后将对应的文件转换后输出。&lt;/p&gt;
-&lt;h2 id=&#34;plugin&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#plugin&#34;&gt;#&lt;/a&gt; plugin&lt;/h2&gt;
-&lt;p&gt;loader 用于转换文件，而 plugin（插件）有着范围更广的任务，它是用来扩展 webpack 功能的，通过在 webpack 构建流程中注入钩子实现。&lt;/p&gt;
-&lt;p&gt;想要使用一个插件，只需要 require 它，然后把它添加到 plugins 数组中，比如这样：&lt;/p&gt;
-&lt;figure class=&#34;highlight javascript&#34;&gt;&lt;figcaption data-lang=&#34;javascript&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token keyword&#34;&gt;const&lt;/span&gt; HtmlWebpackPlugin &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;token function&#34;&gt;require&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token string&#34;&gt;&#39;html-webpack-plugin&#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;token comment&#34;&gt;// 通过 npm 安装&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;module&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;exports &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;3&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token operator&#34;&gt;...&lt;/span&gt;&lt;span class=&#34;token comment&#34;&gt;// 其他省略&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;4&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  plugins&lt;span class=&#34;token operator&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;[&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;5&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token keyword&#34;&gt;new&lt;/span&gt; &lt;span class=&#34;token class-name&#34;&gt;HtmlWebpackPlugin&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;template&lt;span class=&#34;token operator&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;token string&#34;&gt;&#39;./src/index.html&#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;6&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token punctuation&#34;&gt;]&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;7&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;div class=&#34;note primary&#34;&gt;
-&lt;p&gt;HtmlWebpackPlugin 是用于生成 html 文件、并自动在这个文件中引入相关入口 chunk 的 js 文件和抽取出来的 css 文件的插件&lt;/p&gt;
-&lt;/div&gt;
-&lt;h2 id=&#34;compiler对象&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#compiler对象&#34;&gt;#&lt;/a&gt; compiler 对象&lt;/h2&gt;
-&lt;p&gt;它的实例包含了完整的 webpack 配置，全局只有一个 compiler 对象。可以通过这个对象访问 webpack 的内部环境。&lt;/p&gt;
-&lt;h2 id=&#34;compilation对象&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#compilation对象&#34;&gt;#&lt;/a&gt; compilation 对象&lt;/h2&gt;
-&lt;p&gt;当 webpack 以开发模式运行时，每当监测到文件变化时，就会创建一个新的 compilation 对象。对象包含了构建过程中所有的构建数据。&lt;/p&gt;
-&lt;h1 id=&#34;webpack编译结果&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#webpack编译结果&#34;&gt;#&lt;/a&gt; webpack 编译结果&lt;/h1&gt;
-&lt;p&gt;不同模块规范下的打包结果有一些细微的差别，但总体大致是一样的。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;webpack 的打包结果就是一个 IIFE（立即调用函数表达式），它接收一个对象 modules 作为参数，这个参数对象的 key 是依赖路径，value 是简单处理后的脚本&lt;/li&gt;
-&lt;li&gt;打包结果中定义了一个重要的模块加载函数__webpack_require__&lt;/li&gt;
-&lt;li&gt;首先使用模块加载函数__webpack_require__去加载入口模块&lt;/li&gt;
-&lt;li&gt;加载函数使用了闭包变量 installedModules，将已加载过的模块存在内存中。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1 id=&#34;webpack工作流程&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#webpack工作流程&#34;&gt;#&lt;/a&gt; webpack 工作流程&lt;/h1&gt;
-&lt;h2 id=&#34;简单理解版本&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#简单理解版本&#34;&gt;#&lt;/a&gt; 简单理解版本&lt;/h2&gt;
-&lt;p&gt;Webpack 工作时，会&lt;strong&gt;首先读取项目根目录下的 webpack.config.js 来获取配置项&lt;/strong&gt;（当然，从 4.0.0 版本开始可以不用该文件配置，使用默认配置），配置项是一个对象，使用 module.export 导出，通常可以指定打包的入口文件（entry）、打包的输出相关（output），如输出文件名、位置等，以及指定文件转换使用的 loader。&lt;/p&gt;
-&lt;p&gt;获取配置项后，会对每一个入口进行如下的工作：&lt;strong&gt;从入口的模块开始递归解析该模块依赖的所有模块，每找到一个模块，会根据配置的 loader 进行文件转换（webpack 原本只支持对 js 和 json 的解析，其他文件需要对应的 loader 提供支持），然后这些模块以入口为分组，每个入口及其所有依赖的模块会被分到一个组（chunk），而且每一个入口对应一个依赖图。最后将所有 chunk 转换成文件输出。&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;这是一个正常的 webpack 工作流程，除此之外，还可以在 webpack 正常工作流程中使用插件，注入钩子在特定工作流程中对打包结果进行干预。&lt;/p&gt;
-&lt;h2 id=&#34;更深入理解的版本&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#更深入理解的版本&#34;&gt;#&lt;/a&gt; 更深入理解的版本&lt;/h2&gt;
-&lt;p&gt;先留个坑，等用的再熟一点再去啃&lt;/p&gt;
-&lt;h1 id=&#34;总结&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#总结&#34;&gt;#&lt;/a&gt; 总结&lt;/h1&gt;
-&lt;p&gt;Webpack 是当下最流行的前端工程构建工具，它是用于打包一个工程项目静态模块的打包工具，它的出现大大方便了日常开发。&lt;/p&gt;
-&lt;p&gt;各种新特性、新语言、新框架的出现，提高了我们的开发效率，如 typescript、sass、babel、vue 等。但是我们开发出来的项目文件最终还是应该打包成一堆 html、css、js 文件，尽管这些新特性的创造者会提供一个工具来进行转换，但是一个个转换我们的开发文件的工作量是巨大的，这个时候 webpack 就开始发挥它的威力了。&lt;/p&gt;
-&lt;p&gt;Webpack 的出现极大的简化了转换文件的流程，更好的去开发，现在各种新特性通常都会有可以集成到 webpack 开发的 loader。&lt;/p&gt;
-&lt;h1 id=&#34;面试题&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#面试题&#34;&gt;#&lt;/a&gt; 面试题&lt;/h1&gt;
-&lt;h2 id=&#34;loader和plugin的区别&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#loader和plugin的区别&#34;&gt;#&lt;/a&gt; loader 和 plugin 的区别？&lt;/h2&gt;
-&lt;p&gt;loader 主要是提供了一个文件转换的能力。webpack 原生只支持解析 js 和 json 文件，而 loader 让 webpack 有了加载其他模块的能力。&lt;/p&gt;
-&lt;p&gt;plugin 主要是插件，用于扩展 webpack 的功能，比如抽离代码、压缩、配置开发工具等功能。&lt;/p&gt;
  ]]></description>
         </item>
     </channel>
