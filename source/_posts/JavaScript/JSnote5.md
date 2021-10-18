@@ -273,7 +273,29 @@ g.next()也会返回一个对象，格式为{value:xxx,done:true/false}，value�
 
 ==async函数的实现，就是将Generator函数和自动执行器，包装在一个函数内==。
 
-async函数返回一个Promise对象，可以使用then方法添加回调函数。++当函数执行的时候，一旦遇到await就会先返回，等到触发的异步操作完成，再接着执行++。
+async函数**返回一个Promise对象**，可以使用then方法添加回调函数。
+
+await其实是默认创建一个Promise对象（如果修饰的代码不是返回一个Promise，则创建一个异步完成的Promise，并且将resolve传的结果作为返回值），然后等待该Promise完成，将完成的结果作为返回值。
+
+```javascript
+async function foo(){
+	console.log('0');
+  let a = await 1;
+  console.log(a);
+  console.log('2');
+}
+console.log('start');
+foo();
+console.log('end');
+//start->0->end->1->2
+```
+
+当函数执行遇到await时，它会将主线程的控制权交出，先继续执行其他同步代码，等到Promise完成状态的时候通过事件循环（微任务那一套）来继续执行。
+
+- await 仅能在 async 函数内部使用，否则会抛出语法错误
+- async 函数也可以用bind二次绑定作用域
+- 调用 async 函数时本质上返回的是一个 promise，可以进行 .then() .catch() 操作
+- 在 async 函数中，可以在 while, for, for/in, for/of 等控制语句中循环执行 await
 
 ## async/await改写红绿灯
 
@@ -286,7 +308,3 @@ const taskRunner = async () => {
 }
 taskRunner();
 ```
-
-# 总结
-
-异步任务的处理非常重要，几乎必考，而且常常用到，必须熟练的掌握，尽管一开始学起来非常吃力，但是我相信，水滴石穿之下一定终有一天可以好好学习完。
