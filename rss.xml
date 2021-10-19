@@ -14,10 +14,10 @@
         <lastBuildDate>Fri, 15 Oct 2021 17:30:54 +0800</lastBuildDate>
         <category term="个人博客" />
         <item>
-            <guid isPermalink="true">http://zyczxq.com/2021/10/15/JavaScript/VueNote/</guid>
+            <guid isPermalink="true">http://zyczxq.com/2021/10/15/Vue.js/VueNote/</guid>
             <title>读书笔记——深入浅出Vue.js</title>
-            <link>http://zyczxq.com/2021/10/15/JavaScript/VueNote/</link>
-            <category term="前端" scheme="http://zyczxq.com/categories/JavaScript/" />
+            <link>http://zyczxq.com/2021/10/15/Vue.js/VueNote/</link>
+            <category term="Vue" scheme="http://zyczxq.com/categories/Vue/" />
             <pubDate>Fri, 15 Oct 2021 17:30:54 +0800</pubDate>
             <description><![CDATA[ &lt;p&gt;参考资料 ——《深入浅出 Vue.js》刘博文著&lt;/p&gt;
 &lt;h1 id=&#34;变化侦测&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#变化侦测&#34;&gt;#&lt;/a&gt; 变化侦测&lt;/h1&gt;

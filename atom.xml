@@ -11,9 +11,9 @@
     <updated>2021-10-15T09:30:54.000Z</updated>
     <category term="个人博客" />
     <entry>
-        <id>http://zyczxq.com/2021/10/15/JavaScript/VueNote/</id>
+        <id>http://zyczxq.com/2021/10/15/Vue.js/VueNote/</id>
         <title>读书笔记——深入浅出Vue.js</title>
-        <link rel="alternate" href="http://zyczxq.com/2021/10/15/JavaScript/VueNote/"/>
+        <link rel="alternate" href="http://zyczxq.com/2021/10/15/Vue.js/VueNote/"/>
         <content type="html">&lt;p&gt;参考资料 ——《深入浅出 Vue.js》刘博文著&lt;/p&gt;
 &lt;h1 id=&#34;变化侦测&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#变化侦测&#34;&gt;#&lt;/a&gt; 变化侦测&lt;/h1&gt;
 &lt;h2 id=&#34;概述&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#概述&#34;&gt;#&lt;/a&gt; 概述&lt;/h2&gt;
@@ -99,7 +99,7 @@
 &lt;p&gt;&lt;img data-src=&#34;Vue%E5%8F%98%E5%8C%96%E4%BE%A6%E6%B5%8B%E5%85%B3%E7%B3%BB%E5%9B%BE.jpg&#34; alt=&#34;Vue变化侦测关系图&#34; title=&#34;如图所示&#34; /&gt;&lt;/p&gt;
 &lt;h1 id=&#34;虚拟dom技术&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#虚拟dom技术&#34;&gt;#&lt;/a&gt; 虚拟 DOM 技术&lt;/h1&gt;
 </content>
-        <category term="前端" scheme="http://zyczxq.com/categories/JavaScript/" />
+        <category term="Vue" scheme="http://zyczxq.com/categories/Vue/" />
         <updated>2021-10-15T09:30:54.000Z</updated>
     </entry>
     <entry>
