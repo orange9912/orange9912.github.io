@@ -11,9 +11,9 @@
     <updated>2021-10-15T09:30:54.000Z</updated>
     <category term="个人博客" />
     <entry>
-        <id>http://zyczxq.com/2021/10/15/Vue.js/VueNote/</id>
+        <id>http://zyczxq.com/2021/10/15/Vue/VueNote/</id>
         <title>读书笔记——深入浅出Vue.js</title>
-        <link rel="alternate" href="http://zyczxq.com/2021/10/15/Vue.js/VueNote/"/>
+        <link rel="alternate" href="http://zyczxq.com/2021/10/15/Vue/VueNote/"/>
         <content type="html">&lt;p&gt;参考资料 ——《深入浅出 Vue.js》刘博文著&lt;/p&gt;
 &lt;h1 id=&#34;变化侦测&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#变化侦测&#34;&gt;#&lt;/a&gt; 变化侦测&lt;/h1&gt;
 &lt;h2 id=&#34;概述&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#概述&#34;&gt;#&lt;/a&gt; 概述&lt;/h2&gt;
