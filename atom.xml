@@ -8,8 +8,16 @@
     <author>
       <name>orange</name>
     </author>
-    <updated>2021-10-15T09:30:54.000Z</updated>
+    <updated>2021-10-20T06:24:45.000Z</updated>
     <category term="个人博客" />
+    <entry>
+        <id>http://zyczxq.com/2021/10/20/Vue/VueNote2/</id>
+        <title>VueNote2</title>
+        <link rel="alternate" href="http://zyczxq.com/2021/10/20/Vue/VueNote2/"/>
+        <content type="html"></content>
+        <category term="Vue" scheme="http://zyczxq.com/categories/Vue/" />
+        <updated>2021-10-20T06:24:45.000Z</updated>
+    </entry>
     <entry>
         <id>http://zyczxq.com/2021/10/15/Vue/VueNote/</id>
         <title>读书笔记——深入浅出Vue.js</title>
@@ -2919,71 +2927,5 @@ class Parent extends React.Component&amp;#123;
 &lt;figure class=&#34;highlight javascript&#34;&gt;&lt;figcaption data-lang=&#34;javascript&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token comment&#34;&gt;// 写一个将参数函数柯里化的工具函数&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token keyword&#34;&gt;function&lt;/span&gt; &lt;span class=&#34;token function&#34;&gt;currying&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token parameter&#34;&gt;fn&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt;n&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;3&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token keyword&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;token keyword&#34;&gt;function&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token parameter&#34;&gt;m&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;4&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token keyword&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;token function&#34;&gt;fn&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;call&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token keyword&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt;m&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt;n&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;token comment&#34;&gt;//n 是固定参数&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;5&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;6&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;7&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;8&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token keyword&#34;&gt;const&lt;/span&gt; factorial &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;token function&#34;&gt;currying&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;factorial&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;token number&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;9&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token function&#34;&gt;factorial&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token number&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;token comment&#34;&gt;//24&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</content>
         <category term="前端" scheme="http://zyczxq.com/categories/JavaScript/" />
         <updated>2021-06-26T08:09:43.000Z</updated>
-    </entry>
-    <entry>
-        <id>http://zyczxq.com/2021/06/24/JavaScript/CSSnote2/</id>
-        <title>CSS选择器优先级笔记</title>
-        <link rel="alternate" href="http://zyczxq.com/2021/06/24/JavaScript/CSSnote2/"/>
-        <content type="html">&lt;p&gt;在 css 中，我们可以使用多种不同的方法选择元素。实际上，我们总会碰到同一个元素被选中多次的情况，而且选择器不尽相同，这个时候到底哪一个选择器选中的规则生效呢，就需要看选择器的优先级。&lt;/p&gt;
-&lt;p&gt;本文参考了我之前大二看的一本书，《CSS 权威指南》。&lt;/p&gt;
-&lt;h1 id=&#34;各类选择器&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#各类选择器&#34;&gt;#&lt;/a&gt; 各类选择器&lt;/h1&gt;
-&lt;p&gt;css 中的选择器实际上是非常多的，这里就说一些我平常用的比较多的选择器&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;类选择器，不用多说，这个基本上是我最常用的选择器之一&lt;/li&gt;
-&lt;li&gt;ID 选择器&lt;/li&gt;
-&lt;li&gt;属性选择器&lt;/li&gt;
-&lt;li&gt;通用选择器：*&lt;/li&gt;
-&lt;li&gt;文档结构的选择器，例如后代选择器、直接子代的选择器、相邻兄弟选择器等等&lt;/li&gt;
-&lt;li&gt;伪类、伪元素选择器，如 hover、active 等等&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1 id=&#34;特指度&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#特指度&#34;&gt;#&lt;/a&gt; 特指度&lt;/h1&gt;
-&lt;h2 id=&#34;概念&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#概念&#34;&gt;#&lt;/a&gt; 概念&lt;/h2&gt;
-&lt;p&gt;特指度就是一个充当优先级的一个东西。它由四个数值部分组成：&lt;strong&gt;0，0，0，0&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;它是从左到右比较的，只要从左到右比较相同位时哪个大，就是哪个大，不管后面的位数。&lt;/p&gt;
-&lt;p&gt;如：0,1,0,0&amp;gt;0,0,13,0&lt;/p&gt;
-&lt;h2 id=&#34;规则&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#规则&#34;&gt;#&lt;/a&gt; 规则&lt;/h2&gt;
-&lt;p&gt;它计算的规则如下：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;选择器中的每个 ID 属性值加 0，1，0，0&lt;/li&gt;
-&lt;li&gt;选择器中的每个类选择器、属性选择或伪类加 0，0，1，0&lt;/li&gt;
-&lt;li&gt;选择器中的每个元素和伪元素加 0，0，0，1。(css2.1 明确指出伪元素有特指度)&lt;/li&gt;
-&lt;li&gt;连接符和通用选择器不增加特指度。通用选择器特指度为 0，0，0，0&lt;/li&gt;
-&lt;li&gt;行内样式的特指度为 1，0，0，0&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;例子&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#例子&#34;&gt;#&lt;/a&gt; 例子&lt;/h2&gt;
-&lt;p&gt;计算下列各个选择器中的特指度&lt;/p&gt;
-&lt;figure class=&#34;highlight css&#34;&gt;&lt;figcaption data-lang=&#34;CSS&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token selector&#34;&gt;h1&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;span class=&#34;token property&#34;&gt;color&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;:&lt;/span&gt;blue&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;		&lt;span class=&#34;token selector&#34;&gt;//0,0,0,1&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;p em&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;...&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;					&lt;span class=&#34;token selector&#34;&gt;//0,0,0,2&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;3&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;.orange&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;...&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;			&lt;span class=&#34;token selector&#34;&gt;//0,0,1,0&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;4&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;*.bright&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;...&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;			&lt;span class=&#34;token selector&#34;&gt;//0,0,1,0&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;5&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;p.bright em.dark&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;...&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;span class=&#34;token selector&#34;&gt;//0,0,2,2&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;6&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;#id216&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;...&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;				&lt;span class=&#34;token selector&#34;&gt;//0,1,0,0&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;7&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;div#sidebar *[href]&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;...&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;//0&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt;1&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt;1&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;h2 id=&#34;注意边界&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#注意边界&#34;&gt;#&lt;/a&gt; 注意边界&lt;/h2&gt;
-&lt;p&gt;ID 选择符不等于选择 id 属性的属性选择符，一定要注意。&lt;/p&gt;
-&lt;h1 id=&#34;重要声明&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#重要声明&#34;&gt;#&lt;/a&gt; 重要声明&lt;/h1&gt;
-&lt;p&gt;前面说的比较前提都建立在属于非重要声明之中。&lt;/p&gt;
-&lt;p&gt;对于重要声明，可以在声明末尾分号之前插入！important，如：&lt;/p&gt;
-&lt;figure class=&#34;highlight css&#34;&gt;&lt;figcaption data-lang=&#34;CSS&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token selector&#34;&gt;p.dark&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;span class=&#34;token property&#34;&gt;color&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;:&lt;/span&gt;#333 &lt;span class=&#34;token important&#34;&gt;!important&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;token property&#34;&gt;background&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;:&lt;/span&gt;white&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;带有！important 的声明对特指度没有影响。&lt;/p&gt;
-&lt;p&gt;但是，&lt;span class=&#34;pink&#34;&gt;重要声明和非重要声明冲突时，重要声明始终胜出&lt;/span&gt;&lt;/p&gt;
-&lt;h1 id=&#34;继承值&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#继承值&#34;&gt;#&lt;/a&gt; 继承值&lt;/h1&gt;
-&lt;p&gt;css 很多属性会发生继承，但是要注意，继承得来的值是&lt;mark&gt;没有特指度的&lt;/mark&gt;。&lt;/p&gt;
-&lt;div class=&#34;note primary&#34;&gt;
-&lt;p&gt;没有特指度不等于零特指度，要注意，零特指度是大于没有特指度的。&lt;/p&gt;
-&lt;/div&gt;
-&lt;h1 id=&#34;当特指度相同的时候&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#当特指度相同的时候&#34;&gt;#&lt;/a&gt; 当特指度相同的时候...&lt;/h1&gt;
-&lt;p&gt;总有特指度相同的时候，这个时候还需要结合其他的规则进行判断。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;按权重和来源排序&lt;/li&gt;
-&lt;li&gt;按特指度排序&lt;/li&gt;
-&lt;li&gt;按前后位置排序&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;下面展开说。&lt;/p&gt;
-&lt;h2 id=&#34;按权重和来源排序&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#按权重和来源排序&#34;&gt;#&lt;/a&gt; 按权重和来源排序&lt;/h2&gt;
-&lt;p&gt;显式权重：看是否是重要声明，重要声明胜出&lt;/p&gt;
-&lt;p&gt;来源：行内样式 &amp;gt; 内部样式 &amp;gt; 外部样式&lt;/p&gt;
-&lt;h2 id=&#34;按特指度排序&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#按特指度排序&#34;&gt;#&lt;/a&gt; 按特指度排序&lt;/h2&gt;
-&lt;p&gt;这个没什么好说，前面已经说过了&lt;/p&gt;
-&lt;h2 id=&#34;按前后位置排序&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#按前后位置排序&#34;&gt;#&lt;/a&gt; 按前后位置排序&lt;/h2&gt;
-&lt;p&gt;如果显式权重、来源、特指度都相同，则样式表中位置靠后的规则胜出。&lt;/p&gt;
-&lt;div class=&#34;note primary&#34;&gt;
-&lt;p&gt;来自不同样式表的，则某个样式表的位置相当于 import（导入）中的位置&lt;/p&gt;
-&lt;/div&gt;
-</content>
-        <category term="前端" scheme="http://zyczxq.com/categories/JavaScript/" />
-        <updated>2021-06-24T07:18:14.000Z</updated>
     </entry>
 </feed>
