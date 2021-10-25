@@ -12,7 +12,7 @@
     <category term="个人博客" />
     <entry>
         <id>http://zyczxq.com/2021/10/20/Vue/VueNote2/</id>
-        <title>VueNote2</title>
+        <title>深入浅出Vue笔记————虚拟DOM篇</title>
         <link rel="alternate" href="http://zyczxq.com/2021/10/20/Vue/VueNote2/"/>
         <content type="html"></content>
         <category term="Vue" scheme="http://zyczxq.com/categories/Vue/" />

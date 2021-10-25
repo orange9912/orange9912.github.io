@@ -15,7 +15,7 @@
         <category term="个人博客" />
         <item>
             <guid isPermalink="true">http://zyczxq.com/2021/10/20/Vue/VueNote2/</guid>
-            <title>VueNote2</title>
+            <title>深入浅出Vue笔记————虚拟DOM篇</title>
             <link>http://zyczxq.com/2021/10/20/Vue/VueNote2/</link>
             <category term="Vue" scheme="http://zyczxq.com/categories/Vue/" />
             <pubDate>Wed, 20 Oct 2021 14:24:45 +0800</pubDate>
