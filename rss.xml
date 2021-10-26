@@ -19,7 +19,93 @@
             <link>http://zyczxq.com/2021/10/20/Vue/VueNote2/</link>
             <category term="Vue" scheme="http://zyczxq.com/categories/Vue/" />
             <pubDate>Wed, 20 Oct 2021 14:24:45 +0800</pubDate>
-            <description><![CDATA[  ]]></description>
+            <description><![CDATA[ &lt;h1 id=&#34;概述&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#概述&#34;&gt;#&lt;/a&gt; 概述&lt;/h1&gt;
+&lt;p&gt;Vue 自从 2.0 版本开始引入了虚拟 DOM 技术，而虚拟 DOM 技术也是 React 的核心技术之一，引入了虚拟 DOM 之后，Vue 的初始渲染速度提升了 2～4 倍。&lt;/p&gt;
+&lt;p&gt;虚拟 DOM 之所以称为虚拟 DOM，是因为他不是真实的 DOM，而是用 JavaScript 数据结构表示成的&lt;strong&gt;虚拟节点树&lt;/strong&gt;，然后使用虚拟节点树进行渲染。&lt;/p&gt;
+&lt;p&gt;就是，先生成一个虚拟节点树，然后用它和上一次生成的虚拟节点树进行对比，只渲染不同的部分。&lt;/p&gt;
+&lt;p&gt;简单来说，就是&lt;strong&gt;生成 -&amp;gt; 对比 -&amp;gt; 渲染&lt;/strong&gt;。&lt;/p&gt;
+&lt;h1 id=&#34;为什么引入虚拟dom&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#为什么引入虚拟dom&#34;&gt;#&lt;/a&gt; 为什么引入虚拟 DOM？&lt;/h1&gt;
+&lt;p&gt;在前面一篇讲 Vue 的变化侦测的博客里，也提到过。React 的变化侦测是比较暴力的，它不知道哪些地方需要变化，就只能通过虚拟 DOM 的比对，然后销毁、重建。&lt;/p&gt;
+&lt;p&gt;但其实在 Vue 中，Vue 是知道哪些状态发生了变化的。Vue 可以通过更细粒度的感知来更新视图，不需要进行比对。并且，Vue 在更新 DOM 的时候是异步执行的：当侦听到数据变化，&lt;strong&gt;Vue 会开启一个队列，并且缓冲同一事件循环中发生的所有变更&lt;/strong&gt;。（当数据变化，会通知对应的所有依赖 Watcher 实例更新）当一个 watcher 被多次触发，只会被推入到队列一次，能够减少不必要的计算和 DOM 操作。在下一个的事件循环 tick 中，Vue 刷新队列且执行实际（&lt;strong&gt;已去重&lt;/strong&gt;）工作。&lt;/p&gt;
+&lt;p&gt;看起来并没有什么引入虚拟 DOM 的必要，性能上似乎也还好。但是这么设计有个代价，每个状态对应一个 Watcher 实例来观察，内存开销以及依赖追踪开销在大型项目之中非常的大。&lt;/p&gt;
+&lt;p&gt;于是，Vue2.0 就选择了一个中等粒度的折中方案：&lt;strong&gt;引入虚拟 DOM&lt;/strong&gt;。把 Watcher 实例观察的级别从状态改成组件级别，也就是说当状态发生变化的时候，只能通知到组件级别。然后组件内部通过虚拟 DOM 去进行比对和渲染。&lt;/p&gt;
+&lt;p&gt;而且这个改动似乎也不大，因为前面的博客我们讲到，Watcher 只是一个中介，调整外界到 Watcher 的粒度，应该是对响应式核心的改动不大。&lt;/p&gt;
+&lt;h1 id=&#34;vue中的虚拟dom&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#vue中的虚拟dom&#34;&gt;#&lt;/a&gt; Vue 中的虚拟 DOM&lt;/h1&gt;
+&lt;p&gt;在 Vue 之中，使用模板来描述状态和 DOM 的映射。Vue 会通过模板编译，将模板转换成渲染函数，通过执行这个函数就能够得到一个虚拟节点树。&lt;/p&gt;
+&lt;p&gt;每次属性发生变化，会调用组件渲染函数&lt;strong&gt;生成&lt;/strong&gt;新的虚拟节点树，然后将新生成的虚拟节点树与上一次渲染视图使用的旧虚拟节点树进行&lt;strong&gt;对比&lt;/strong&gt;（&lt;strong&gt;diff&lt;/strong&gt;），再把要更新的地方进行 DOM 操作（&lt;strong&gt;patch&lt;/strong&gt;）。最后缓存这一次渲染视图使用的虚拟节点树的 VNode&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;%E6%B5%81%E7%A8%8B.png&#34; alt=&#34;流程&#34; title=&#34;VNode，即Virtual Node&#34; /&gt;&lt;/p&gt;
+&lt;h2 id=&#34;vnode&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#vnode&#34;&gt;#&lt;/a&gt; VNode&lt;/h2&gt;
+&lt;p&gt;在虚拟 DOM 中，VNode 即虚拟节点，在 Vue 中存在一个 VNode 类，用来实例化不同类型的 vnode 实例来表示不同类型的 DOM 节点。&lt;/p&gt;
+&lt;figure class=&#34;highlight javascript&#34;&gt;&lt;figcaption data-lang=&#34;javascript&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token keyword&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;token keyword&#34;&gt;default&lt;/span&gt; &lt;span class=&#34;token keyword&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;token class-name&#34;&gt;VNode&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token function&#34;&gt;constructor&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token parameter&#34;&gt;tag&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; data&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; children&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; text&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; elm&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; context&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; componentOptions&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; asyncFactory&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;3&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;		&lt;span class=&#34;token keyword&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;tag &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; tag&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;4&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token keyword&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;data &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; data&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;5&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token keyword&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;children &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; children&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;6&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token operator&#34;&gt;...&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;7&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;8&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token operator&#34;&gt;...&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;9&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;VNode 实际上就是一个 JavaScript 对象。在渲染视图之中，Vue 会先创建 VNode，然后再使用它去生成真实 DOM，然后插入到页面渲染视图。&lt;/p&gt;
+&lt;p&gt;VNode 的类型有以下几种：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;注释节点&lt;/li&gt;
+&lt;li&gt;文本节点&lt;/li&gt;
+&lt;li&gt;元素节点&lt;/li&gt;
+&lt;li&gt;组件节点&lt;/li&gt;
+&lt;li&gt;函数式组件&lt;/li&gt;
+&lt;li&gt;克隆节点&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;patch&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#patch&#34;&gt;#&lt;/a&gt; patch&lt;/h2&gt;
+&lt;p&gt;patch 算法又叫 patching 算法，它主要是通过对比新旧 vnode 找到需要更新的节点进行更新。本质上其实就是用 JavaScript 的运算速度换 DOM 操作的执行成本。&lt;/p&gt;
+&lt;p&gt;主要是两个算法：&lt;strong&gt;patchVnode&lt;/strong&gt; 和&lt;strong&gt; updateChildren&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;patch 算法的运行流程如下：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;检测 oldVnode 是否存在。若不存在，则使用 vnode 创建节点插入视图。存在则进入下一步&lt;/li&gt;
+&lt;li&gt;检测 oldVnode 和 vnode 是否是同一个节点。如果是则使用 patchVnode 进行更详细的对比与更新操作。&lt;/li&gt;
+&lt;li&gt;若第二步不是，则使用 vnode 创建真实节点并插入到视图中旧节点的旁边，并将视图中的旧节点删除&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;patchvnode&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#patchvnode&#34;&gt;#&lt;/a&gt; patchVnode&lt;/h2&gt;
+&lt;p&gt;是同一个节点的情况下，会进入该算法进行更详细的对比和更新，patchVnode 的算法流程大致如下：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;检测 vnode 与 oldVnode 是否完全一样？一样则退出，否则 2&lt;/li&gt;
+&lt;li&gt;vnode 和 oldVnode 是静态节点？是则退出，否则 3&lt;/li&gt;
+&lt;li&gt;vnode 有 text 属性？没有则代表是元素节点，有则检查 oldVnode 和 vnode 文本是否相同，不同就用 vnode 的文本替换真实 DOM 节点的内容否则 4&lt;/li&gt;
+&lt;li&gt;如果 vnode 和 oldVnode 都存在子节点，且子节点不相同，就进入 updateChildren。否则进入 567 步逐个检测&lt;/li&gt;
+&lt;li&gt;如果只有 vnode 子节点存在，则清空 DOM 中的文本并将 vnode 的子节点添加到 DOM 中。&lt;/li&gt;
+&lt;li&gt;如果只有 oldVnode 存在子节点，则清空 DOM 中的子节点&lt;/li&gt;
+&lt;li&gt;如果 oldVnode 中有文本，则清空 DOM 中的文本&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;总而言之，尽量 vnode 为准来更新视图。&lt;/p&gt;
+&lt;h2 id=&#34;updatechildren&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#updatechildren&#34;&gt;#&lt;/a&gt; updateChildren&lt;/h2&gt;
+&lt;p&gt;更新子节点，也是 diff 的核心。主要是 4 种操作：更新节点、新增节点、删除节点、移动节点。并且在循环中进行比对&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;新增子节点。&lt;/p&gt;
+&lt;p&gt;这个好理解，当没有在 oldChildren 中找到本次循环所指向的新子节点的节点，就新建一个节点插入到所有未处理节点的前面&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;更新子节点。同一个节点且同一位置&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;移动子节点。同一个节点，但是位置不同，则把需要移动的节点移动到所有未处理节点的前面。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;删除子节点。本质上是删除哪些 oldChildren 存在但 newChildren 不存在的节点。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;为了实现两端向中间遍历（即分辨出哪些节点被处理过 or 未处理过），这里 vue 用了四个变量来计算已处理和未处理的节点，oldStartIdx、oldEndIdx、newStartIdx、newEndIdx。分别表示 oldChildren 开始位置的下标和结束位置的下标、newChildren 开始位置的下标和结束位置的下标。&lt;/p&gt;
+&lt;p&gt;因为查找对应节点这个过程是通过循环，比较耗时，因此 vue 对这个过程做了个优化策略，&lt;strong&gt;也就是双端对比&lt;/strong&gt;。同时从新旧 children 的两端开始比较，借助 key 值找到可复用的节点，再进行相关操作。&lt;/p&gt;
+&lt;p&gt;大概有四个快捷查找方式：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;新前与旧前&lt;/li&gt;
+&lt;li&gt;新后与旧后&lt;/li&gt;
+&lt;li&gt;新后与旧前&lt;/li&gt;
+&lt;li&gt;新前与旧后&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;note primary&#34;&gt;
+&lt;p&gt;新前指的是 newChildren 中所有未处理节点的第一个节点，新后指的是 newChildren 中所有未处理节点的最后一个节点。旧前与旧后以此类推&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;其实就是顾名思义，先通过这四个快捷查找试探，如果找到了就不必循环查找，如果没找到才循环查找。&lt;/p&gt;
+&lt;p&gt;即通过对比新前 / 后与旧前 / 后位置的节点，看看是不是同一个节点，是则不用循环查找。这样可以减少移动节点的次数和减少不必要的性能损耗。&lt;/p&gt;
+&lt;h1 id=&#34;总结&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#总结&#34;&gt;#&lt;/a&gt; 总结&lt;/h1&gt;
+&lt;p&gt;虚拟 DOM 中最关键的部分就是 patch。通过 patch 可以对比新旧两个虚拟 DOM，并只针对发生了变化的节点进行更新视图的操作。&lt;/p&gt;
+&lt;p&gt;虚拟 DOM 也是 React 的核心技术之一。自从 Vue2.0 引入虚拟 DOM 后，初始渲染速度比 Vue1.0 提升了 2～4 倍，且大大降低了内存消耗。&lt;/p&gt;
+&lt;h1 id=&#34;参考资料&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#参考资料&#34;&gt;#&lt;/a&gt; 参考资料&lt;/h1&gt;
+&lt;p&gt;刘博文著的《深入浅出 Vue.js》&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC80MDEzNDAwMTY=&#34;&gt;diff 算法深入一下？ - 知乎 (zhihu.com)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8xNDk5NzI2MTk=&#34;&gt;聊一聊 Diff 算法（React、Vue2.x、Vue3.x） - 知乎 (zhihu.com)&lt;/span&gt;&lt;/p&gt;
+ ]]></description>
         </item>
         <item>
             <guid isPermalink="true">http://zyczxq.com/2021/10/15/Vue/VueNote/</guid>
