@@ -106,7 +106,7 @@
     </entry>
     <entry>
         <id>http://zyczxq.com/2021/10/15/Vue/VueNote/</id>
-        <title>读书笔记——深入浅出Vue.js</title>
+        <title>深入浅出Vue笔记————响应式系统篇</title>
         <link rel="alternate" href="http://zyczxq.com/2021/10/15/Vue/VueNote/"/>
         <content type="html">&lt;p&gt;参考资料 ——《深入浅出 Vue.js》刘博文著&lt;/p&gt;
 &lt;p&gt;前四章，讲述变化侦测的笔记。&lt;/p&gt;
