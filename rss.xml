@@ -191,7 +191,7 @@
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;前面说过，在 Vue1.x 之中，更新粒度是属性级别的，即一个属性对应一个 Watcher 实例。&lt;/p&gt;
-&lt;p&gt;但在 Vue2.x 之中，更新粒度是组件级别的，&lt;strong&gt;即一个组件实例对应一个 Watcher 实例&lt;/strong&gt;。一个组件可能依赖很多数据，这些数据对应的 Dep 都收集了这个 Watcher 实例，在数据变化的过程中，只要一个数据变化，都会引起这个组件的重新渲染。&lt;/p&gt;
+&lt;p&gt;但在 Vue2.x 之中，更新粒度是组件级别的，&lt;strong&gt;即一个组件实例对应一个组件级的 Watcher 实例 (实际上在组件内部用户可以通过 $watch 方法创建 watcher)&lt;/strong&gt;。一个组件可能依赖很多数据，这些数据对应的 Dep 都收集了这个 Watcher 实例，在数据变化的过程中，只要一个数据变化，都会引起这个组件的重新渲染。&lt;/p&gt;
 &lt;div class=&#34;note primary&#34;&gt;
 &lt;p&gt;不同数据的 Dep 可能收录同一个 Watcher 实例，数据的 Dep 可收录多个 Watcher 实例。（多对多）&lt;/p&gt;
 &lt;/div&gt;
