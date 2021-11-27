@@ -1,5 +1,5 @@
 ---
-title: webpack概念笔记
+title: webpack学习
 date: 2021-06-22 14:57:41
 tags:
 categories:
@@ -164,10 +164,6 @@ Webpack工作时，会**首先读取项目根目录下的webpack.config.js来获
 
 这是一个正常的webpack工作流程，除此之外，还可以在webpack正常工作流程中使用插件，注入钩子在特定工作流程中对打包结果进行干预。
 
-## 更深入理解的版本
-
-先留个坑，等用的再熟一点再去啃
-
 # 总结
 
 Webpack是当下最流行的前端工程构建工具，它是用于打包一个工程项目静态模块的打包工具，它的出现大大方便了日常开发。
@@ -183,3 +179,113 @@ Webpack的出现极大的简化了转换文件的流程，更好的去开发，�
 loader主要是提供了一个文件转换的能力。webpack原生只支持解析js和json文件，而loader让webpack有了加载其他模块的能力。
 
 plugin主要是插件，用于扩展webpack的功能，比如抽离代码、压缩、配置开发工具等功能。
+
+# 10.25补充
+
+webpack构建依赖图的时候，遇到不同的模块就根据webpack配置文件中配置的loader进行转换。
+
+plugin更像一个类，webpack会先把plugin实例化（new的时候对构造函数传入options），然后调用plugin的apply方法（传入complier）
+编写plugin的时候只需要在apply方法中对webpack广播出来的各种事件钩子根据需要注册处理函数，如compiler.hooks.hookname.tap(className,(…) => {…})
+
+## loader编写要点
+
+loader实质上是一个**函数**，它接收前一个loader的返回值作为参数输入（如果是配置的第一个loader则就是源文件内容），一般是字符串or二进制buffer，经过一些处理后返回对应的类型。
+
+简单情况下，就是这样：
+
+```javascript
+module.exports = function(source){
+  //...一些操作
+  return content;
+}
+```
+
+当然实际上我们不止是需要做一些操作，我们经常会看到对一个loader进行配置，然后定制化的处理文件。
+
+- 所以我们还需要获取开发者配置的options
+- 以及对loader处理过程中的错误捕获、导出sourceMap等信息
+- 还有些loader可能是异步的，比如less-loader就是异步的
+
+对于前两点，可以这样
+
+```javascript
+const loaderUtils = require('loader-utils');
+module.exports = function(source){
+	const options = loaderUtils.getOptions(this);//获取开发者配置的配置对象
+  //....一些工作
+  this.callback(error,content,sourceMap,ast);
+  //四个参数分别是：loader出错时向外抛出的错误，导出的内容，sourceMap，本次编译生成的抽象语法树
+}
+```
+
+:::primary
+
+获取配置传入的this实际指向一个叫loaderContext的loader-runner特有对象，详情请读webpack loader部分的源码
+
+:::
+
+对于异步loader的方案，可以使用简单的async/await，也可以使用webpack提供的this.async。调用this.async会返回一个回调，可以在异步操作完成后调用（这样就知道异步loader结束了），例如：
+
+```javascript
+const loaderUtils = require('loader-utils');
+module.exports = async function(source){
+  const options = loaderUtils.getOptions(this);
+  function delay(){
+    return new Promise((resolve,reject) => {
+      setTimeout(() => resolve(source),1000);
+    })
+  }
+  const callback = this.async();
+  delay().then(res => callback(null,res));
+}
+```
+
+## plugin编写要点
+
+在webpack构建的生命周期中，webpack会广播许多事件，我们可以通过监听这些事件，注册事件处理函数去干预编译，改变输出结果。
+
+简单来说，plugin更像是一个类（当然你用函数也不是不行，只要给它的原型定义一个以compiler对象为参数的apply方法即可）
+
+webpack会先把插件实例化（传入配置信息），然后调用实例的apply方法。一般apply方法内是对webpack各种事件钩子注册函数，调用apply方法时就会将这些钩子注册好。然后在真正webpack工作各个阶段的时候，广播各种事件，并调用该事件的所有钩子（自然就会调用某个插件的该事件钩子函数）
+
+```javascript
+class myPlugin{
+	constructor(options){
+    this.options = options;
+  }
+  apply(compiler){
+    compiler.hooks.具体hook的名字.tap('myPlugin',(compilation, callback) => {
+      setTimeout(() => {
+        callback();
+      },1000);
+    });//注册钩子,会在事件触发时执行操作,具体钩子去官网看
+  }
+}
+```
+
+- 编写一个带apply方法的class
+- 插入指定事件钩子
+- 使用compilation修改打包内容
+
+## 与其他打包工具的对比
+
+### Rollup.js
+
+相比webpack，Rollup.js有以下几个特点：
+
+- 仅支持ESNext模块
+- 自带tree shaking功能
+- 生成的冗余代码比较少
+
+有那么一句名言：“建库用rollup，其他场景用webpack”，当然这并不是绝对的。
+
+rollup和webpack不同的地方主要是rollup会将模块按照代码顺序引入同一个文件来解决模块依赖问题，所以无法做到拆包（模块已经完全透明了）。
+
+### Vite
+
+现在的Vite也非常的火，Vite的火主要也是webpack衬托起来的。前面也说道，webpack在冷启动的时候要遍历整个应用模块冷启动，在HMR（hot module replacement，模块热更新）的时候也会随着应用的增大而变慢。
+
+相比之下，Vite做了几点让HMR的速度快了不少。比如将代码分析为源码和依赖，预构建依赖、源码按需提供。
+
+具体特点就不说了，看官方文档就可以，补充资料：[vite多久后能干掉webpack？ - 知乎 (zhihu.com)](https://www.zhihu.com/question/477139054/answer/2156019180)
+

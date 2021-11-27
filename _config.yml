@@ -57,6 +57,7 @@ category_map: # edit for Theme.shoka
   前端: JavaScript
   各种配置: configs
   Linux: Linux
+  Vue: Vue
 tag_map:
 
 # Date / Time format
