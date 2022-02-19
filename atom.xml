@@ -8,8 +8,291 @@
     <author>
       <name>orange</name>
     </author>
-    <updated>2021-11-08T06:36:31.000Z</updated>
+    <updated>2022-02-19T03:22:09.000Z</updated>
     <category term="个人博客" />
+    <entry>
+        <id>http://zyczxq.com/2022/02/19/JavaScript/v8/</id>
+        <title>v8那些事</title>
+        <link rel="alternate" href="http://zyczxq.com/2022/02/19/JavaScript/v8/"/>
+        <content type="html">&lt;p&gt;V8 这个词，很多前端人应该都耳熟能详，我也看过不少相关的文章，正好想写一篇文总结一下在 V8 这个引擎下，JS 是怎么运行的。&lt;/p&gt;
+&lt;h1 id=&#34;v8那点事&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#v8那点事&#34;&gt;#&lt;/a&gt; V8 那点事&lt;/h1&gt;
+&lt;p&gt;它的历史来源，我就不写了，网上也有很多资料。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;V8 的源码&lt;/strong&gt;：&lt;strong&gt;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9zb3VyY2UuY2hyb21pdW0ub3JnL2Nocm9taXVtL2Nocm9taXVtL3NyYy8rL21hc3Rlcjp2OC8=&#34;&gt;https://source.chromium.org/chromium/chromium/src/+/master:v8/&lt;/span&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;但主要在了解 V8 引擎之前，需要先有一点编译原理的知识。&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;V8 使用&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9iYWlrZS5iYWlkdS5jb20vaXRlbS9DJTJCJTJC&#34;&gt; C++&lt;/span&gt; 开发，并在谷歌浏览器中使用。在运行 JavaScript 之前，相比其它的 JavaScript 的引擎转换成&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9iYWlrZS5iYWlkdS5jb20vaXRlbS8lRTUlQUQlOTclRTglOEElODIlRTclQTAlODE=&#34;&gt;字节码&lt;/span&gt;或&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9iYWlrZS5iYWlkdS5jb20vaXRlbS8lRTglQTclQTMlRTklODclOEElRTYlODklQTclRTglQTElOEM=&#34;&gt;解释执行&lt;/span&gt;，V8 将其编译成原生&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9iYWlrZS5iYWlkdS5jb20vaXRlbS8lRTYlOUMlQkElRTUlOTklQTglRTclQTAlODE=&#34;&gt;机器码&lt;/span&gt;（&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9iYWlrZS5iYWlkdS5jb20vaXRlbS9JQS0zMg==&#34;&gt;IA-32&lt;/span&gt;, &lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9iYWlrZS5iYWlkdS5jb20vaXRlbS94ODYtNjQ=&#34;&gt;x86-64&lt;/span&gt;, &lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9iYWlrZS5iYWlkdS5jb20vaXRlbS9BUk0vNzUxODI5OQ==&#34;&gt;ARM&lt;/span&gt;, or &lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9iYWlrZS5iYWlkdS5jb20vaXRlbS9NSVBT&#34;&gt;MIPS&lt;/span&gt; CPUs），并且使用了如内联缓存（inline caching）等方法来提高性能。有了这些功能，JavaScript 程序在 V8 引擎下的运行速度媲美二进制程序。&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;V8 可以独立运行，也可以 嵌入 到任何 C++ 应用程序。项目托管在 Google Code 上 [1] ，基于&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9iYWlrZS5iYWlkdS5jb20vaXRlbS9CU0QlRTUlOEQlOEYlRTglQUUlQUUvODAxMzY1MQ==&#34;&gt; BSD 协议&lt;/span&gt;，任何组织或个人可以将其源码用于自己的项目中。&lt;/em&gt;———— 百度百科&lt;/p&gt;
+&lt;h1 id=&#34;v8如何运行javascript&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#v8如何运行javascript&#34;&gt;#&lt;/a&gt; V8 如何运行 JavaScript&lt;/h1&gt;
+&lt;p&gt;在编译原理里，一般分为五个阶段：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;词法分析，生成 token 流&lt;/li&gt;
+&lt;li&gt;语法分析，生成 AST（语法抽象树）&lt;/li&gt;
+&lt;li&gt;语义分析&lt;/li&gt;
+&lt;li&gt;优化&lt;/li&gt;
+&lt;li&gt;生成代码&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;在 V8 中，差不多是这样：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;从网络上下载 js 脚本，解析得到 js 源代码文本&lt;/li&gt;
+&lt;li&gt;经过 Parser，词法分析和语法分析，得到&lt;strong&gt; AST&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;将 AST 送入 Ignition，生成字节码，然后边解释边执行。&lt;/li&gt;
+&lt;li&gt;高频执行的会被标记为热点，通过编译器编译成机器码，下次直接执行机器码。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;大体的过程是这样，但是中间又有很多小细节。&lt;/p&gt;
+&lt;h2 id=&#34;parsing解析&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#parsing解析&#34;&gt;#&lt;/a&gt; Parsing（解析）&lt;/h2&gt;
+&lt;p&gt;Parser，会将 js 源代码解析成 token、再解析成 AST，这个就不再叙述了，可以自行看编译原理。&lt;/p&gt;
+&lt;p&gt;主要是在语法分析中分为两个阶段：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Pre-Parser。&lt;/p&gt;
+&lt;p&gt;预解析，他会跳过一些未被使用的代码，比如函数的声明。在这个过程，他仅仅解析语法、声明的作用域等，速度是 Full-parser 的 2 倍&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;并且不会产生 AST&lt;/strong&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Full-Parser&lt;/p&gt;
+&lt;p&gt;解析使用的代码，&lt;strong&gt;产生 AST&lt;/strong&gt;。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;interpret解释&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#interpret解释&#34;&gt;#&lt;/a&gt; Interpret（解释）&lt;/h2&gt;
+&lt;p&gt;在解释阶段，Compiler 会接收之前生成的 AST，并转换成&lt;strong&gt;字节码&lt;/strong&gt;，然后一行一行将字节码解释成机器码运行。&lt;/p&gt;
+&lt;p&gt;运行的过程中，会将重复执行、需要优化的代码进行热点标记，通过更高级的编译器优化后再编译。&lt;/p&gt;
+&lt;div class=&#34;note primary&#34;&gt;
+&lt;p&gt;其实在 V8 设计的初期，是直接将 AST 编译成机器码、中间没有字节码这么个东西的。但是因为直接编译成机器码来执行的话，大小往往是源代码的几十倍，占用了不小的内存空间。在移动设备（内存较小）流行时，这样的缺点非常突出。&lt;/p&gt;
+&lt;p&gt;于是后来就加上了字节码。和机器码相比，字节码不仅占用的空间小了许多，还让他有了更强的跨平台能力，因为机器码是和平台有着强依赖关系的，但字节码没有。&lt;/p&gt;
+&lt;/div&gt;
+&lt;h2 id=&#34;编译器&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#编译器&#34;&gt;#&lt;/a&gt; 编译器&lt;/h2&gt;
+&lt;p&gt;上面提到通过编译器编译成机器码并运行，主要是指 V8 的&lt;strong&gt; TurboFan 编译器&lt;/strong&gt;。&lt;/p&gt;
+&lt;div class=&#34;note primary&#34;&gt;
+&lt;p&gt;在 V8 中，字节码配合解释器 + 编译器，又被称为&lt;strong&gt; JIT（即时编译技术）&lt;/strong&gt;，类似于 Java 虚拟机的技术。&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;解释器在解释执行字节码时，会收集代码信息，标记一些&lt;strong&gt;热点代码&lt;/strong&gt;，** 热点代码 (hot spot)** 就是一段代码被重复执行多次，TurboFan 会将热点代码直接编译成机器码，保存起来，下次调用直接运行对应的二进制的机器码，加速执行速度。&lt;/p&gt;
+&lt;h2 id=&#34;存在的问题&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#存在的问题&#34;&gt;#&lt;/a&gt; 存在的问题...&lt;/h2&gt;
+&lt;p&gt;或者说其实是 Javascript 这门语言存在的问题，不是 V8 的问题&lt;/p&gt;
+&lt;p&gt;V8 的 JIT 在优化时，只能针对静态类型的变量。比如说执行一个函数，函数需要的两个参数类型是确定的，这种情况就可以优化。&lt;/p&gt;
+&lt;p&gt;但是问题就在于，js 是一门动态的语言，类型在执行的时候可能会变化，会导致 JIT 失效。就需要重新进行 &lt;strong&gt;Parser-&amp;gt;Compiler-&amp;gt;Interpreter-&amp;gt;Execution&lt;/strong&gt;，前两步正是最耗费时间的步骤，这也是为什么 js 没法搞一些高性能应用，比如大型游戏。&lt;/p&gt;
+&lt;p&gt;所以为了保持最大限度的 JIT 优化，大佬们就搞了一个语言 ——&lt;strong&gt;WebAssembly&lt;/strong&gt;（简称 WASM），这是一门可以直接和机器码打交道的汇编语言，当然，这是后面的了，有兴趣可以看看：&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvZEVPSUFydEs2RElmZXdJdmEyekxLdw==&#34;&gt;https://mp.weixin.qq.com/s/dEOIArtK6DIfewIva2zLKw&lt;/span&gt;&lt;/p&gt;
+&lt;h1 id=&#34;v8如何优化对象的存储&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#v8如何优化对象的存储&#34;&gt;#&lt;/a&gt; V8 如何优化对象的存储&lt;/h1&gt;
+&lt;p&gt;JavaScript 中，对象是一个非常重要的概念。在 V8 之中，做了大量的优化。&lt;/p&gt;
+&lt;p&gt;一个对象通常拥有许多熟悉，例如 &lt;code&gt;&amp;#123; a: 1, b: 2 &amp;#125;&lt;/code&gt; ，你可能会发现，用 for-in 遍历对象时，输出的顺序总是一致，并不是随机&lt;/p&gt;
+&lt;p&gt;在 V8 之中，对象主要分为两种属性：&lt;strong&gt;Named Properties（命名属性）和 Indexed Properties（数组索引属性，又称为 elements）&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;这两种数据结构一般来说是&lt;strong&gt;线性&lt;/strong&gt;的，但有时候也可能会被切换到字典形式的存储。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://v8.dev/_img/fast-properties/jsobject.png&#34; alt=&#34;img&#34; /&gt;&lt;/p&gt;
+&lt;h2 id=&#34;数组索引属性elements&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#数组索引属性elements&#34;&gt;#&lt;/a&gt; 数组索引属性（Elements）&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;定义时键是整型的属性&lt;/li&gt;
+&lt;li&gt;数值升序排列&lt;/li&gt;
+&lt;li&gt;存储在对象的 &lt;code&gt;elements&lt;/code&gt;  属性中&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;很明显，elements 主要用于各种 &lt;code&gt;Array.prototype&lt;/code&gt;  方法，如 pop、slice。&lt;/p&gt;
+&lt;p&gt;空数组预分配的大小为 4。&lt;/p&gt;
+&lt;h3 id=&#34;带孔的数组&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#带孔的数组&#34;&gt;#&lt;/a&gt; 带孔的数组&lt;/h3&gt;
+&lt;p&gt;带孔的数组就是 &lt;code&gt;[1,,3]&lt;/code&gt;  这种，充满的数组就是 &lt;code&gt;[1,2,3]&lt;/code&gt; 。&lt;/p&gt;
+&lt;p&gt;我们都知道，当查找一个对象中的元素，如果在该对象中元素不存在，会顺着原型链查询。在 V8 内通过对数组是否全部充满来判断，&lt;strong&gt;如果数组是带孔的，查不到对应的值，就会顺着数组的原型链查找&lt;/strong&gt;。&lt;/p&gt;
+&lt;figure class=&#34;highlight javascript&#34;&gt;&lt;figcaption data-lang=&#34;javascript&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token keyword&#34;&gt;const&lt;/span&gt; arr &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;token number&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;token number&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;arr&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;__proto__ &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;token number&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;token number&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;token number&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;3&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;console&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;log&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;arr&lt;span class=&#34;token punctuation&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;token number&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;token comment&#34;&gt;// 会输出 2&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;如果已经是充满的，就不会往原型链上查询，而是直接在当前作用域里查询。&lt;/p&gt;
+&lt;h3 id=&#34;快数组&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#快数组&#34;&gt;#&lt;/a&gt; 快数组&lt;/h3&gt;
+&lt;p&gt;就是线性数据结构存储的数组。&lt;/p&gt;
+&lt;h3 id=&#34;慢数组&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#慢数组&#34;&gt;#&lt;/a&gt; 慢数组&lt;/h3&gt;
+&lt;p&gt;使用字典存储的数组&lt;/p&gt;
+&lt;h3 id=&#34;快数组-vs-慢数组&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#快数组-vs-慢数组&#34;&gt;#&lt;/a&gt; 快数组 VS 慢数组？&lt;/h3&gt;
+&lt;p&gt;当出现这种情况，如果用快数组，就会相当的浪费空间&lt;/p&gt;
+&lt;figure class=&#34;highlight javascript&#34;&gt;&lt;figcaption data-lang=&#34;javascript&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token keyword&#34;&gt;const&lt;/span&gt; a &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;a&lt;span class=&#34;token punctuation&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;token number&#34;&gt;9999&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;token string&#34;&gt;&#39;9999&#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;ul&gt;
+&lt;li&gt;Fast 模式的存储结构是 &lt;strong&gt;FixedArray&lt;/strong&gt; 并且长度小于等于 elements.length，可以通过 push 和 pop 扩容和缩容数组（弱语言类型，无法固定空间，只能通过 length 变化实现），&lt;strong&gt;实现内存空间的连续&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;slow 模式的存储结构是一个以数字为键的 &lt;strong&gt;HashTable&lt;/strong&gt;（哈希表），不用开辟连续的内存空间，节省内存&lt;/li&gt;
+&lt;li&gt;快数组就是以空间换时间的方式，申请了大块连续内存，提高了执行效率。&lt;/li&gt;
+&lt;li&gt;慢数组以时间换空间，不必申请连续的空间，节省了内存，但需要付出效率变差的代价。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;快慢转换&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#快慢转换&#34;&gt;#&lt;/a&gt; 快慢转换&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;快 -&amp;gt; 慢&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;如果快数组新的容量 &amp;gt;= 3 * 扩容后的容量 * 2，意味着它比 HashTable 形式存储占用更大的内存，快数组会转换为慢数组；&lt;/li&gt;
+&lt;li&gt;如果快数组新增的索引与原来最大索引的差值大于等于 1024，中间全部是_hole 标记，快数组会被转换会慢数组。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;慢 -&amp;gt; 快&lt;/p&gt;
+&lt;p&gt;元素能存放在快数组中并且长度不在 smi 之间（64 位，-2&lt;sup&gt;31 到 2&lt;/sup&gt;32-1），并且当前慢数组空间相比快数组节省值小于等于 50%，则转变成为快数组。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;命名属性named-properties&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#命名属性named-properties&#34;&gt;#&lt;/a&gt; 命名属性（Named Properties）&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;定义时键是非整型的属性&lt;/li&gt;
+&lt;li&gt;定义时的顺序排列&lt;/li&gt;
+&lt;li&gt;存储在对象的 &lt;code&gt;properties&lt;/code&gt;  属性中&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;在命名属性中不是简单的使用键来推断在 Properties 中的位置，还需要存储额外的数据，这就是隐藏类。&lt;/p&gt;
+&lt;h3 id=&#34;隐藏类&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#隐藏类&#34;&gt;#&lt;/a&gt; 隐藏类&lt;/h3&gt;
+&lt;p&gt;在 V8 中，每个对象都有关联的一个&lt;strong&gt; HiddenClass（隐藏类）&lt;/strong&gt;，因为对象属性的类型和值是可以随时改变的，在运行时才能拿到属性内存偏移量，为了提高性能，才有了隐藏类。&lt;/p&gt;
+&lt;p&gt;每次对象的属性发生改变时，会随着对象的变化而动态更新内存偏移量等信息。&lt;/p&gt;
+&lt;p&gt;隐藏类中记录了对象中每个属性的标识信息 (&lt;strong&gt;descriptors&lt;/strong&gt;)。它保存了属性 key 以及描述符数组的指针。描述符数组包含了有关命名属性的信息，例如名称本身以及值保存的位置，但只会存命名属性相关的。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;具有相同结构（&lt;strong&gt;相同属性定义顺序相同&lt;/strong&gt;）的对象共享相同的 Hidden Class&lt;/li&gt;
+&lt;li&gt;默认情况下，添加的每个&lt;strong&gt;新命名属性&lt;/strong&gt;都会导致创建一个新的 Hidden Class。&lt;/li&gt;
+&lt;li&gt;添加&lt;strong&gt;数组索引属性&lt;/strong&gt;不会创建新的 Hidden Class。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;对象内属性&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#对象内属性&#34;&gt;#&lt;/a&gt; 对象内属性&lt;/h3&gt;
+&lt;p&gt;V8 支持所谓的对象内属性，&lt;strong&gt;这些属性直接存储在对象本身上&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;当对象的属性数量小于 10 个的情况，直接将属性 key 存在对象内的属性上，如果需要查询某个 key 的值时，直接中对象内中获取对应 key 的值就可以了。&lt;/p&gt;
+&lt;p&gt;这也是 V8 中最快的属性。&lt;/p&gt;
+&lt;h3 id=&#34;快属性&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#快属性&#34;&gt;#&lt;/a&gt; 快属性&lt;/h3&gt;
+&lt;p&gt;fast properties。一般来说我们把&lt;strong&gt;存储在线性数据结构中的属性&lt;/strong&gt;定义为快速。&lt;/p&gt;
+&lt;h3 id=&#34;慢属性&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#慢属性&#34;&gt;#&lt;/a&gt; 慢属性&lt;/h3&gt;
+&lt;p&gt;slow propeties。不存储在线性数据结构，而是存储在&lt;strong&gt;属性字典&lt;/strong&gt;中。&lt;/p&gt;
+&lt;h3 id=&#34;快属性-vs-慢属性&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#快属性-vs-慢属性&#34;&gt;#&lt;/a&gt; 快属性 VS 慢属性？&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;快属性的信息仍然存储在 Hidden Class，慢属性存在字典中，不再通过 Hidden Class 共享。&lt;/li&gt;
+&lt;li&gt;慢属性新增删除较快。快属性如果大量的新增和删除，会耗费大量时间在维护 Hidden Class 中。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;命名属性总结&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#命名属性总结&#34;&gt;#&lt;/a&gt; 命名属性总结&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;有三种不同的命名属性类型：in-object、fast 和 slow/dictionary。
+&lt;ol&gt;
+&lt;li&gt;对象内属性直接存储在对象本身上并提供最快的访问。&lt;/li&gt;
+&lt;li&gt;快速属性存在于属性存储中，所有元信息都存储在 HiddenClass 上的描述符数组中。&lt;/li&gt;
+&lt;li&gt;慢属性存在于一个自包含的属性字典中，元信息不再通过 HiddenClass 共享。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;慢速属性允许有效地删除和添加属性，但访问速度比其他两种类型要慢。&lt;/li&gt;
+&lt;li&gt;快速属性存在 inline cache（内联缓存）优化，所以访问速度相对快。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;v8如何实现数组的排序&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#v8如何实现数组的排序&#34;&gt;#&lt;/a&gt; V8 如何实现数组的排序&lt;/h1&gt;
+&lt;p&gt;&lt;code&gt;Array.prototype.sort&lt;/code&gt;  方法。&lt;/p&gt;
+&lt;p&gt;在  &lt;code&gt;ECMAScript&lt;/code&gt;  不同版本规范对  &lt;code&gt;Array.prototype.sort&lt;/code&gt;  的定义中没有要求用什么样的排序方式实现  &lt;code&gt;sort()&lt;/code&gt;  方法，也没有要求是否要采用稳定算法，都是靠各大浏览器自己实现。&lt;/p&gt;
+&lt;p&gt;V8 中使用的是&lt;strong&gt;快速排序和插入排序&lt;/strong&gt;的结合。对于长度  &lt;code&gt;&amp;lt;= 10&lt;/code&gt;  的数组使用的是插入排序 (稳定排序算法) ， &lt;code&gt;&amp;gt;10&lt;/code&gt;  的数组使用的是快速排序。快速排序是不稳定的排序算法。&lt;/p&gt;
+&lt;div class=&#34;note primary&#34;&gt;
+&lt;p&gt;顺带一提，别的引擎，如 Nitro 使用的是归并排序和桶排序。再顺带一提，C++ 中的 sort 使用的是快速排序 + 堆排序 + 插入排序。&lt;/p&gt;
+&lt;/div&gt;
+&lt;h1 id=&#34;v8如何进行垃圾回收&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#v8如何进行垃圾回收&#34;&gt;#&lt;/a&gt; V8 如何进行垃圾回收&lt;/h1&gt;
+&lt;p&gt;垃圾回收是个很经典的话题，各个语言都有自己的垃圾回收机制。&lt;/p&gt;
+&lt;p&gt;主要是分为&lt;strong&gt;手动&lt;/strong&gt;和&lt;strong&gt;自动&lt;/strong&gt;，像 C++ 就是手动，js 就是自动垃圾回收。&lt;/p&gt;
+&lt;p&gt;但是注意：&lt;strong&gt;自动垃圾回收并不是代表我们开发者不需要关注内存管理&lt;/strong&gt;！&lt;/p&gt;
+&lt;div class=&#34;note primary&#34;&gt;
+&lt;p&gt;Orinoco，V8 的垃圾回收器名字。&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;不过在进行介绍 V8 垃圾回收方式之前，先说说 js 的内存机制吧。&lt;/p&gt;
+&lt;h2 id=&#34;内存空间&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#内存空间&#34;&gt;#&lt;/a&gt; 内存空间&lt;/h2&gt;
+&lt;p&gt;js 中的内存空间主要分为以下三种：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;代码空间，用来存储可执行代码的地方。&lt;/li&gt;
+&lt;li&gt;栈空间。栈空间，调用栈中用来存储调用上下文的地方，而且基本类型也存储在这里，引用类型存放一个指针在这里，指向堆空间。&lt;/li&gt;
+&lt;li&gt;堆空间。用来存放引用类型。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;栈空间回收&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#栈空间回收&#34;&gt;#&lt;/a&gt; 栈空间回收&lt;/h2&gt;
+&lt;p&gt;javascript 在执行一个函数的时候，会把它的上下文环境压入执行栈中，并且 ESP（Extended Stack Pointer，扩展栈指针）上移指向当前栈顶。&lt;/p&gt;
+&lt;p&gt;函数执行完成后，直接将 ESP 下移，下次压栈会直接覆盖 ESP 以上的位置，就等于是回收了。&lt;/p&gt;
+&lt;h3 id=&#34;题外话尾调用优化&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#题外话尾调用优化&#34;&gt;#&lt;/a&gt; 题外话：尾调用优化&lt;/h3&gt;
+&lt;p&gt;当函数执行完成时，才能够销毁，但我们经常一个函数调用另外一个函数，这样执行栈就会不断压入，很多时候，执行尾调用优化可以减少栈空间的使用，复用一个上下文。&lt;/p&gt;
+&lt;h3 id=&#34;闭包的内存模型&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#闭包的内存模型&#34;&gt;#&lt;/a&gt; 闭包的内存模型&lt;/h3&gt;
+&lt;figure class=&#34;highlight javascript&#34;&gt;&lt;figcaption data-lang=&#34;javascript&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token keyword&#34;&gt;function&lt;/span&gt; &lt;span class=&#34;token function&#34;&gt;outer&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token keyword&#34;&gt;let&lt;/span&gt; name &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;token string&#34;&gt;&#39;orange&#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;3&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token keyword&#34;&gt;const&lt;/span&gt; hello &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;token string&#34;&gt;&#39;helloworld&#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;4&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token keyword&#34;&gt;function&lt;/span&gt; &lt;span class=&#34;token function&#34;&gt;getName&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;5&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;		console&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;log&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;hello&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;6&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token keyword&#34;&gt;return&lt;/span&gt; name&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;7&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;8&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token keyword&#34;&gt;function&lt;/span&gt; &lt;span class=&#34;token function&#34;&gt;setName&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token parameter&#34;&gt;newName&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;9&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;		name &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; newName&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;10&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;11&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token keyword&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;12&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    getName&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; setName&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;13&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;14&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;15&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token keyword&#34;&gt;const&lt;/span&gt; obj &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;token function&#34;&gt;outer&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;ul&gt;
+&lt;li&gt;当执行 outer 时，会创建一个上下文。&lt;/li&gt;
+&lt;li&gt;在编译时，遇到内部函数，进行词法分析，同时发现内部函数引用外部变量，就会判断到是一个闭包。&lt;/li&gt;
+&lt;li&gt;然后会在堆空间创建一个对象，用于存放引用到的外部变量。&lt;/li&gt;
+&lt;li&gt;然后即使 outer 执行完毕，内部函数也仍然引用着创建的堆空间对象。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;堆空间回收&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#堆空间回收&#34;&gt;#&lt;/a&gt; 堆空间回收&lt;/h2&gt;
+&lt;p&gt;堆空间回收就相对来说复杂很多，但其实每个语言都大同小异，都是根据已经提出的一些论文来改进的&lt;/p&gt;
+&lt;h3 id=&#34;代际假说&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#代际假说&#34;&gt;#&lt;/a&gt; 代际假说&lt;/h3&gt;
+&lt;p&gt;代际假说主要有两个：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;大部分对象在内存中的存在时间很短。&lt;/li&gt;
+&lt;li&gt;那些一直存活的对象通常会存在很久&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;简单来说，就是对象的生存对象通常两极分化。javascript 把内存分成了两块区域：&lt;strong&gt;新生代和老生代&lt;/strong&gt;。&lt;/p&gt;
+&lt;h3 id=&#34;新生代垃圾回收&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#新生代垃圾回收&#34;&gt;#&lt;/a&gt; 新生代垃圾回收&lt;/h3&gt;
+&lt;p&gt;在 V8 中，由&lt;strong&gt;副垃圾回收器&lt;/strong&gt;来负责新生区的垃圾回收。&lt;/p&gt;
+&lt;p&gt;为什么是副呢？因为新生区比较小，通常在 1～8M 左右，而老生区相对来说就大的多了。&lt;/p&gt;
+&lt;div class=&#34;note primary&#34;&gt;
+&lt;p&gt;V8 之中，对内存的使用有限制（64 位下约 1.4G、32 位下约 0.7G）。&lt;/p&gt;
+&lt;p&gt;当然，也可以在启动时传递 --max-old-space-size 或 --max-new-space-size 来调整这个限制大小。但是只能在初始化 / 启动时指定，无法运行过程中扩充。&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;新生代的垃圾回收算法主要通过 &lt;strong&gt;Scavenge&lt;/strong&gt; 算法进行垃圾回收，该算法的流程主要是： 将堆内存一分为二，一个处于使用中 (&lt;strong&gt;from&lt;/strong&gt;)，一个处于闲置中 (&lt;strong&gt;To&lt;/strong&gt;)。&lt;/p&gt;
+&lt;div class=&#34;note primary&#34;&gt;
+&lt;p&gt;实际上也分为 &lt;code&gt;nursery&lt;/code&gt;  和 &lt;code&gt;intermediate&lt;/code&gt; ，经历过一次 GC 的就叫 &lt;code&gt;intermediate&lt;/code&gt;  子代。&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;分配内存时，会先分配到使用中的内存（from 空间），当开始进行垃圾回收的时候，回收生命周期结束的对象。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;对对象区域进行垃圾回收（标记清除），留下在使用中的活跃对象&lt;/li&gt;
+&lt;li&gt;把对象区域中剩下的活跃对象复制到空闲区域（复制过程会消除内存碎片）&lt;/li&gt;
+&lt;li&gt;翻转，使用区域（from）和空闲区域 (To) 身份互换。循环重复&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;这个算法是典型的牺牲空间换时间的算法（因为只能使用堆内存的一半）。&lt;/p&gt;
+&lt;p&gt;该算法只复制存活的对象，而实际应用中新生代大多数对象的存活时间都是比较短的，所以时间效率上相对来说比较优异。但是每次都需要复制，而复制操作需要时间成本，如果新生区空间设置得太大了，那么每次清理的时间就会过久，所以为了执行效率，一般新生区的空间会被设置得比较小（1～8m）。&lt;/p&gt;
+&lt;h3 id=&#34;对象晋升策略&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#对象晋升策略&#34;&gt;#&lt;/a&gt; 对象晋升策略&lt;/h3&gt;
+&lt;p&gt;当一个对象经过新生代垃圾回收中多次复制仍然存活时，它就会被认为是生命周期较长的对象，随后会被移动到老生代内存空间中（也就是晋升）。&lt;/p&gt;
+&lt;p&gt;在上面新生代垃圾回收过程中，并不是每一次都会把对象复制到闲置空间（To）中，而是在复制之前，会先判断两个条件，如果满足条件，则会触发对象晋升，而不是复制到闲置空间中。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;是否经历过 Scavenge 回收（主要通过地址判断）&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;To 空间的内存占用率是否超过一定的限制&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;达成其一，则实行对象晋升，晋升到老生代，由主垃圾回收器处理。&lt;/p&gt;
+&lt;h3 id=&#34;老生代垃圾回收&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#老生代垃圾回收&#34;&gt;#&lt;/a&gt; 老生代垃圾回收&lt;/h3&gt;
+&lt;p&gt;在老生代之中，大部分都是存活时间比较久的对象。这时候咱们在进行大量的复制，时间效率会低很多。&lt;strong&gt;因此不适合使用 Scavenge 算法&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;而 V8 之中，使用的是 **Mark - Sweep （标记 - 清除）&lt;strong&gt;和&lt;/strong&gt; Mark - Compact （标记 - 整理）** 相结合的方式。&lt;/p&gt;
+&lt;h4 id=&#34;mark-sweep标记-清除&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#mark-sweep标记-清除&#34;&gt;#&lt;/a&gt; Mark - Sweep（标记 - 清除）&lt;/h4&gt;
+&lt;p&gt;标记 - 清除分为两个阶段：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;标记阶段。遍历堆中的所有对象，并标记活着的对象。&lt;/li&gt;
+&lt;li&gt;清除阶段。清除没有被标记的对象。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;标记 - 清除标记活着的对象，并且只清理死亡的对象。Scavenge 算法只复制活着的对象，前者适合存活多、后者适合存活少的地方。&lt;/p&gt;
+&lt;p&gt;但是清理得多了，会存在很多内存碎片，碎片多到一定程度，&lt;strong&gt;当空间不足以分配空间给新生代晋升的对象时，V8 就会采取 Mark - Compact 来消除内存碎片&lt;/strong&gt;。&lt;/p&gt;
+&lt;h4 id=&#34;mark-compact标记-整理&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#mark-compact标记-整理&#34;&gt;#&lt;/a&gt; Mark - Compact（标记 - 整理）&lt;/h4&gt;
+&lt;p&gt;Mark - Compact 是在 Mark - Sweep 的基础上演变过来的。它和 Mark - Sweep 的区别主要在于，&lt;strong&gt;当对象在标记为死亡后，在整理的过程中，将活着的对象往一端移动（整理），移动完成后，直接清理边界外的内存&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;但是因为需要先移动后清除，很显然，它比 Mark - Sweep 要慢。&lt;/p&gt;
+&lt;h3 id=&#34;总结&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#总结&#34;&gt;#&lt;/a&gt; 总结&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;回收算法&lt;/th&gt;
+&lt;th&gt;速度&lt;/th&gt;
+&lt;th&gt;碎片&lt;/th&gt;
+&lt;th&gt;适用场景&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Scavenge&lt;/td&gt;
+&lt;td&gt;快&lt;/td&gt;
+&lt;td&gt;无（复制过程中消除）&lt;/td&gt;
+&lt;td&gt;新生代 (存活对象少的地方)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Mark-Sweep&lt;/td&gt;
+&lt;td&gt;较慢&lt;/td&gt;
+&lt;td&gt;有&lt;/td&gt;
+&lt;td&gt;老生代 (存活对象多的地方)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Mark-Compact&lt;/td&gt;
+&lt;td&gt;最慢&lt;/td&gt;
+&lt;td&gt;无&lt;/td&gt;
+&lt;td&gt;老生代&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;V8 根据代际假说，将对象分为两部分：新生代与老生代。并且对两部分使用不同的算法&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;新生代使用 Scavenge 算法进行垃圾回收，这种算法牺牲空间来换取时间，实际上只利用了新生代一半的空间进行存储。但优点在于面对生命周期短的对象时速度较快，而且不会产生内存碎片。&lt;/li&gt;
+&lt;li&gt;新生代的对象满足两个条件之一，就会进行对象晋升，移动到老生代区域&lt;/li&gt;
+&lt;li&gt;老生代使用 Mark-Sweep 及 Mark-Compact 两种结合。主要使用 Mark-Sweep，当碎片太多、不足以分配一块内存给晋升的对象时，就利用 Mark-Compact 进行整理。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;优化&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#优化&#34;&gt;#&lt;/a&gt; 优化&lt;/h3&gt;
+&lt;p&gt;为了避免出现回收逻辑和 JavaScript 逻辑不一致的情况，当垃圾回收进行时，需要暂停 JavaScript 的应用逻辑，这种现象叫做全停顿。&lt;/p&gt;
+&lt;p&gt;在老生代的垃圾回收中，因为空间比较大，运行一次垃圾回收可能要占用相当长的一段时间，这段停顿时间可能会造成卡顿。&lt;/p&gt;
+&lt;p&gt;而在 Orinoco 中（V8 的垃圾回收器），它利用并行、增量和并发技术来进行垃圾收集、释放主线程。&lt;/p&gt;
+&lt;p&gt;为了减小停顿时间带来的影响，V8 引入了增量标记，即将一个同步一口气完成的动作分为许多个 “step”，在这些 step 之间可以穿插一些 JavaScript 应用逻辑（其实我总觉得和操作系统调度、React fiber 的改进思想有些异曲同工，都是分片），这样就不会长时间无响应。&lt;/p&gt;
+&lt;h1 id=&#34;参考资料&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#参考资料&#34;&gt;#&lt;/a&gt; 参考资料&lt;/h1&gt;
+&lt;p&gt;V8 浅析：&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvNG5TWnBybHRQY1ZWM3lFbDVIYXdpdw==&#34;&gt;https://mp.weixin.qq.com/s/4nSZprltPcVV3yEl5Hawiw&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;V8 面向对象浅析：&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvTVJEbmg5NTl3REQ1TEMzazZJTW85dw==&#34;&gt;https://mp.weixin.qq.com/s/MRDnh959wDD5LC3k6IMo9w&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;《深入浅出 Nodejs》—— 朴灵&lt;/p&gt;
+&lt;p&gt;Fast Properties in V8：&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly92OC5kZXYvYmxvZy9mYXN0LXByb3BlcnRpZXM=&#34;&gt;https://v8.dev/blog/fast-properties&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;javascript 的 Array.prototype.sort：&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9odWZhbmd5dW4uY29tLzIwMTcvc29ydC1hcnJheS8=&#34;&gt;https://hufangyun.com/2017/sort-array/&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9ibG9nLnBvZXRyaWVzLnRvcC9icm93c2VyLXdvcmtpbmctcHJpbmNpcGxlL2d1aWRlL3BhcnQzL2xlc3NvbjEzLmh0bWw=&#34;&gt;https://blog.poetries.top/browser-working-principle/guide/part3/lesson13.html&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;谈 v8 垃圾回收：&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly92OC5kZXYvYmxvZy90cmFzaC10YWxr&#34;&gt;https://v8.dev/blog/trash-talk&lt;/span&gt;&lt;/p&gt;
+</content>
+        <category term="前端" scheme="http://zyczxq.com/categories/JavaScript/" />
+        <updated>2022-02-19T03:22:09.000Z</updated>
+    </entry>
     <entry>
         <id>http://zyczxq.com/2021/11/08/Vue/VueNote4/</id>
         <title>深入浅出Vue笔记————生命周期篇</title>
@@ -2996,208 +3279,5 @@
 </content>
         <category term="前端" scheme="http://zyczxq.com/categories/JavaScript/" />
         <updated>2021-07-20T10:24:01.000Z</updated>
-    </entry>
-    <entry>
-        <id>http://zyczxq.com/2021/07/01/JavaScript/reactNote2/</id>
-        <title>React笔记2</title>
-        <link rel="alternate" href="http://zyczxq.com/2021/07/01/JavaScript/reactNote2/"/>
-        <content type="html">&lt;p&gt;读《react 进阶》时做的一些内容的笔记&lt;/p&gt;
-&lt;h1 id=&#34;组件生命周期&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#组件生命周期&#34;&gt;#&lt;/a&gt; 组件生命周期&lt;/h1&gt;
-&lt;p&gt;&lt;span class=&#34;pink&#34;&gt;类组件才有生命周期，函数组件是没有的！&lt;/span&gt;&lt;/p&gt;
-&lt;h2 id=&#34;挂载阶段&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#挂载阶段&#34;&gt;#&lt;/a&gt; 挂载阶段&lt;/h2&gt;
-&lt;ol&gt;
-&lt;li&gt;constructor。构造方法，一般用于初始化组件的 state 和绑定事件处理方法等。&lt;/li&gt;
-&lt;li&gt;componentWillMount。&lt;/li&gt;
-&lt;li&gt;render。必要方法，返回 UI。他必须是个纯函数&lt;/li&gt;
-&lt;li&gt;componentDidMount。挂载后调用，一般在这个时候向服务端请求数据。在这里调用 this.setState 会引起组件重新渲染&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id=&#34;更新阶段&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#更新阶段&#34;&gt;#&lt;/a&gt; 更新阶段&lt;/h2&gt;
-&lt;ol&gt;
-&lt;li&gt;componentWillReceiveProps（nextProps）。只在 props 引起的组件更新过程中才会被调用。&lt;/li&gt;
-&lt;li&gt;should ComponentUpdate (nextProps,nextState)。决定组件是否继续执行更新过程，可以通过比较两个参数来决定返回值。用于减少组件不必要的渲染，来优化性能。&lt;/li&gt;
-&lt;li&gt;componentWillUpdate&lt;/li&gt;
-&lt;li&gt;componentDidUpdate (prevProps,prevState)。组件更新后被调用。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id=&#34;卸载阶段&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#卸载阶段&#34;&gt;#&lt;/a&gt; 卸载阶段&lt;/h2&gt;
-&lt;ol&gt;
-&lt;li&gt;componentWillUnmount。在组件被卸载前调用。用于执行一些清理操作，比如清除定时器，清除 componentDidMount 中手动创建的 DOM&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h1 id=&#34;react事件处理函数this问题&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#react事件处理函数this问题&#34;&gt;#&lt;/a&gt; React 事件处理函数 this 问题&lt;/h1&gt;
-&lt;p&gt;ES6class 语法实质上是 ES5 组合继承的语法糖，这我们都知道。&lt;/p&gt;
-&lt;p&gt;在 ES6class 中，并不会为方法自动绑定 this 到当前对象，为了解决这个 this 指向问题，有几种解决方案。&lt;/p&gt;
-&lt;h2 id=&#34;使用箭头函数&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#使用箭头函数&#34;&gt;#&lt;/a&gt; 使用箭头函数&lt;/h2&gt;
-&lt;p&gt;我们都知道箭头函数的 this 是定义时绑定，它会拿外层中最靠近的 this 来套给自己。&lt;/p&gt;
-&lt;h2 id=&#34;使用组件方法&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#使用组件方法&#34;&gt;#&lt;/a&gt; 使用组件方法&lt;/h2&gt;
-&lt;p&gt;直接在事件监听中写 this.handle&lt;/p&gt;
-&lt;p&gt;同时需要在构造函数中使用 bind 来绑定&lt;/p&gt;
-&lt;figure class=&#34;highlight javascript&#34;&gt;&lt;figcaption data-lang=&#34;javascript&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token keyword&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;handle &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;token keyword&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;handle&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;bind&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token keyword&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;h1 id=&#34;react的ref&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#react的ref&#34;&gt;#&lt;/a&gt; React 的 ref&lt;/h1&gt;
-&lt;p&gt;ref 用于获取元素，他可以获取 DOM 元素，甚至也可获取 React 组件实例。&lt;/p&gt;
-&lt;p&gt;可以用来&lt;strong&gt;控制元素的焦点、文本选择&lt;/strong&gt;等操作。&lt;/p&gt;
-&lt;p&gt;但是 ref 破坏了以 props 为数据传递介质的典型数据流，&lt;strong&gt;应尽量避免使用&lt;/strong&gt;&lt;/p&gt;
-&lt;h2 id=&#34;在dom元素上使用ref&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#在dom元素上使用ref&#34;&gt;#&lt;/a&gt; 在 DOM 元素上使用 ref&lt;/h2&gt;
-&lt;p&gt;在 DOM 元素上使用 ref 是最常见的使用场景。ref 接收一个回调函数作为值，同时向这个回调函数中传入 DOM 元素。&lt;/p&gt;
-&lt;p&gt;在组件被挂载时，回调函数会被调用，同时接收当前 DOM 元素作为参数。&lt;/p&gt;
-&lt;p&gt;在组件被卸载时，会接受 null 作为参数。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&#34;language-react&#34;&gt;class AutoFocusTextInput extends React.Component &amp;#123;
-  componentDidMount()&amp;#123;
-    this.textInput.focus();
-  &amp;#125;
-  render()&amp;#123;
-    return (
-    	&amp;lt;div&amp;gt;
-      	&amp;lt;input
-          type=&amp;quot;text&amp;quot;
-          ref=&amp;#123;(input) =&amp;gt; &amp;#123;this.textInput = input;&amp;#125;&amp;#125;/&amp;gt;
-      &amp;lt;/div&amp;gt;
-    )
-  &amp;#125;
-&amp;#125;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;这个组件为 input 元素定义了 ref，在组件挂载后，通过 ref 获取到这个 input 元素并存在 textInput 上，让 input 自动获取焦点。&lt;/p&gt;
-&lt;h2 id=&#34;在组件上使用ref&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#在组件上使用ref&#34;&gt;#&lt;/a&gt; 在组件上使用 ref&lt;/h2&gt;
-&lt;p&gt;此时 ref 的回调函数接收的参数时当前组件的实例，提供了一种在组件外部操作组件的方式。&lt;/p&gt;
-&lt;p&gt;可以通过 ref 获取到组件的实例，并调用组件内部的方法。&lt;/p&gt;
-&lt;p&gt;先定义个内部组件&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&#34;language-react&#34;&gt;class AutoFocusTextInput extends React.Component &amp;#123;
-  constructor(props)&amp;#123;
-    super(props);
-    this.blur = this.blur.bind(this);
-  &amp;#125;
-  componentDidMount()&amp;#123;
-    this.textInput.focus();
-  &amp;#125;
-  blur()&amp;#123;
-    this.textInput.blur();
-  &amp;#125;
-  render()&amp;#123;
-    return (
-    	&amp;lt;div&amp;gt;
-      	&amp;lt;input
-          type=&amp;quot;text&amp;quot;
-          ref=&amp;#123;(input) =&amp;gt; &amp;#123;this.textInput = input;&amp;#125;&amp;#125;/&amp;gt;
-      &amp;lt;/div&amp;gt;
-    )
-  &amp;#125;
-&amp;#125;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;然后定义一个组件&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&#34;language-react&#34;&gt;class Container extends React.Component &amp;#123;
-  constructor(props)&amp;#123;
-    super(props);
-    this.handleClick = this.handleClick.bind(this);
-  &amp;#125;
-  handleClick()&amp;#123;
-    this.inputInstance.blur();
-  &amp;#125;
-  render()&amp;#123;
-    return (
-    	&amp;lt;div&amp;gt;
-      	&amp;lt;AutoFocusTextInput ref=&amp;#123; (input) =&amp;gt; &amp;#123;this.inputInstance = input&amp;#125;&amp;#125;/&amp;gt;
-        &amp;lt;button onClick=&amp;#123;this.handleClick&amp;#125;&amp;gt;失去焦点&amp;lt;/button&amp;gt;
-      &amp;lt;/div&amp;gt;
-    )
-  &amp;#125;
-&amp;#125;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;div class=&#34;note warning&#34;&gt;
-&lt;p&gt;只能为类组件定义 ref 属性，不能为函数组件定义 ref，因为函数组件没有实例。&lt;/p&gt;
-&lt;/div&gt;
-&lt;p&gt;但可以在函数组件内部使用 ref（利用 useRef），只要它指向一个 DOM 元素或者 class 组件。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&#34;language-react&#34;&gt;function CustomTextInput(props) &amp;#123;
-  // 这里必须声明 textInput，这样 ref 才可以引用它
-  const textInput = useRef(null);
-
-  function handleClick() &amp;#123;
-    textInput.current.focus();
-  &amp;#125;
-
-  return (
-    &amp;lt;div&amp;gt;
-      &amp;lt;input
-        type=&amp;quot;text&amp;quot;
-        ref=&amp;#123;textInput&amp;#125; /&amp;gt;
-      &amp;lt;input
-        type=&amp;quot;button&amp;quot;
-        value=&amp;quot;Focus the text input&amp;quot;
-        onClick=&amp;#123;handleClick&amp;#125;
-      /&amp;gt;
-    &amp;lt;/div&amp;gt;
-  );
-&amp;#125;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;div class=&#34;note primary&#34;&gt;
-&lt;p&gt;useRef 返回一个可变的 ref 对象，其.current 属性被初始化为传入的参数。返回的 ref 对象在组件的整个生命周期内保持不变&lt;/p&gt;
-&lt;p&gt;本质上， &lt;code&gt;useRef&lt;/code&gt;  就像是可以在其  &lt;code&gt;.current&lt;/code&gt;  属性中保存一个可变值的 “盒子”。&lt;/p&gt;
-&lt;p&gt;当 ref 对象内容发生变化时，useRef 不会发出通知。&lt;/p&gt;
-&lt;/div&gt;
-&lt;h2 id=&#34;父组件访问子组件的dom节点&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#父组件访问子组件的dom节点&#34;&gt;#&lt;/a&gt; 父组件访问子组件的 DOM 节点&lt;/h2&gt;
-&lt;p&gt;其实和子组件修改父组件的数据有点相似&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;都是父组件传一个 prop 回调函数给子组件&lt;/li&gt;
-&lt;li&gt;然后子组件在内部调用这个函数，将值通过调用这个函数传给父组件，从而达到访问的目的&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre&gt;&lt;code class=&#34;language-react&#34;&gt;function Children(props)&amp;#123;
-  return (
-  	&amp;lt;div&amp;gt;
-    	&amp;lt;input ref=&amp;#123;props.inputRef&amp;#125;/&amp;gt;
-    &amp;lt;/div&amp;gt;
-  )
-&amp;#125;
-
-class Parent extends React.Component&amp;#123;
-  render()&amp;#123;
-    return (
-    	&amp;lt;Children 
-        inputRef=&amp;#123;el =&amp;gt; this.inputElement = el&amp;#125;
-        /&amp;gt;
-    );
-  &amp;#125;
-&amp;#125;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h1 id=&#34;虚拟dom&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#虚拟dom&#34;&gt;#&lt;/a&gt; 虚拟 DOM&lt;/h1&gt;
-&lt;h2 id=&#34;概念&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#概念&#34;&gt;#&lt;/a&gt; 概念&lt;/h2&gt;
-&lt;p&gt;虚拟 DOM 与真实 DOM 对应，就是使用 JavaScript 对象来表示 DOM 元素的一种技术。&lt;/p&gt;
-&lt;p&gt;在浏览器中，操作真实 DOM 是效率会非常慢，每次操作都可能引起浏览器的回流和重绘，所以要尽量减少。&lt;/p&gt;
-&lt;h2 id=&#34;diff算法&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#diff算法&#34;&gt;#&lt;/a&gt; DIff 算法&lt;/h2&gt;
-&lt;p&gt;每次组件的状态或属性更新，组件的 render 方法都会返回一个新的虚拟 DOM 对象。&lt;/p&gt;
-&lt;p&gt;React 会通过比较更新前后两份虚拟 DOM（新的虚拟 DOM 和旧的虚拟 DOM），来找出差异部分更新到真实 DOM 上，从而减少在真实 DOM 上的操作。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;正常情况下，比较两个树型结构差异的算法时间复杂度是 O (N 的 3 次方)&lt;/strong&gt;，但 React 通过总结 DOM 的实际使用场景，提出了两个绝大多数场景下都成立的假设。通过这两个假设，React 实现了&lt;span class=&#34;pink&#34;&gt; O (N)&lt;/span&gt; 复杂下完成两颗虚拟 DOM 树的比较。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;如果两个元素的类型不同，那么它们将生成两棵不同的树。&lt;/li&gt;
-&lt;li&gt;对 DOM 节点跨层级移动的情况忽略不计。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;比较过程：&lt;/p&gt;
-&lt;h3 id=&#34;当根结点不同类型时&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#当根结点不同类型时&#34;&gt;#&lt;/a&gt; 当根结点不同类型时&lt;/h3&gt;
-&lt;p&gt;这时候 React 会认为新的树和旧的树完全不同，会将整棵树拆掉重建（包括虚拟 DOM 树和真实 DOM 树），拆除的时候会触发组件的卸载生命钩子，重建的时候会触发挂载钩子。&lt;/p&gt;
-&lt;h3 id=&#34;当根结点是相同的dom元素类型&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#当根结点是相同的dom元素类型&#34;&gt;#&lt;/a&gt; 当根结点是相同的 DOM 元素类型&lt;/h3&gt;
-&lt;p&gt;React 会保留根结点，比较根结点的属性，只更新变化了的属性。&lt;/p&gt;
-&lt;h3 id=&#34;当根结点时相同的组件类型&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#当根结点时相同的组件类型&#34;&gt;#&lt;/a&gt; 当根结点时相同的组件类型&lt;/h3&gt;
-&lt;p&gt;这时对应的组件实例不会被销毁，只会执行更新操作，同步变化的属性到虚拟 DOM 树上。在这一过程中组件实例的 componentWillReceiveProps 和 componentWillUpdate 会被调用。&lt;/p&gt;
-&lt;div class=&#34;note primary&#34;&gt;
-&lt;p&gt;对于组件类型的节点，这时候 React 无法知道如何更新真实 DOm 树，需要在组件更新并且 render 方法执行完毕后，根据 render 返回的虚拟 DOM 结构决定如何更新真实 DOM 树。&lt;/p&gt;
-&lt;/div&gt;
-&lt;p&gt;&lt;span class=&#34;pink&#34;&gt;根据这三个假设，React 递归遍历虚拟 DOM 树，比较完之后得到最终的差异，更新到 DOM 树中。&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;当一个节点有多个子节点的时候，默认情况下 React 会按照顺序逐一比较两棵树上对应的子节点。&lt;/p&gt;
-&lt;figure class=&#34;highlight html&#34;&gt;&lt;figcaption data-lang=&#34;HTML&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token tag&#34;&gt;&lt;span class=&#34;token tag&#34;&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;lt;&lt;/span&gt;ul&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token tag&#34;&gt;&lt;span class=&#34;token tag&#34;&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;lt;&lt;/span&gt;li&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&gt;&lt;/span&gt;&lt;/span&gt;first&lt;span class=&#34;token tag&#34;&gt;&lt;span class=&#34;token tag&#34;&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;lt;/&lt;/span&gt;li&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;3&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token tag&#34;&gt;&lt;span class=&#34;token tag&#34;&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;lt;&lt;/span&gt;li&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&gt;&lt;/span&gt;&lt;/span&gt;second&lt;span class=&#34;token tag&#34;&gt;&lt;span class=&#34;token tag&#34;&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;lt;/&lt;/span&gt;li&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;4&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token tag&#34;&gt;&lt;span class=&#34;token tag&#34;&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;lt;/&lt;/span&gt;ul&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;5&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;6&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token tag&#34;&gt;&lt;span class=&#34;token tag&#34;&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;lt;&lt;/span&gt;ul&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;7&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token tag&#34;&gt;&lt;span class=&#34;token tag&#34;&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;lt;&lt;/span&gt;li&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&gt;&lt;/span&gt;&lt;/span&gt;first&lt;span class=&#34;token tag&#34;&gt;&lt;span class=&#34;token tag&#34;&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;lt;/&lt;/span&gt;li&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;8&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token tag&#34;&gt;&lt;span class=&#34;token tag&#34;&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;lt;&lt;/span&gt;li&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&gt;&lt;/span&gt;&lt;/span&gt;second&lt;span class=&#34;token tag&#34;&gt;&lt;span class=&#34;token tag&#34;&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;lt;/&lt;/span&gt;li&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;9&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token tag&#34;&gt;&lt;span class=&#34;token tag&#34;&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;lt;&lt;/span&gt;li&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&gt;&lt;/span&gt;&lt;/span&gt;third&lt;span class=&#34;token tag&#34;&gt;&lt;span class=&#34;token tag&#34;&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;lt;/&lt;/span&gt;li&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;10&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token tag&#34;&gt;&lt;span class=&#34;token tag&#34;&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;lt;/&lt;/span&gt;ul&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;这个时候最终只会插入一个新的节点。&lt;/p&gt;
-&lt;p&gt;但如果我们在开始位置新增一个节点，或者把最后的节点调整位置到最开始，就会出现这种特殊情况。&lt;/p&gt;
-&lt;p&gt;React 会以为每一个结点都变化了，从而每个节点都被修改。&lt;/p&gt;
-&lt;h3 id=&#34;key&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#key&#34;&gt;#&lt;/a&gt; key&lt;/h3&gt;
-&lt;p&gt;为了避免前面那种特殊情况，提出了 key。key 时为了帮助 React 提高 Diff 算法的效率，使用 key 来匹配子节点，只要渲染之后子节点的 key 没有变化，React 就会认为这是同一个节点。&lt;/p&gt;
-&lt;p&gt;但是加上 key 也未必 “性能最优”，需要避免使用索引来作为元素的 key，如果使用索引，也会出现前面那个情况。&lt;/p&gt;
-&lt;h1 id=&#34;减少不必要组件渲染&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#减少不必要组件渲染&#34;&gt;#&lt;/a&gt; 减少不必要组件渲染&lt;/h1&gt;
-&lt;p&gt;之前大概知道，可以通过 should ComponentUpdate 钩子来决定是否更新组件。&lt;/p&gt;
-&lt;p&gt;最好的办法是通过比较当前 prop 和下次 props 看有没有属性变化，但是深比较的性能影响比较大。&lt;/p&gt;
-&lt;p&gt;所以提出了折中的办法，&lt;strong&gt;只比较第一层级的属性&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;而 React 中提出了一个 Pure Component 组件，这个组件会使用浅比较来比较新旧 props 和 state，因此可以通过让组件继承 Pure Component 来代替手写 should ComponentUpdate 的逻辑。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&#34;language-react&#34;&gt;class NumberList extends React.PureComponent&amp;#123;
-  ...
-&amp;#125;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h1 id=&#34;react-fiber&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#react-fiber&#34;&gt;#&lt;/a&gt; React Fiber&lt;/h1&gt;
-&lt;p&gt;JavaScript 是单线程的，如果调用栈运行一个很耗时的脚本，比如解析一个图片，可能会长时间阻塞，使得其他事件都无法得到响应。&lt;/p&gt;
-&lt;p&gt;为了突破这个瓶颈，React 中试着将耗时高、易阻塞的长任务进行切片，分成子任务并异步执行他们。这样，在每个子任务的空隙间就有机会处理其他任务，如 UI 更新。&lt;/p&gt;
-</content>
-        <category term="前端" scheme="http://zyczxq.com/categories/JavaScript/" />
-        <updated>2021-07-01T12:05:17.000Z</updated>
     </entry>
 </feed>
