@@ -1,7 +1,7 @@
 lockfileVersion: '6.0'
 
 settings:
-  autoInstallPeers: true
+  autoInstallPeers: false
   excludeLinksFromLockfile: false
 
 dependencies:
@@ -54,7 +54,7 @@ devDependencies:
     version: 4.3.2
   hexo-feed:
     specifier: ^1.1.0
-    version: 1.1.2(chalk@4.1.2)(hexo@5.4.2)
+    version: 1.1.2(hexo@5.4.2)
 
 packages:
 
@@ -917,13 +917,12 @@ packages:
       - chokidar
     dev: false
 
-  /hexo-feed@1.1.2(chalk@4.1.2)(hexo@5.4.2):
+  /hexo-feed@1.1.2(hexo@5.4.2):
     resolution: {integrity: sha512-7uK+9r3btleHpVbuuP0I13ETSRiVsBtQghPNyyBl9HJ8D23jXcWq5lLe4KUlhOql35mlIYErNv1iZIbJMNilEQ==}
     peerDependencies:
       chalk: ^4.1.0
       hexo: ^4.2.0 || ^5.2.0 || ^6.1.0 || ^7.0.0
     dependencies:
-      chalk: 4.1.2
       hexo: 5.4.2
     dev: true
 
