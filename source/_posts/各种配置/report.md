@@ -31,11 +31,11 @@ categories:
 
   git的安装网上已经有很多，安装过程也没有什么坑，这里就不再赘述了，详细可以看官网的说明
 
-{% links %} - site: #git下载与安装  owner: #git官网  url: #https://git-scm.com/downloads  desc: #git官网安装指导  color: "#9b5b8b" {% endlinks %}
+#https://git-scm.com/downloads
 
   或者查看廖雪峰老师的教程：
 
-{% links %} - site: #git  owner: #廖雪峰  url: #https://www.liaoxuefeng.com/wiki/896043488029600/896067074338496  desc: #廖雪峰git教程  color: "#9b5b8b" {% endlinks %}
+#https://www.liaoxuefeng.com/wiki/896043488029600/896067074338496
 
 ==注意== 
 
