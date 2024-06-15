@@ -12,7 +12,7 @@
     <category term="个人博客" />
     <entry>
         <id>http://zyczxq.com/2024/04/16/Node/node-trial/</id>
-        <title>node-trial</title>
+        <title>Node实践1</title>
         <link rel="alternate" href="http://zyczxq.com/2024/04/16/Node/node-trial/"/>
         <content type="html">&lt;h1 id=&#34;用node帮女朋友生成报告单&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#用node帮女朋友生成报告单&#34;&gt;#&lt;/a&gt; 用 node 帮女朋友生成报告单&lt;/h1&gt;
 &lt;h2 id=&#34;背景&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#背景&#34;&gt;#&lt;/a&gt; 背景&lt;/h2&gt;
@@ -102,10 +102,10 @@
 &lt;/ol&gt;
 &lt;h2 id=&#34;参考资料&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#参考资料&#34;&gt;#&lt;/a&gt; 参考资料&lt;/h2&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/exceljs/exceljs/blob/master/README_zh.md&#34;&gt;exceljs/README_zh.md at master · exceljs/exceljs (github.com)&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/cthackers/adm-zip/wiki/ADM-ZIP&#34;&gt;ADM 邮编・cthackers/adm-zip 维基 (github.com)&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://juejin.cn/post/7313048171797544997?searchId=20240411133356217F06864C2AFE0BDFA5#heading-6&#34;&gt;前端是怎么解析 Excel、PDF、Word、PPT 等文件的？ - 掘金 (juejin.cn)&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://juejin.cn/post/6844903655989051399?searchId=2024041111055823B66E49E1ED6200D07D&#34;&gt;nodejs 实现一个 word 文档解析器 - 掘金 (juejin.cn)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9naXRodWIuY29tL2V4Y2VsanMvZXhjZWxqcy9ibG9iL21hc3Rlci9SRUFETUVfemgubWQ=&#34;&gt;exceljs/README_zh.md at master · exceljs/exceljs (github.com)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9naXRodWIuY29tL2N0aGFja2Vycy9hZG0temlwL3dpa2kvQURNLVpJUA==&#34;&gt;ADM 邮编・cthackers/adm-zip 维基 (github.com)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MzEzMDQ4MTcxNzk3NTQ0OTk3P3NlYXJjaElkPTIwMjQwNDExMTMzMzU2MjE3RjA2ODY0QzJBRkUwQkRGQTUjaGVhZGluZy02&#34;&gt;前端是怎么解析 Excel、PDF、Word、PPT 等文件的？ - 掘金 (juejin.cn)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC82ODQ0OTAzNjU1OTg5MDUxMzk5P3NlYXJjaElkPTIwMjQwNDExMTEwNTU4MjNCNjZFNDlFMUVENjIwMEQwN0Q=&#34;&gt;nodejs 实现一个 word 文档解析器 - 掘金 (juejin.cn)&lt;/span&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </content>
         <category term="Node" scheme="http://zyczxq.com/categories/Node/" />
