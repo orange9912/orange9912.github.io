@@ -35,7 +35,7 @@
 &lt;p&gt;这个标准是用于描述和存储电子文档，由 &lt;code&gt;Ecma International&lt;/code&gt; （欧洲计算机制造商协会）管理和维护的&lt;/p&gt;
 &lt;p&gt;而 XML 和 HTML 一样都是常用的标记语言，XML 更多用于数据交换。&lt;/p&gt;
 &lt;p&gt;而 docx 文件其实本质上就是一个压缩包，只要把后缀改成 zip 并解压缩，就可以看到这些文件&lt;/p&gt;
-&lt;p&gt;&amp;lt;img src=&amp;quot;./node-trial.png&amp;quot; /&amp;gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;node-trial.png&#34; alt=&#34;lifecycle&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;其中 &lt;code&gt;word/document.xml&lt;/code&gt;  中存放了该 docx 文档的具体内容，我们只要修改这一部分，最终再写回成 &lt;code&gt;zip&lt;/code&gt;  文件并改扩展名为 &lt;code&gt;docx&lt;/code&gt; ，即可实现根据模版文件输出对应例子。&lt;/p&gt;
 &lt;h2 id=&#34;流程&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#流程&#34;&gt;#&lt;/a&gt; 流程&lt;/h2&gt;
 &lt;p&gt;搞定了以上问题，就可以开始编写代码了，代码的工作流程如下：&lt;/p&gt;
