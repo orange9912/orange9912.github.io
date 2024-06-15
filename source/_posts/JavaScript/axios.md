@@ -1,8 +1,7 @@
 ---
 title: Axios源码解析
 date: 2021-09-01 14:34:36
-tags:
-sticky: true
+tags: 
 categories:
 - 前端
 ---
