@@ -1,5 +1,5 @@
 ---
-title: node-trial
+title: Node实践1
 categories:
   - Node
 date: 2024-04-16 00:00:00
@@ -42,7 +42,7 @@ tags:
 
 而docx文件其实本质上就是一个压缩包，只要把后缀改成zip并解压缩，就可以看到这些文件
 
-<img src="./node-trial.png" />
+![lifecycle](node-trial.png "")
 
 其中`word/document.xml`中存放了该docx文档的具体内容，我们只要修改这一部分，最终再写回成`zip`文件并改扩展名为`docx`，即可实现根据模版文件输出对应例子。
 
