@@ -20,9 +20,9 @@
 &lt;p&gt;目前在职主要负责的内容是抖音等宿主的&lt;strong&gt;端内 H5/Lynx&lt;/strong&gt;（字节内部的高效跨平台框架）页面的编写&lt;/p&gt;
 &lt;p&gt;其中我负责的一个页面：&lt;strong&gt;赛事详情页&lt;/strong&gt;，是抖音游戏（游戏赛事直播间、赛事搜索）赛事的重要信息呈现页面。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;这里补图：直播间场景与搜索场景&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img data-src=&#34;live_scene.png&#34; alt=&#34;直播间场景&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img data-src=&#34;search_scene.png&#34; alt=&#34;搜索场景&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img data-src=&#34;example_shot.png&#34; alt=&#34;截图&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;live_scene.jpg&#34; alt=&#34;live_scene&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;search_scene.jpg&#34; alt=&#34;search_scene&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;example_shot.jpg&#34; alt=&#34;example_shot&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;不同的版权赛事厂商会提供接口返回我们指定的数据结构，实现赛事信息的呈现。&lt;/p&gt;
 &lt;p&gt;以 PEL 春季赛为例，在 2.29-3.3 的四天比赛中，日均看播 UV 超 1xx 万，而页面的峰值 PV 也达 1xx 万&lt;/p&gt;
 &lt;p&gt;但是页面的首屏性能颇为不佳（尤其是在 Android 机型下）&lt;/p&gt;
@@ -107,7 +107,7 @@
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;p&gt;&lt;img data-src=&#34;perf_analyze.png&#34; alt=&#34;分析&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;perf_analyze.jpg&#34; alt=&#34;分析&#34; /&gt;&lt;/p&gt;
 &lt;h3 id=&#34;结论&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#结论&#34;&gt;#&lt;/a&gt; 结论&lt;/h3&gt;
 &lt;p&gt;瓶颈：主 js 模块的大小过大，加载 js 资源时间过长。&lt;/p&gt;
 &lt;p&gt;浏览器在此先是加载 html，然后从 html 中拉资源，并行加载 css 样式及必要的 js 模块，这些模块大小共计&lt;strong&gt; 895kb&lt;/strong&gt;，其中主 js 模块花了 1.06 秒进行加载（到 1390ms 时刻），然后解析又使用了 100ms 左右。&lt;/p&gt;
