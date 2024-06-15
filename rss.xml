@@ -10,9 +10,159 @@
         </author>
         <description>博客</description>
         <language>zh-CN</language>
-        <pubDate>Tue, 16 Apr 2024 00:00:00 +0800</pubDate>
-        <lastBuildDate>Tue, 16 Apr 2024 00:00:00 +0800</lastBuildDate>
+        <pubDate>Sat, 15 Jun 2024 18:38:52 +0800</pubDate>
+        <lastBuildDate>Sat, 15 Jun 2024 18:38:52 +0800</lastBuildDate>
         <category term="个人博客" />
+        <item>
+            <guid isPermalink="true">http://zyczxq.com/2024/06/15/work/webview-performance/</guid>
+            <title>H5体验优化的实践与总结</title>
+            <link>http://zyczxq.com/2024/06/15/work/webview-performance/</link>
+            <category term="工作沉淀" scheme="http://zyczxq.com/categories/work/" />
+            <pubDate>Sat, 15 Jun 2024 18:38:52 +0800</pubDate>
+            <description><![CDATA[ &lt;h1 id=&#34;版权赛事详情页的体验优化&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#版权赛事详情页的体验优化&#34;&gt;#&lt;/a&gt; 版权赛事详情页的体验优化&lt;/h1&gt;
+&lt;p&gt;优化时间：&lt;strong&gt;2024.3.20&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id=&#34;背景&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#背景&#34;&gt;#&lt;/a&gt; 背景&lt;/h2&gt;
+&lt;p&gt;目前在职主要负责的内容是抖音等宿主的&lt;strong&gt;端内 H5/Lynx&lt;/strong&gt;（字节内部的高效跨平台框架）页面的编写&lt;/p&gt;
+&lt;p&gt;其中我负责的一个页面：&lt;strong&gt;赛事详情页&lt;/strong&gt;，是抖音游戏（游戏赛事直播间、赛事搜索）赛事的重要信息呈现页面。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;这里补图：直播间场景与搜索场景&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;live_scene.png&#34; alt=&#34;直播间场景&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;search_scene.png&#34; alt=&#34;搜索场景&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;example_shot.png&#34; alt=&#34;截图&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;不同的版权赛事厂商会提供接口返回我们指定的数据结构，实现赛事信息的呈现。&lt;/p&gt;
+&lt;p&gt;以 PEL 春季赛为例，在 2.29-3.3 的四天比赛中，日均看播 UV 超 1xx 万，而页面的峰值 PV 也达 1xx 万&lt;/p&gt;
+&lt;p&gt;但是页面的首屏性能颇为不佳（尤其是在 Android 机型下）&lt;/p&gt;
+&lt;h2 id=&#34;性能现状&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#性能现状&#34;&gt;#&lt;/a&gt; 性能现状&lt;/h2&gt;
+&lt;p&gt;我取了一段比赛进行时（访问高峰期的时间范围）的性能数据作为基准样本，分析 ActualFMP、Load 事件、秒开绿&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;ActualFMP 定义：&lt;strong&gt;接口返回时间 - window.performance.timing.navigationStart&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;这个性能指标接近于 LCP，在此页面中接近于真实的用户看到有意义内容的时间。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;线上统计&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#线上统计&#34;&gt;#&lt;/a&gt; 线上统计&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;指标类别&lt;/th&gt;
+&lt;th&gt;统计分位&lt;/th&gt;
+&lt;th&gt;表现&lt;/th&gt;
+&lt;th&gt;备注&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;ActualFMP&lt;/td&gt;
+&lt;td&gt;90 分位&lt;/td&gt;
+&lt;td&gt;iOS：基本低于 1s，Android：3.3s～3.5s&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;ActualFMP&lt;/td&gt;
+&lt;td&gt;50 分位&lt;/td&gt;
+&lt;td&gt;iOS：300ms 左右，Android： 2s 左右&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Load&lt;/td&gt;
+&lt;td&gt;90 分位&lt;/td&gt;
+&lt;td&gt;iOS：500ms 左右，Android：2.75s&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Load&lt;/td&gt;
+&lt;td&gt;50 分位&lt;/td&gt;
+&lt;td&gt;iOS：100ms 左右，Android：1.45s&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;秒开率（取 TotalActualFMP≤1s 占总量的比值，该时间相比 ActualFMP 要多上一个容器初始化时间）&lt;/td&gt;
+&lt;td&gt;-&lt;/td&gt;
+&lt;td&gt;iOS：85.48%，Android：22%。整体：60%&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id=&#34;线下具体分析&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#线下具体分析&#34;&gt;#&lt;/a&gt; 线下具体分析&lt;/h3&gt;
+&lt;p&gt;以我手上的 Android 测试机为例，将网络限制至条件下述进行测试：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;10Mb/s 的上传 &amp;amp; 下载&lt;/li&gt;
+&lt;li&gt;40ms 响应时间&lt;/li&gt;
+&lt;/ul&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;指标&lt;/th&gt;
+&lt;th&gt;timestamp&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;DCL（DOM Content Loaded）&lt;/td&gt;
+&lt;td&gt;1627ms&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;FCP（First Contentful Paint）&lt;/td&gt;
+&lt;td&gt;1668ms&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Load（资源加载完毕）&lt;/td&gt;
+&lt;td&gt;1675.9ms&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;LCP（Largest Contentful Paint）&lt;/td&gt;
+&lt;td&gt;2080ms&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;img data-src=&#34;perf_analyze.png&#34; alt=&#34;分析&#34; /&gt;&lt;/p&gt;
+&lt;h3 id=&#34;结论&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#结论&#34;&gt;#&lt;/a&gt; 结论&lt;/h3&gt;
+&lt;p&gt;瓶颈：主 js 模块的大小过大，加载 js 资源时间过长。&lt;/p&gt;
+&lt;p&gt;浏览器在此先是加载 html，然后从 html 中拉资源，并行加载 css 样式及必要的 js 模块，这些模块大小共计&lt;strong&gt; 895kb&lt;/strong&gt;，其中主 js 模块花了 1.06 秒进行加载（到 1390ms 时刻），然后解析又使用了 100ms 左右。&lt;/p&gt;
+&lt;h2 id=&#34;优化思路&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#优化思路&#34;&gt;#&lt;/a&gt; 优化思路&lt;/h2&gt;
+&lt;p&gt;现有的端内 H5 优化手段文章已经非常多了，这里记录一些我调研到总结手段的思路：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;缓存&lt;/strong&gt;：离线包（优化前已使用）&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;前置&lt;/strong&gt;：数据预取（prefetch）、资源预加载（html preload）&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;简化&lt;/strong&gt;：首屏代码、非首屏模块动态加载&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;拆分&lt;/strong&gt;：主 js、依赖&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;实践&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#实践&#34;&gt;#&lt;/a&gt; 实践&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;接入 prefetch：经验上看能优化 100-200ms&lt;/li&gt;
+&lt;li&gt;拆分依赖：Parsed size 降低了 120K 左右，主 js 模块拆分了多个 chunk，最大的降至 300K&lt;/li&gt;
+&lt;li&gt;一些代码的优化&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;优化效果&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#优化效果&#34;&gt;#&lt;/a&gt; 优化效果&lt;/h3&gt;
+&lt;p&gt;在线包、离线包体积均降了 10%（374K -&amp;gt; 339K）&lt;/p&gt;
+&lt;p&gt;数据预取下首屏直出效果更强、几乎看不见 loading&lt;/p&gt;
+&lt;p&gt;以下为&lt;strong&gt;三月底统计数据&lt;/strong&gt;：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;场景&lt;/th&gt;
+&lt;th&gt;图&lt;/th&gt;
+&lt;th&gt;效果&lt;/th&gt;
+&lt;th&gt;备注&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;普通搜索入口 (ActualFMP 90 分位)&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;Android：1.29s =&amp;gt; 1.03s (&lt;strong&gt;-20%&lt;/strong&gt;)。iOS：838ms =&amp;gt; 529ms（&lt;strong&gt;-36.9%&lt;/strong&gt;）。整体：1145ms =&amp;gt; 879.8ms (&lt;strong&gt;-23.1%&lt;/strong&gt;)&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;直播间入口（ActualFMP 90 分位）&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;Android：3.02s =&amp;gt; 2.28s (-24.5%)。iOS: 864ms =&amp;gt; 928ms (+0.07%)，整体：2.7s =&amp;gt; 2.064s (&lt;strong&gt;-23.5%&lt;/strong&gt;)&lt;/td&gt;
+&lt;td&gt;此场景较卡，因为位于进房，许多初始化逻辑，手机性能差的用户时间会表现的非常明显&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;秒开率（整体）：60% =&amp;gt; 78.45%&lt;strong&gt;（+30.75%）&lt;/strong&gt;，六月初已接近 80%&lt;/p&gt;
+&lt;h2 id=&#34;更多&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#更多&#34;&gt;#&lt;/a&gt; 更多...&lt;/h2&gt;
+&lt;p&gt;经过日常写代码的注意，其他负责的 H5 秒开率也基本达到了 80% 以上&lt;/p&gt;
+ ]]></description>
+        </item>
         <item>
             <guid isPermalink="true">http://zyczxq.com/2024/04/16/Node/node-trial/</guid>
             <title>Node实践1</title>
@@ -2951,154 +3101,6 @@
 &lt;p&gt;将一组相关的算法封装，把实现隐藏起来，灵活扩展。&lt;/p&gt;
 &lt;p&gt;我觉得 React 中的 render props 模式也有点策略模式的思想，render props 将数据的获取和渲染职责相分离，可以灵活替换、扩展渲染的组件&lt;/p&gt;
 &lt;h1 id=&#34;总结&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#总结&#34;&gt;#&lt;/a&gt; 总结&lt;/h1&gt;
- ]]></description>
-        </item>
-        <item>
-            <guid isPermalink="true">http://zyczxq.com/2021/07/20/JavaScript/Authorization/</guid>
-            <title>单页应用鉴权问题</title>
-            <link>http://zyczxq.com/2021/07/20/JavaScript/Authorization/</link>
-            <category term="前端" scheme="http://zyczxq.com/categories/JavaScript/" />
-            <pubDate>Tue, 20 Jul 2021 18:24:01 +0800</pubDate>
-            <description><![CDATA[ &lt;p&gt;面试中被问到的时候，才发现这块是个知识盲区，于是专门花了一点时间去搜集资料，然后自己理解、再整理出来自己的一篇笔记。来总结一下一些鉴权的方法，还有它们的优缺点。&lt;/p&gt;
-&lt;h1 id=&#34;背景&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#背景&#34;&gt;#&lt;/a&gt; 背景&lt;/h1&gt;
-&lt;p&gt;Http 本身是一个无状态的协议，这个不用多说了，单从网络连接上，服务器无法获知客户的身份。&lt;/p&gt;
-&lt;p&gt;但是，总不能进行与用户相关的操作就需要登录一次吧？所以就需要实现登录之后如何鉴权的问题。&lt;/p&gt;
-&lt;h1 id=&#34;cookie-session实现鉴权&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#cookie-session实现鉴权&#34;&gt;#&lt;/a&gt; Cookie-Session 实现鉴权&lt;/h1&gt;
-&lt;h2 id=&#34;cookie&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#cookie&#34;&gt;#&lt;/a&gt; Cookie&lt;/h2&gt;
-&lt;p&gt;一般来说，在登录成功后，可以把某些用户信息存入客户端的 Cookie 中，每次发送请求时带着 Cookie，这样，服务器就能够通过 Cookie 来知道对应的客户身份了。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Cookie 一般分为以下两种&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;session cookie。这种 cookie 会随着用户关闭浏览器而清除，不会被标记任何过期时间 Expires 或最大时限 Max-Age&lt;/li&gt;
-&lt;li&gt;Permanent cookie。和 session cookie 相反，在关闭浏览器后会被持久化存储。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class=&#34;note primary&#34;&gt;
-&lt;p&gt;请求一个网站时只能发送该网站下的 Cookie，而不能操作别的网站的 Cookie&lt;/p&gt;
-&lt;/div&gt;
-&lt;p&gt;cookie 可以由 JavaScript 代码创建：&lt;/p&gt;
-&lt;figure class=&#34;highlight javascript&#34;&gt;&lt;figcaption data-lang=&#34;javascript&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;document&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;cookie &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;token string&#34;&gt;&#39;my_cookie_name=my_cookie_value; expires=....&#39;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;也可以由服务端通过设置响应头创建&lt;/p&gt;
-&lt;figure class=&#34;highlight http&#34;&gt;&lt;figcaption data-lang=&#34;HTTP&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token header&#34;&gt;&lt;span class=&#34;token header-name keyword&#34;&gt;Set-Cookie&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;token header-value&#34;&gt;my_cookie_name=my_cookie_value&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;浏览器会自动在每个请求中加入相关 domain 下的 cookie。&lt;/p&gt;
-&lt;h2 id=&#34;session&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#session&#34;&gt;#&lt;/a&gt; Session&lt;/h2&gt;
-&lt;p&gt;Session 是另外一种记录客户状态的机制，不同的是 Cookie 保存在客户端中，Session 保存在服务器上（但其实也要利用到 Cookie，后面的机制就是）。&lt;/p&gt;
-&lt;p&gt;客户端浏览器访问服务器的时候，服务器把客户端信息以某种形式记录在服务器上。这就是 Session。客户端浏览器再次访问时只需要从该 Session 中查找该客户的状态就可以了。&lt;/p&gt;
-&lt;p&gt;服务器用 Session 把客户的信息临时保存在服务器上，在用户离开服务器后，Session 会被销毁。&lt;/p&gt;
-&lt;p&gt;但是这种机制有可能会对服务器造成相应的压力。&lt;/p&gt;
-&lt;h1 id=&#34;cookie-session认证&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#cookie-session认证&#34;&gt;#&lt;/a&gt; Cookie-Session 认证&lt;/h1&gt;
-&lt;p&gt;一个经典的场景就是使用 Cookie 存储一个 SessionID（SessionID 由服务端管理，进行创建和计时）。&lt;/p&gt;
-&lt;p&gt;通过验证 cookie 和 SessionID，服务器便能标记一个用户的访问信息。&lt;/p&gt;
-&lt;p&gt;认证过程大概是这样的：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;用户使用密码、或者别的方式登录系统。&lt;/li&gt;
-&lt;li&gt;服务端验证后，创建一个 Session 信息，并且将 SessionID 存到 cookie，发送回浏览器&lt;/li&gt;
-&lt;li&gt;下次客户端再发起请求，自动带上 cookie 信息，服务端通过 cookie 获取 Session 信息进行校验。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id=&#34;缺点及安全隐患&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#缺点及安全隐患&#34;&gt;#&lt;/a&gt; 缺点及安全隐患&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;只能在 web 端使用，在 APP 中，不能使用 cookie 就不能使用了。&lt;/li&gt;
-&lt;li&gt;如果服务器做了负载均衡，下一个操作到了另外一台服务器的时候可能就会丢失&lt;/li&gt;
-&lt;li&gt;cookie 不能跨域&lt;/li&gt;
-&lt;li&gt;XSS 攻击下，cookie 中的认证信息可能会被盗取。&lt;/li&gt;
-&lt;li&gt;可能会被 CSRF 所利用。cookie 的同源策略只是限制不同源的网站读取其他网站的 cookie，但如果利用 CSRF 攻击，同源策略并不能限制他。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;安全设置&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#安全设置&#34;&gt;#&lt;/a&gt; 安全设置&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;HttpOnly cookie。在浏览器端，JavaScript 没有读取 cookie 的权限，防止 XSS。&lt;/li&gt;
-&lt;li&gt;Secure cookie，只有在特定安全通道（通常是 HTTPS 下）下，才传递 cookie&lt;/li&gt;
-&lt;li&gt;SameSite cookie：在跨域情况下，相关 cookie 无法被请求携带，主要是为了防止 CSRF。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;具体还有一些，在我那篇 XSS 和 CSRF 笔记中也有提到，就不细说了&lt;/p&gt;
-&lt;h1 id=&#34;改进版的cookie-session认证&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#改进版的cookie-session认证&#34;&gt;#&lt;/a&gt; 改进版的 Cookie-Session 认证&lt;/h1&gt;
-&lt;p&gt;把上述的改进为：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;不用 cookie 做客户端验证了，用其他的。web 下使用 localStorage，APP 中使用客户端数据库，这样也可以避免了 CSRF（不会自动发送）。&lt;/li&gt;
-&lt;li&gt;服务端不使用 Session，而是把 Session 信息拿出来存到数据库之中。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;认证过程：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;用户登录&lt;/li&gt;
-&lt;li&gt;服务器经过验证，把认证信息存入数据库，并把 key 值发送给浏览器&lt;/li&gt;
-&lt;li&gt;客户端拿到 key 值后存 localStorage&lt;/li&gt;
-&lt;li&gt;下次客户端再次请求后，把 key 值附加到 header 或者请求体内。&lt;/li&gt;
-&lt;li&gt;服务端通过获取的 key 来从数据库中读取信息。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;&lt;ins&gt;这样做其实还有一个好处，在用户登录后存 key 进入 localStorage 的时候，可以利用监听 storage 事件来实现其他同源页面也保持登录状态&lt;/ins&gt;。&lt;/p&gt;
-&lt;h1 id=&#34;基于jwt的token验证&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#基于jwt的token验证&#34;&gt;#&lt;/a&gt; 基于 JWT 的 token 验证&lt;/h1&gt;
-&lt;p&gt;JWT（JSON Web Token），即用于验证的信息是由 JSON 数据格式组成，这个 Token 是一个字符串。&lt;/p&gt;
-&lt;p&gt;上述的认证，还是需要服务端和客户端这边维持一个状态信息，但是基于 JWT 的 token 认证方案可以省去这个过程。&lt;/p&gt;
-&lt;p&gt;基于 Token 的身份验证是无状态的，我们不将用户信息存在服务器中。&lt;/p&gt;
-&lt;h2 id=&#34;jwt的组成&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#jwt的组成&#34;&gt;#&lt;/a&gt; JWT 的组成&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;header（消息头）&lt;/li&gt;
-&lt;li&gt;payload（消息体，储存用户 id，用户角色等）+ 过期时间（可选）&lt;/li&gt;
-&lt;li&gt;signature（签名）&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;JWT 是 JSON 格式的数据，前两部分就是 JSON 数据，第三部分 signature 是基于前两部分 header 和 payload 生成的签名。&lt;/p&gt;
-&lt;p&gt;前两部分分别通过 Base64URL 算法生成两组字符串，再和 signature 结合，三部分结合后通过 “ &lt;strong&gt;.&lt;/strong&gt; ” 分割，就是最终的 token（如 xxxxxx.yyyyy.zzzz）&lt;/p&gt;
-&lt;div class=&#34;note primary&#34;&gt;
-&lt;p&gt;签名的作用就是保证&lt;strong&gt; JWT 没有被篡改过&lt;/strong&gt;。签名基于前两个编码过的字符串，以某种不可逆算法加密（如 HMAC 算法）比较。&lt;/p&gt;
-&lt;/div&gt;
-&lt;h2 id=&#34;认证过程&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#认证过程&#34;&gt;#&lt;/a&gt; 认证过程&lt;/h2&gt;
-&lt;ol&gt;
-&lt;li&gt;用户登录系统&lt;/li&gt;
-&lt;li&gt;服务端验证，将认证信息通过指定的算法（如 HS256）进行加密，将加密的结果发送到客户端&lt;/li&gt;
-&lt;li&gt;客户端拿到返回的 token，存到某个地方（可以是 localStorage 或 SessionStorage 或 cookie，后面比较哪种好）&lt;/li&gt;
-&lt;li&gt;下次客户端发送的时候，将 token 附加到 header 中（放 url 中也可以，但是放在 header 中更安全）&lt;/li&gt;
-&lt;li&gt;服务端获取 header 中的 token，通过相同的算法对 token 中的信息进行验证，验证 token 中的 signature 和 payload 是否等同，就可知道是否被中间人更改。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id=&#34;存储位置&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#存储位置&#34;&gt;#&lt;/a&gt; 存储位置&lt;/h2&gt;
-&lt;p&gt;一般 JWT 在客户端的存储有三种：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;localStorage&lt;/li&gt;
-&lt;li&gt;SessionStorage&lt;/li&gt;
-&lt;li&gt;cookie（不能设置 Http only）&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;一般来说比较推荐存放在 session cookie 中（上面提到的临时 cookie），前两种存在跨域读取限制。&lt;/p&gt;
-&lt;div class=&#34;note primary&#34;&gt;
-&lt;p&gt;就算是存临时 cookie，也和上面传统的 cookie-session 机制是不一样的，我们只是存在那，并不是利用它去鉴权，实际上还是需要我们手动将 cookie 加到 header 上&lt;/p&gt;
-&lt;/div&gt;
-&lt;p&gt;当然其实也可以存在 localStorage，不过有几点不好就是：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;当用户关闭浏览器后，JWT 仍然会被存储在本地存储，除非手动更新或清理。&lt;/li&gt;
-&lt;li&gt;任何 JavaScript 都可以轻易获取本地存储的内容&lt;/li&gt;
-&lt;li&gt;无法被 Web Worker 使用&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;并不是说一定要存在临时 cookie，结合具体场景选择。&lt;/p&gt;
-&lt;h2 id=&#34;优点&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#优点&#34;&gt;#&lt;/a&gt; 优点&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;使用 json 作为数据传输，轻量级。&lt;/li&gt;
-&lt;li&gt;服务端无需保存状态，节省服务端资源。也方便横向扩展&lt;/li&gt;
-&lt;li&gt;可以实现单点登录&lt;/li&gt;
-&lt;li&gt;防 CSRF（token 的优势）&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;总结&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#总结&#34;&gt;#&lt;/a&gt; 总结&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;token 获取到后需要保存到某个地方待下次使用，最好是临时 cookie，或者 localstorage、sessionStorage&lt;/li&gt;
-&lt;li&gt;token 是有有效期的。&lt;/li&gt;
-&lt;li&gt;localStorage 和 sessionStorage 的跨域限制较为严格。&lt;/li&gt;
-&lt;li&gt;token 每次请求中都会编码到请求中，注意 token 大小。&lt;/li&gt;
-&lt;li&gt;存储敏感信息时记得加密&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1 id=&#34;混合jwt和cookie进行鉴权&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#混合jwt和cookie进行鉴权&#34;&gt;#&lt;/a&gt; 混合 JWT 和 Cookie 进行鉴权&lt;/h1&gt;
-&lt;p&gt;晚点填坑&lt;/p&gt;
-&lt;h1 id=&#34;oauth认证&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#oauth认证&#34;&gt;#&lt;/a&gt; OAuth 认证&lt;/h1&gt;
-&lt;p&gt;比较常见的就是用微信登录、QQ 登录或其他比较权威的网站开放的 API 来实现用户登录。&lt;/p&gt;
-&lt;div class=&#34;note primary&#34;&gt;
-&lt;p&gt;OAuth 允许用户提供一个令牌，而不是用户名和密码来访问他们存放在特定服务提供者的数据。每一个令牌授权一个特定的网站（例如，视频编辑网站) 在特定的时段（例如，接下来的 2 小时内）内访问特定的资源（例如仅仅是某一相册中的视频）。这样，OAuth 让用户可以授权第三方网站访问他们存储在另外服务提供者的某些特定信息，而非所有内容。—— 维基百科&lt;/p&gt;
-&lt;/div&gt;
-&lt;h1 id=&#34;参考信息&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#参考信息&#34;&gt;#&lt;/a&gt; 参考信息&lt;/h1&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href=&#34;https://www.cnblogs.com/fengzheng/p/8416393.html&#34;&gt;说一说几种常用的登录认证方式，你用的哪种 - 风的姿态 - 博客园 (cnblogs.com)&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;《前端核心开发知识进阶》第 33 章，单页应用鉴权设计&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href=&#34;https://mp.weixin.qq.com/s/93FzBigxugfRKI5qN76mWA&#34;&gt;前端应该学习的 Token 登录认证知识 (qq.com)&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href=&#34;https://learnku.com/articles/17883?order_by=vote_count&amp;amp;&#34;&gt;JWT 超详细分析 | Laravel China 社区 (learnku.com)&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
  ]]></description>
         </item>
     </channel>
