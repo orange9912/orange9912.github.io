@@ -17,8 +17,6 @@ categories:
 
 其中我负责的一个页面：**赛事详情页**，是抖音游戏（游戏赛事直播间、赛事搜索）赛事的重要信息呈现页面。
 
-**这里补图：直播间场景与搜索场景**
-
 ![live_scene](live_scene.jpg)
 
 ![search_scene](search_scene.jpg)
@@ -41,50 +39,91 @@ categories:
 
 ### 线上统计
 
-| 指标类别                                                     | 统计分位 | 表现                                 | 备注 |
-| ------------------------------------------------------------ | -------- | ------------------------------------ | ---- |
-| ActualFMP                                                    | 90分位   | iOS：基本低于1s，Android：3.3s～3.5s |      |
-| ActualFMP                                                    | 50分位   | iOS：300ms左右，Android： 2s左右     |      |
-| Load                                                         | 90分位   | iOS：500ms左右，Android：2.75s       |      |
-| Load                                                         | 50分位   | iOS：100ms左右，Android：1.45s       |      |
-| 秒开率（取TotalActualFMP≤1s占总量的比值，该时间相比ActualFMP要多上一个容器初始化时间） | -        | iOS：85.48%，Android：22%。整体：60% |      |
+| 指标类别                                   | 统计分位   | 表现                                           | 备注 |
+| ------------------------------------------ | ---------- | ---------------------------------------------- | ---- |
+| Load                                       | 90分位     | iOS：700ms-800ms左右，Android：1.3s            |      |
+| ActualFMp                                  | 50分位     | iOS：450ms左右，Android：900ms左右             |      |
+| ActualFMP                                  | 90分位     | iOS：900ms左右，Android：1.5s～1.7s            |      |
+| TotalActualFMP（ActualFMP + 容器启动时间） | **50分位** | iOS：800ms左右，Android：1.3s                  |      |
+| 秒开率（取TotalActualFMP≤1s占总量的比值）  | -          | iOS：81.41%，Android：24.53%。整体：**54.84**% |      |
 
 ### 线下具体分析
 
 以我手上的Android测试机为例，将网络限制至条件下述进行测试：
 
-- 10Mb/s的上传&下载
-- 40ms响应时间
+- 8Mb/s的上传&下载
+- 50ms响应时间
 
-| 指标                            | timestamp |
-| ------------------------------- | --------- |
-| DCL（DOM Content Loaded）       | 1627ms    |
-| FCP（First Contentful Paint）   | 1668ms    |
-| Load（资源加载完毕）            | 1675.9ms  |
-| LCP（Largest Contentful Paint） | 2080ms    |
+得到 **window.performance.timing**（解读见最后） 以及下述的监控数据：
+
+```json
+{
+    "connectStart": 1719898088842,
+    "navigationStart": 1719898088839,
+    "secureConnectionStart": 0,
+    "fetchStart": 1719898088842,
+    "domContentLoadedEventStart": 1719898090267,
+    "responseStart": 1719898089287,
+    "domInteractive": 1719898089442,
+    "domainLookupEnd": 1719898088842,
+    "responseEnd": 1719898089295,
+    "redirectStart": 0,
+    "requestStart": 1719898088925,
+    "unloadEventEnd": 0,
+    "unloadEventStart": 0,
+    "domLoading": 1719898089313,
+    "domComplete": 1719898090301,
+    "domainLookupStart": 1719898088842,
+    "loadEventStart": 1719898090302,
+    "domContentLoadedEventEnd": 1719898090268,
+    "loadEventEnd": 1719898090302,
+    "redirectEnd": 0,
+    "connectEnd": 1719898088842
+}
+```
+
+| 指标     | 定义                                             | timestamp |
+| -------- | ------------------------------------------------ | --------- |
+| TTFB     | 发出页面请求到接收到应答数据第一个字节的时间总和 | **448ms** |
+| DOMReady | 页面DOM树创建完成                                | 1426ms    |
+| DCL      | （DOM Content Loaded）HTML加载与解析完成         | 1627ms    |
+| FCP      | （First Contentful Paint）首次内容绘制时间       | 1668ms    |
+| Load     | 资源加载完毕 loadEventEnd - navigationStart      | 1675.9ms  |
+| LCP      | （Largest Contentful Paint）最大内容绘制         | 2080ms    |
 
 ![分析](perf_analyze.jpg)
 
 ### 结论
 
-瓶颈：主js模块的大小过大，加载js资源时间过长。
+从图内可以看到，浏览器先是加载HTML，然后并行加载js模块以及页面样式表
 
-浏览器在此先是加载html，然后从html中拉资源，并行加载css样式及必要的js模块，这些模块大小共计**895kb**，其中主js模块花了1.06秒进行加载（到1390ms时刻），然后解析又使用了100ms左右。
+这些模块的大小共计 **203KB**（编码），其中最有优化空间的主 js 模块花了 773.34 ms（762.772ms网络+10.568ms资源加载）加载，接着长达一个160ms的**long task**去解析并执行js
+
+直到 1428ms 时刻处理完成并触发 DCL。
+
+
 
 ## 优化思路
 
-现有的端内H5优化手段文章已经非常多了，这里记录一些我调研到总结手段的思路：
+![first_paint](first_paint.png)
 
-- **缓存**：离线包（优化前已使用）
-- **前置**：数据预取（prefetch）、资源预加载（html preload）
-- **简化**：首屏代码、非首屏模块动态加载
-- **拆分**：主js、依赖
+这些流程一般来说都是串行的，**只要我们能把一些串行的环节改造成并行，或者降低该环节的耗时**，就可以达到优化首屏的效果
 
-### 实践
+针对这个页面的一些特点，我定制了如下的思路：
 
-- 接入prefetch：经验上看能优化100-200ms
-- 拆分依赖：Parsed size 降低了120K左右，主js模块拆分了多个chunk，最大的降至300K
-- 一些代码的优化
+![think](think.png)
+
+- **前置**
+  - 将首屏的接口进行prefetch，使页面初始化与请求数据并行，少了一个环节，预计优化**100ms-200ms**
+  - 主 HTML 资源使用内部框架的能力进行 Preload。
+- **简化**
+  - 首屏时把非首屏可见内容延迟渲染
+  - 干掉类似功能的依赖，降低包体积
+  - Treeshaking。例如 Lodash 替换为 Loadsh-es，才能配合 Treeshaking 按需引入
+  - 版本相近的间接依赖，尽可能锁同一版本
+- **拆分**
+  - 使用直播的插件方案，将一些高频使用的库外置拆分出去，有效减少主包大小并利用并行加载。
+  - 将一些非首屏必须的依赖进行动态导入
 
 ### 优化效果
 
@@ -94,13 +133,62 @@ categories:
 
 以下为**三月底统计数据**：
 
-| 场景                           | 图   | 效果                                                         | 备注                                                         |
-| ------------------------------ | ---- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| 普通搜索入口(ActualFMP 90分位) |      | Android：1.29s => 1.03s (**-20%**)。iOS：838ms => 529ms（**-36.9%**）。整体：1145ms => 879.8ms(**-23.1%**) |                                                              |
-| 直播间入口（ActualFMP 90分位） |      | Android：3.02s => 2.28s(-24.5%)。iOS: 864ms => 928ms(+0.07%)，整体：2.7s => 2.064s(**-23.5%**) | 此场景较卡，因为位于进房，许多初始化逻辑，手机性能差的用户时间会表现的非常明显 |
+| 场景                           | 图   | 效果                                                         | 备注 |
+| ------------------------------ | ---- | ------------------------------------------------------------ | ---- |
+| 普通搜索入口(ActualFMP 90分位) |      | Android：1.29s => 1.03s (**-20%**)。iOS：838ms => 529ms（**-36.9%**）。整体：1145ms => 879.8ms(**-23.1%**) |      |
 
-秒开率（整体）：60% => 78.45%**（+30.75%）**，六月初已接近80%
+秒开率（整体）：54.84% => 73.43%（优化上线一天后）=> 85.48%（上线三月后离线率较高时）
 
-## 更多...
+# 附：window.performance采集性能数据的解读
 
-经过日常写代码的注意，其他负责的H5秒开率也基本达到了80%以上
+![performance-exam](performance-exam.jpg)
+
+### 时间节点
+
+- 初始化
+  - `navigationStart`：完成卸载前一个文档的时间点
+  - `redirectStart`：若有重定向，则为重定向开始时间，否则为0
+  - `redirectEnd`：若有重定向，则为重定向结束时间，否则0
+  - `unloadStart`、`unloadEnd`：若当前文档和上一个文档来自不同的源（origins），设置这两为0，否则记录实际时间。
+- 请求
+  - `fetchStart`：浏览器发起资源请求，或者读取缓存（如果有）的开始时间
+  - `domainLookupStart`：查询DNS（若有）的开始时间。如果没有发起查询，那就保持与`fetchStart`一致
+  - `domainLookupEnd`：同上，只不过表示结束时间
+  - `connectStart`：建立`TCP`连接的开始时间（如果需要建立连接），否则和`domainLookupEnd`相同
+  - connectEnd：同上，只不过表示结束时间
+  - secureConnectionStart：HTTPS 的安全连接握手过程时间前，如果没有使用 HTTPS 则为0。或者不可用时返回 undefined
+  - requestStart：客户端发送请求的时刻。
+  - responseStart：客户端收到**应答首个字节**的时刻
+  - responseEnd：客户端收到**应答最后一个字节**的时刻
+- 解析渲染阶段
+  - domLoading：用户代理设置当前文档为 loading 状态，一般为浏览器**即将开始解析第一批收到的 HTML 文档字节时**。
+  - domInteractive：用户代理设置当前文档为可交互，一般为浏览器完成对**所有 HTML 解析并且 DOM 构建完成的时间点**（DOM 准备就绪的时间点
+  - domContentLoaded：用户代理触发DCL的时间，一般为 DOM 准备就绪且没有样式表阻止 JS 执行的时刻（可以开始构建渲染树），DOM、CSSOM均准备就绪
+  - domComplete：用户代理设置文档为 complete，即所有处理完成，并且网页上的所有资源（图片）都下载完毕。
+  - loadEventStart：用户代理触发Load事件之前
+  - loadEventEnd：用户代理完成Load事件
+
+![performance-exam](performance_time.jpg)
+
+### 时刻范围/耗时、意义
+
+这些指标基本都是仅在双方非 0 值时计算有意义。
+
+- Redirect（重定向时间）：**rediectEnd - redirectStart**，
+- AppCache（缓存）： **domainLookupStart - fetchStart** 
+- DNS：**domainLookupEnd - domainLookupStart**
+- TCP：**connectEnd - connectStart**
+- SSL：**connectEnd - secureConnectionStart**
+- Request：**reponseStart - requestStart**
+- Response: **responseEnd - responseStart**
+- Load（页面完全加载总时间）: **LoadEventEnd - navigationStart**
+- DOMReady：**domContentLoadedEventStart - fetchStart**
+- DOMParse：**domInteractive - responseEnd**
+- ResourceLoad: **LoadEventStart - domContentLoadedEventEnd**
+- TTFB（发出页面请求到接收到应答数据第一个字节的时间总和）: **responseStart - navigationStart** 
+
+### 参考
+
+[Navigation Timing (w3.org)](https://www.w3.org/TR/navigation-timing/#processing-model)
+
+[Navigation Timing Level 2 (w3.org)](https://www.w3.org/TR/navigation-timing-2/)
