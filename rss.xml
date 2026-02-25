@@ -27,13 +27,13 @@
 &lt;figure class=&#34;highlight javascript&#34;&gt;&lt;figcaption data-lang=&#34;javascript&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token function&#34;&gt;sendLog&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token literal-property property&#34;&gt;eventName&lt;/span&gt;&lt;span class=&#34;token operator&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;token string&#34;&gt;&#39;livesdk_xxx_xxx&#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;3&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token literal-property property&#34;&gt;attr&lt;/span&gt;&lt;span class=&#34;token operator&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;4&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;		&lt;span class=&#34;token operator&#34;&gt;...&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;5&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;6&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;h2 id=&#34;新规范&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#新规范&#34;&gt;#&lt;/a&gt; 新规范&lt;/h2&gt;
 &lt;p&gt;新规范的事件名统⼀使⽤的命名规范：抖⾳游戏埋点前缀_组件类型_组件⾏为&lt;/p&gt;
 &lt;p&gt;DA 将埋点参数分成三部分结构，并利用其中的路由结构来区分标注的 UI 组件。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;sendLogParts.png&#34; alt=&#34;sendLogParts&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;sendLogParts.png&#34; alt=&#34;sendLogParts&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;举个例子，假设页面业务路径如下：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;path.png&#34; alt=&#34;path&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;path.png&#34; alt=&#34;path&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;此时 PageA 下的 Module：MB2 的参数长这样：&lt;/p&gt;
 &lt;figure class=&#34;highlight javascript&#34;&gt;&lt;figcaption data-lang=&#34;javascript&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token keyword&#34;&gt;const&lt;/span&gt; params &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token comment&#34;&gt;// 省略其他核心参数&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;3&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;	&lt;span class=&#34;token literal-property property&#34;&gt;module_name&lt;/span&gt;&lt;span class=&#34;token operator&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;token string&#34;&gt;&#34;MB2&#34;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;4&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token literal-property property&#34;&gt;attr&lt;/span&gt;&lt;span class=&#34;token operator&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt; &lt;span class=&#34;token comment&#34;&gt;/* ...obj */&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;token comment&#34;&gt;// 模块属性&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;5&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token literal-property property&#34;&gt;location&lt;/span&gt;&lt;span class=&#34;token operator&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;6&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token literal-property property&#34;&gt;current_page&lt;/span&gt;&lt;span class=&#34;token operator&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;token string&#34;&gt;&#39;PageB&#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;7&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token literal-property property&#34;&gt;current_page_attr&lt;/span&gt;&lt;span class=&#34;token operator&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt; &lt;span class=&#34;token comment&#34;&gt;/* PageB 的 attr */&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;8&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token literal-property property&#34;&gt;current_module&lt;/span&gt;&lt;span class=&#34;token operator&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;token string&#34;&gt;&#34;MB1&#34;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;token comment&#34;&gt;// 模块的前置模块，&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;9&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token literal-property property&#34;&gt;current_module_attr&lt;/span&gt;&lt;span class=&#34;token operator&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt; &lt;span class=&#34;token comment&#34;&gt;/* MB1 的 attr */&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;token comment&#34;&gt;//&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;10&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;11&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token literal-property property&#34;&gt;route&lt;/span&gt;&lt;span class=&#34;token operator&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;12&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token literal-property property&#34;&gt;previous_page&lt;/span&gt;&lt;span class=&#34;token operator&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;token string&#34;&gt;&#39;PageA&#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;13&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token literal-property property&#34;&gt;previous_page_attr&lt;/span&gt;&lt;span class=&#34;token operator&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt; &lt;span class=&#34;token comment&#34;&gt;/* PageA 的 attr */&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;14&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token literal-property property&#34;&gt;previous_module&lt;/span&gt;&lt;span class=&#34;token operator&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;token string&#34;&gt;&#34;MA1&#34;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;token string&#34;&gt;&#34;MA2&#34;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;token string&#34;&gt;&#34;MA3&#34;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;token comment&#34;&gt;// 前置页面跳转到 PageB 的模块链&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;15&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token literal-property property&#34;&gt;previous_module_attr&lt;/span&gt;&lt;span class=&#34;token operator&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;[&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;16&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;      &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt; &lt;span class=&#34;token comment&#34;&gt;/* MA1 的 attr */&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;17&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;      &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt; &lt;span class=&#34;token comment&#34;&gt;/* MA2 的 attr */&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;18&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;      &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt; &lt;span class=&#34;token comment&#34;&gt;/* MA3 的 attr */&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;19&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token punctuation&#34;&gt;]&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;20&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;21&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;新规范的复杂度远比旧规范要高，提出后研发流程里的各个角色遇到了许多痛点。&lt;/p&gt;
 &lt;h1 id=&#34;痛点&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#痛点&#34;&gt;#&lt;/a&gt; 痛点&lt;/h1&gt;
-&lt;p&gt;&lt;img src=&#34;pain.png&#34; alt=&#34;sendLogParts&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;pain.png&#34; alt=&#34;sendLogParts&#34; /&gt;&lt;/p&gt;
 &lt;h1 id=&#34;思路方案&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#思路方案&#34;&gt;#&lt;/a&gt; 思路 / 方案&lt;/h1&gt;
 &lt;p&gt;针对开发难的痛点，我们组内的其他同事设计了一套传递埋点参数的规范以及解析的 &lt;code&gt;npm&lt;/code&gt;  包去进行&lt;strong&gt;减少基础的解析代码与依赖设置工作&lt;/strong&gt;，但由于不是我做的，此处按下不表。&lt;/p&gt;
 &lt;p&gt;针对设计、测试难的痛点，我们&lt;strong&gt;提供一个符合规范的埋点系统&lt;/strong&gt;去定制能力解决：&lt;/p&gt;
@@ -52,9 +52,9 @@
 &lt;li&gt;沉淀一套结合工具 &lt;code&gt;npm&lt;/code&gt;  包埋点代码开发的最佳实践&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&#34;工作流&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#工作流&#34;&gt;#&lt;/a&gt; 工作流&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;process_old.png&#34; alt=&#34;旧工作流&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;process_old.png&#34; alt=&#34;旧工作流&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;有了平台与基础包之后，期望的流程会变成：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;process_new.png&#34; alt=&#34;旧工作流&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;process_new.png&#34; alt=&#34;旧工作流&#34; /&gt;&lt;/p&gt;
 &lt;h2 id=&#34;沉淀埋点代码开发最佳实践&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#沉淀埋点代码开发最佳实践&#34;&gt;#&lt;/a&gt; 沉淀埋点代码开发最佳实践&lt;/h2&gt;
 &lt;p&gt;基础包会帮我们自动将页面的核心参数从 &lt;code&gt;url&lt;/code&gt;  参数上读取设置，但路径参数与位置参数仍需要我们手动分析结合编写。&lt;/p&gt;
 &lt;p&gt;但大量的埋点相关代码侵入到业务代码中，使得业务代码冗长并难以阅读，思考过后决定将埋点代码以 hook 形式抽离，只暴露最终的方法调用。&lt;/p&gt;
@@ -63,7 +63,7 @@
 &lt;p&gt;这样做使得埋点代码对&lt;strong&gt;普通业务代码侵⼊性最⼩&lt;/strong&gt;：业务代码只需在模块内部引⼊ &lt;strong&gt;hook&lt;/strong&gt; 并传⼊视图的 &lt;strong&gt;Ref&lt;/strong&gt;，即可正常上报。&lt;/p&gt;
 &lt;p&gt;同时，由于上报需要得知路径关系，在⻚⾯级 &lt;strong&gt;hook&lt;/strong&gt; 顶层会维护⼀个模块树的 &lt;strong&gt;State&lt;/strong&gt;，这个 &lt;strong&gt;State&lt;/strong&gt; 会随&lt;/p&gt;
 &lt;p&gt;着组件树层层下发⾄具体模块的 &lt;strong&gt;ReportHook&lt;/strong&gt; 来获取对应链路信息和设置前置模块（并直接继承前置模块信息）、上报埋点，再到⼦组件中消费，如此往复。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;example.png&#34; alt=&#34;旧工作流&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;example.png&#34; alt=&#34;旧工作流&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;总的来说，这个⽅案在编写时会有⼀定复杂度，但编写成功之后，有以下优点:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;对功能代码的的低侵⼊性，低耦合⾼内聚&lt;/strong&gt;。埋点逻辑只需另外写在统⼀的 hook ⽂件，业务代码只需调⽤传参。&lt;/li&gt;
@@ -72,7 +72,7 @@
 &lt;h2 id=&#34;埋点结构树&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#埋点结构树&#34;&gt;#&lt;/a&gt; 埋点结构树&lt;/h2&gt;
 &lt;p&gt;预期：将某个页面内的所有埋点以及其相邻页面的直接埋点生成一棵树供直观阅读。&lt;/p&gt;
 &lt;p&gt;思考过后，我考虑建⽴⼀个关系表，以⻚⾯ ID 为主键，存储⻚⾯内节点关系的树，以及路径的 Map。在每一次编辑关系时，维护该关系表。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;graph.png&#34; alt=&#34;旧工作流&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;graph.png&#34; alt=&#34;旧工作流&#34; /&gt;&lt;/p&gt;
  ]]></description>
         </item>
         <item>
@@ -86,9 +86,9 @@
 &lt;h2 id=&#34;背景&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#背景&#34;&gt;#&lt;/a&gt; 背景&lt;/h2&gt;
 &lt;p&gt;目前在职主要负责的内容是抖音等宿主的&lt;strong&gt;端内 H5/Lynx&lt;/strong&gt;（字节内部的高效跨平台框架）页面的编写&lt;/p&gt;
 &lt;p&gt;其中我负责的一个页面：&lt;strong&gt;赛事详情页&lt;/strong&gt;，是抖音游戏（游戏赛事直播间、赛事搜索）赛事的重要信息呈现页面。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;live_scene.jpg&#34; alt=&#34;live_scene&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;search_scene.jpg&#34; alt=&#34;search_scene&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;example_shot.jpg&#34; alt=&#34;example_shot&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;live_scene.jpg&#34; alt=&#34;live_scene&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;search_scene.jpg&#34; alt=&#34;search_scene&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;example_shot.jpg&#34; alt=&#34;example_shot&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;不同的版权赛事厂商会提供接口返回我们指定的数据结构，实现赛事信息的呈现。&lt;/p&gt;
 &lt;p&gt;以 PEL 春季赛为例，在 2.29-3.3 的四天比赛中，日均看播 UV 超 1xx 万，而页面的峰值 PV 也达 1xx 万&lt;/p&gt;
 &lt;p&gt;但是页面的首屏性能颇为不佳（尤其是在 Android 机型下）&lt;/p&gt;
@@ -189,16 +189,16 @@
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;p&gt;&lt;img src=&#34;perf_analyze.jpg&#34; alt=&#34;分析&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;perf_analyze.jpg&#34; alt=&#34;分析&#34; /&gt;&lt;/p&gt;
 &lt;h3 id=&#34;结论&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#结论&#34;&gt;#&lt;/a&gt; 结论&lt;/h3&gt;
 &lt;p&gt;从图内可以看到，浏览器先是加载 HTML，然后并行加载 js 模块以及页面样式表&lt;/p&gt;
 &lt;p&gt;这些模块的大小共计 &lt;strong&gt;203KB&lt;/strong&gt;（编码），其中最有优化空间的主 js 模块花了 773.34 ms（762.772ms 网络 + 10.568ms 资源加载）加载，接着长达一个 160ms 的&lt;strong&gt; long task&lt;/strong&gt; 去解析并执行 js&lt;/p&gt;
 &lt;p&gt;直到 1428ms 时刻处理完成并触发 DCL。&lt;/p&gt;
 &lt;h2 id=&#34;优化思路&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#优化思路&#34;&gt;#&lt;/a&gt; 优化思路&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;first_paint.png&#34; alt=&#34;first_paint&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;first_paint.png&#34; alt=&#34;first_paint&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;这些流程一般来说都是串行的，&lt;strong&gt;只要我们能把一些串行的环节改造成并行，或者降低该环节的耗时&lt;/strong&gt;，就可以达到优化首屏的效果&lt;/p&gt;
 &lt;p&gt;针对这个页面的一些特点，我定制了如下的思路：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;think.png&#34; alt=&#34;think&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;think.png&#34; alt=&#34;think&#34; /&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;前置&lt;/strong&gt;
 &lt;ul&gt;
@@ -245,7 +245,7 @@
 &lt;/table&gt;
 &lt;p&gt;秒开率（整体）：54.84% =&amp;gt; 73.43%（优化上线一天后）=&amp;gt; 85.48%（上线三月后离线率较高时）&lt;/p&gt;
 &lt;h1 id=&#34;附windowperformance采集性能数据的解读&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#附windowperformance采集性能数据的解读&#34;&gt;#&lt;/a&gt; 附：window.performance 采集性能数据的解读&lt;/h1&gt;
-&lt;p&gt;&lt;img src=&#34;performance-exam.jpg&#34; alt=&#34;performance-exam&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;performance-exam.jpg&#34; alt=&#34;performance-exam&#34; /&gt;&lt;/p&gt;
 &lt;h3 id=&#34;时间节点&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#时间节点&#34;&gt;#&lt;/a&gt; 时间节点&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;初始化
@@ -280,7 +280,7 @@
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;performance_time.jpg&#34; alt=&#34;performance-exam&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;performance_time.jpg&#34; alt=&#34;performance-exam&#34; /&gt;&lt;/p&gt;
 &lt;h3 id=&#34;时刻范围耗时-意义&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#时刻范围耗时-意义&#34;&gt;#&lt;/a&gt; 时刻范围 / 耗时、意义&lt;/h3&gt;
 &lt;p&gt;这些指标基本都是仅在双方非 0 值时计算有意义。&lt;/p&gt;
 &lt;ul&gt;
@@ -298,8 +298,8 @@
 &lt;li&gt;TTFB（发出页面请求到接收到应答数据第一个字节的时间总和）: &lt;strong&gt;responseStart - navigationStart&lt;/strong&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id=&#34;参考&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#参考&#34;&gt;#&lt;/a&gt; 参考&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&#34;https://www.w3.org/TR/navigation-timing/#processing-model&#34;&gt;Navigation Timing (w3.org)&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://www.w3.org/TR/navigation-timing-2/&#34;&gt;Navigation Timing Level 2 (w3.org)&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly93d3cudzMub3JnL1RSL25hdmlnYXRpb24tdGltaW5nLyNwcm9jZXNzaW5nLW1vZGVs&#34;&gt;Navigation Timing (w3.org)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly93d3cudzMub3JnL1RSL25hdmlnYXRpb24tdGltaW5nLTIv&#34;&gt;Navigation Timing Level 2 (w3.org)&lt;/span&gt;&lt;/p&gt;
  ]]></description>
         </item>
         <item>
@@ -329,7 +329,7 @@
 &lt;p&gt;这个标准是用于描述和存储电子文档，由 &lt;code&gt;Ecma International&lt;/code&gt; （欧洲计算机制造商协会）管理和维护的&lt;/p&gt;
 &lt;p&gt;而 XML 和 HTML 一样都是常用的标记语言，XML 更多用于数据交换。&lt;/p&gt;
 &lt;p&gt;而 docx 文件其实本质上就是一个压缩包，只要把后缀改成 zip 并解压缩，就可以看到这些文件&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;node-trial.png&#34; alt=&#34;lifecycle&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;node-trial.png&#34; alt=&#34;lifecycle&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;其中 &lt;code&gt;word/document.xml&lt;/code&gt;  中存放了该 docx 文档的具体内容，我们只要修改这一部分，最终再写回成 &lt;code&gt;zip&lt;/code&gt;  文件并改扩展名为 &lt;code&gt;docx&lt;/code&gt; ，即可实现根据模版文件输出对应例子。&lt;/p&gt;
 &lt;h2 id=&#34;流程&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#流程&#34;&gt;#&lt;/a&gt; 流程&lt;/h2&gt;
 &lt;p&gt;搞定了以上问题，就可以开始编写代码了，代码的工作流程如下：&lt;/p&gt;
@@ -396,10 +396,10 @@
 &lt;/ol&gt;
 &lt;h2 id=&#34;参考资料&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#参考资料&#34;&gt;#&lt;/a&gt; 参考资料&lt;/h2&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/exceljs/exceljs/blob/master/README_zh.md&#34;&gt;exceljs/README_zh.md at master · exceljs/exceljs (github.com)&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/cthackers/adm-zip/wiki/ADM-ZIP&#34;&gt;ADM 邮编・cthackers/adm-zip 维基 (github.com)&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://juejin.cn/post/7313048171797544997?searchId=20240411133356217F06864C2AFE0BDFA5#heading-6&#34;&gt;前端是怎么解析 Excel、PDF、Word、PPT 等文件的？ - 掘金 (juejin.cn)&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://juejin.cn/post/6844903655989051399?searchId=2024041111055823B66E49E1ED6200D07D&#34;&gt;nodejs 实现一个 word 文档解析器 - 掘金 (juejin.cn)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9naXRodWIuY29tL2V4Y2VsanMvZXhjZWxqcy9ibG9iL21hc3Rlci9SRUFETUVfemgubWQ=&#34;&gt;exceljs/README_zh.md at master · exceljs/exceljs (github.com)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9naXRodWIuY29tL2N0aGFja2Vycy9hZG0temlwL3dpa2kvQURNLVpJUA==&#34;&gt;ADM 邮编・cthackers/adm-zip 维基 (github.com)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC83MzEzMDQ4MTcxNzk3NTQ0OTk3P3NlYXJjaElkPTIwMjQwNDExMTMzMzU2MjE3RjA2ODY0QzJBRkUwQkRGQTUjaGVhZGluZy02&#34;&gt;前端是怎么解析 Excel、PDF、Word、PPT 等文件的？ - 掘金 (juejin.cn)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC82ODQ0OTAzNjU1OTg5MDUxMzk5P3NlYXJjaElkPTIwMjQwNDExMTEwNTU4MjNCNjZFNDlFMUVENjIwMEQwN0Q=&#34;&gt;nodejs 实现一个 word 文档解析器 - 掘金 (juejin.cn)&lt;/span&gt;&lt;/li&gt;
 &lt;/ul&gt;
  ]]></description>
         </item>
@@ -432,7 +432,7 @@
 &lt;h1 id=&#34;问题&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#问题&#34;&gt;#&lt;/a&gt; 问题&lt;/h1&gt;
 &lt;p&gt;不太回忆起来了，仅列举部分还记得的问题&lt;/p&gt;
 &lt;h2 id=&#34;tag里渲染文字上浮的问题&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#tag里渲染文字上浮的问题&#34;&gt;#&lt;/a&gt; Tag 里渲染文字上浮的问题&lt;/h2&gt;
-&lt;p&gt;经过一顿搜索后，原作者：&lt;a href=&#34;https://www.zhihu.com/question/39516424/answer/274374076&#34;&gt;(99+ 封私信 / 80 条消息) Android 浏览器下 line-height 垂直居中为什么会偏离？ - 知乎 (zhihu.com)&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;经过一顿搜索后，原作者：&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzM5NTE2NDI0L2Fuc3dlci8yNzQzNzQwNzY=&#34;&gt;(99+ 封私信 / 80 条消息) Android 浏览器下 line-height 垂直居中为什么会偏离？ - 知乎 (zhihu.com)&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;简而言之就是因为字体内部渲染的问题，无法通过前端的技术去根本上修复&lt;/p&gt;
 &lt;p&gt;只能进行缓解：让行高 = 字号，多余的行高通过间距去控制（即减小字体的渲染范围来缓解）&lt;/p&gt;
 &lt;h2 id=&#34;textarea-input内在拼音输入态时多次触发无意义的onchange&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#textarea-input内在拼音输入态时多次触发无意义的onchange&#34;&gt;#&lt;/a&gt; TextArea、Input 内在拼音输入态时多次触发无意义的 onChange&lt;/h2&gt;
@@ -443,7 +443,7 @@
 &lt;p&gt;jscodeshift 提供了许多的上层功能封装（自带 runner 可对文件目录自动递归处理），用于当 AST editor 较为省事。&lt;/p&gt;
 &lt;p&gt;编写过程中，可以配合 https://astexplorer.net 工具来辅助快速找出节点对应类型去写匹配代码。&lt;/p&gt;
 &lt;p&gt;同样，我也负责了 Tag、Input、TextArea 三个组件对应的 &lt;code&gt;transformer&lt;/code&gt;  文件编写。&lt;/p&gt;
-&lt;p&gt;参考资料：&lt;a href=&#34;https://github.com/facebook/jscodeshift&#34;&gt;GitHub - facebook/jscodeshift: A JavaScript codemod toolkit.&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;参考资料：&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9naXRodWIuY29tL2ZhY2Vib29rL2pzY29kZXNoaWZ0&#34;&gt;GitHub - facebook/jscodeshift: A JavaScript codemod toolkit.&lt;/span&gt;&lt;/p&gt;
  ]]></description>
         </item>
         <item>
@@ -463,7 +463,7 @@
 &lt;/ul&gt;
 &lt;p&gt;带着问题去看文章。&lt;/p&gt;
 &lt;p&gt;每个 Vue 实例在创建的时候都要经过一系列初始化，从创建到销毁，Vue 的生命周期可以分为四个阶段：&lt;strong&gt;初始化、模板编译、挂载、卸载阶段&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;lifecycle.png&#34; alt=&#34;lifecycle&#34; title=&#34;官方图&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;lifecycle.png&#34; alt=&#34;lifecycle&#34; title=&#34;官方图&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;接下来，&lt;strong&gt;我们从 Vue 的构造函数深入了解 Vue 的生命周期，看看 Vue 是怎么建立并初始化的&lt;/strong&gt;。不知道的可以再看看前面的博客，我们前面说到，Vue 有个构造函数，在某个文件内，会引入不同的 Mixin，往 Vue 的原型上挂载方法，其中 Vue 构造函数就引用了 initMixin 的方法用于初始化。&lt;/p&gt;
 &lt;figure class=&#34;highlight javascript&#34;&gt;&lt;figcaption data-lang=&#34;javascript&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token keyword&#34;&gt;function&lt;/span&gt; &lt;span class=&#34;token function&#34;&gt;Vue&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token parameter&#34;&gt;options&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token keyword&#34;&gt;if&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token operator&#34;&gt;!&lt;/span&gt;process&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;env&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;token constant&#34;&gt;NODE_ENV&lt;/span&gt; &lt;span class=&#34;token operator&#34;&gt;!==&lt;/span&gt; &lt;span class=&#34;token string&#34;&gt;&#39;production&#39;&lt;/span&gt; &lt;span class=&#34;token operator&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&#34;token operator&#34;&gt;!&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token keyword&#34;&gt;this&lt;/span&gt; &lt;span class=&#34;token keyword&#34;&gt;instanceof&lt;/span&gt; &lt;span class=&#34;token class-name&#34;&gt;Vue&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;3&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;		&lt;span class=&#34;token function&#34;&gt;warn&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token string&#34;&gt;&#39;Vue is a constructor and should be called with the `new` keyword&#39;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;4&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;5&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token keyword&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;_init&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;options&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;token comment&#34;&gt;// 就是这里&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;6&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;h1 id=&#34;this_init&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#this_init&#34;&gt;#&lt;/a&gt; this._init&lt;/h1&gt;
 &lt;p&gt;这个方法是通过 initMixin 挂载到 Vue 原型上的，接下来我们来看看他的细节。&lt;/p&gt;
@@ -726,7 +726,7 @@
 &lt;h1 id=&#34;vue中的虚拟dom&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#vue中的虚拟dom&#34;&gt;#&lt;/a&gt; Vue 中的虚拟 DOM&lt;/h1&gt;
 &lt;p&gt;在 Vue 之中，使用模板来描述状态和 DOM 的映射。Vue 会通过模板编译，将模板转换成渲染函数，通过执行这个函数就能够得到一个虚拟节点树。&lt;/p&gt;
 &lt;p&gt;每次属性发生变化，会调用组件渲染函数&lt;strong&gt;生成&lt;/strong&gt;新的虚拟节点树，然后将新生成的虚拟节点树与上一次渲染视图使用的旧虚拟节点树进行&lt;strong&gt;对比&lt;/strong&gt;（&lt;strong&gt;diff&lt;/strong&gt;），再把要更新的地方进行 DOM 操作（&lt;strong&gt;patch&lt;/strong&gt;）。最后缓存这一次渲染视图使用的虚拟节点树的 VNode&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;%E6%B5%81%E7%A8%8B.png&#34; alt=&#34;流程&#34; title=&#34;VNode，即Virtual Node&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;%E6%B5%81%E7%A8%8B.png&#34; alt=&#34;流程&#34; title=&#34;VNode，即Virtual Node&#34; /&gt;&lt;/p&gt;
 &lt;h2 id=&#34;vnode&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#vnode&#34;&gt;#&lt;/a&gt; VNode&lt;/h2&gt;
 &lt;p&gt;在虚拟 DOM 中，VNode 即虚拟节点，在 Vue 中存在一个 VNode 类，用来实例化不同类型的 vnode 实例来表示不同类型的 DOM 节点。&lt;/p&gt;
 &lt;figure class=&#34;highlight javascript&#34;&gt;&lt;figcaption data-lang=&#34;javascript&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token keyword&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;token keyword&#34;&gt;default&lt;/span&gt; &lt;span class=&#34;token keyword&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;token class-name&#34;&gt;VNode&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token function&#34;&gt;constructor&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token parameter&#34;&gt;tag&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; data&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; children&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; text&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; elm&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; context&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; componentOptions&lt;span class=&#34;token punctuation&#34;&gt;,&lt;/span&gt; asyncFactory&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;3&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;		&lt;span class=&#34;token keyword&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;tag &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; tag&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;4&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token keyword&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;data &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; data&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;5&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token keyword&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;children &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; children&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;6&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token operator&#34;&gt;...&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;7&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;8&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token operator&#34;&gt;...&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;9&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;VNode 实际上就是一个 JavaScript 对象。在渲染视图之中，Vue 会先创建 VNode，然后再使用它去生成真实 DOM，然后插入到页面渲染视图。&lt;/p&gt;
@@ -796,8 +796,8 @@
 &lt;p&gt;虚拟 DOM 也是 React 的核心技术之一。自从 Vue2.0 引入虚拟 DOM 后，初始渲染速度比 Vue1.0 提升了 2～4 倍，且大大降低了内存消耗。&lt;/p&gt;
 &lt;h1 id=&#34;参考资料&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#参考资料&#34;&gt;#&lt;/a&gt; 参考资料&lt;/h1&gt;
 &lt;p&gt;刘博文著的《深入浅出 Vue.js》&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/p/401340016&#34;&gt;diff 算法深入一下？ - 知乎 (zhihu.com)&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/p/149972619&#34;&gt;聊一聊 Diff 算法（React、Vue2.x、Vue3.x） - 知乎 (zhihu.com)&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC80MDEzNDAwMTY=&#34;&gt;diff 算法深入一下？ - 知乎 (zhihu.com)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8xNDk5NzI2MTk=&#34;&gt;聊一聊 Diff 算法（React、Vue2.x、Vue3.x） - 知乎 (zhihu.com)&lt;/span&gt;&lt;/p&gt;
  ]]></description>
         </item>
         <item>
@@ -888,7 +888,7 @@
 &lt;div class=&#34;note primary&#34;&gt;
 &lt;p&gt;不同数据的 Dep 可能收录同一个 Watcher 实例，数据的 Dep 可收录多个 Watcher 实例。（多对多）&lt;/p&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;img src=&#34;Vue%E5%8F%98%E5%8C%96%E4%BE%A6%E6%B5%8B%E5%85%B3%E7%B3%BB%E5%9B%BE.jpg&#34; alt=&#34;Vue变化侦测关系图&#34; title=&#34;如图所示&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;Vue%E5%8F%98%E5%8C%96%E4%BE%A6%E6%B5%8B%E5%85%B3%E7%B3%BB%E5%9B%BE.jpg&#34; alt=&#34;Vue变化侦测关系图&#34; title=&#34;如图所示&#34; /&gt;&lt;/p&gt;
 &lt;h1 id=&#34;qa&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#qa&#34;&gt;#&lt;/a&gt; Q&amp;amp;A&lt;/h1&gt;
 &lt;h2 id=&#34;简述vue的响应式原理&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#简述vue的响应式原理&#34;&gt;#&lt;/a&gt; 简述 Vue 的响应式原理？&lt;/h2&gt;
 &lt;p&gt;主要是三个关键词，数据劫持、依赖收集、发布订阅模式。Vue 通过 Observer 类将对象转化成 getter/setter，将数组的原型用拦截器覆盖，都在 getter 中收集依赖存放到 Dep 实例中。对象在 setter 中通知依赖更新，而数组在拦截器中通知依赖。依赖就是 Watcher 实例，外界通过依赖读取数据，当数据发生变化时通知依赖，依赖再通知外界进行更新。&lt;/p&gt;
@@ -904,11 +904,11 @@
             <description><![CDATA[ &lt;p&gt;2021.9.29&lt;/p&gt;
 &lt;p&gt;洗澡的的时候发呆，突然想起来，今年还发生了挺多事情的。&lt;/p&gt;
 &lt;p&gt;先是年初的时候，大病一场，住院住了十多天，每天躺在病床上输液，当时跨年那一晚，我还在住院（因为身体太难受，当晚我还吐了），女朋友来照顾我（不得不说，有个伴侣就是好啊～）。好像是 1 月 5 号出院的吧，又面临着期末考试，当时最近的一场考试是 1 月 10 日。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;%E8%80%83%E8%AF%95%E5%AE%89%E6%8E%92.png&#34; alt=&#34;考试安排&#34; title=&#34;当时的考试安排&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;%E8%80%83%E8%AF%95%E5%AE%89%E6%8E%92.png&#34; alt=&#34;考试安排&#34; title=&#34;当时的考试安排&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;因为生病，大三上整个学期的下半学期几乎是没有听课。整门课程有一半的东西还没学，而且前半部分学的也不是特别牢，我又不想申请缓考，这就导致了：&lt;strong&gt;出院的时候我只有三天的时间去应付最近的一门考试《编译原理》，还是最难的那一门，而且后面还有很多门一半没学的课程在等着我&lt;/strong&gt;。&lt;/p&gt;
 &lt;p&gt;因为住院养成的生物钟（早上六点半醒），让我 1.6-1.19 那段时间几乎是早上六点多醒，七点多起准备去图书馆学习，晚上学到十点多再回宿舍，丝毫不敢松懈，学到脑子觉得疲劳了也还在不断的提自己的效率。&lt;/p&gt;
 &lt;p&gt;那两周真的是煎熬，我也不知道怎么熬过来的。仔细想想，那段时间几乎是我最拼的时候了：心无旁骛、满脑子只有知识点，不断的从书本、ppt 汲取知识，转化成自己的知识结构，再输出到试卷上。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;%E6%88%90%E7%BB%A9.png&#34; alt=&#34;成绩&#34; title=&#34;最终的考试成绩&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;%E6%88%90%E7%BB%A9.png&#34; alt=&#34;成绩&#34; title=&#34;最终的考试成绩&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;最终的结果其实还挺出乎我的意料的，准备时间最少、最难的课程编译原理我卷面分竟然考了 96，其他课程的成绩也还不错，当然比起大二的时候绩点就差了很多。&lt;/p&gt;
 &lt;p&gt;考完试之后，我整个人也放松了许多。&lt;/p&gt;
 &lt;hr /&gt;
@@ -1092,11 +1092,11 @@
 &lt;li&gt;老生代：生存时间较长的对象&lt;/li&gt;
 &lt;li&gt;新生代空间较小，老生代空间较大&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;1.png&#34; alt=&#34;1&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;1.png&#34; alt=&#34;1&#34; /&gt;&lt;/p&gt;
 &lt;h2 id=&#34;新生代垃圾回收&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#新生代垃圾回收&#34;&gt;#&lt;/a&gt; 新生代垃圾回收&lt;/h2&gt;
 &lt;p&gt;新生代的垃圾回收算法主要通过&lt;strong&gt; Scavenge&lt;/strong&gt; 算法进行垃圾回收，该算法的流程主要是：&lt;/p&gt;
 &lt;p&gt;将堆内存一分为二，一个处于使用中 (from)，一个处于闲置中 (To)。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;2.png&#34; alt=&#34;2&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;2.png&#34; alt=&#34;2&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;分配内存时，会先分配到使用中的内存（from 空间），当开始进行垃圾回收的时候，回收生命周期结束的对象。&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;对对象区域进行垃圾回收（标记清除），留下在使用中的活跃对象&lt;/li&gt;
@@ -1176,7 +1176,7 @@
 &lt;p&gt;为了减小停顿时间带来的影响，V8 引入了增量标记，即将一个同步一口气完成的动作分为许多个 “step”，在这些 step 之间可以穿插一些 JavaScript 应用逻辑（其实我总觉得和操作系统调度、React fiber 的改进思想有些异曲同工，都是分片），这样就不会长时间无响应。&lt;/p&gt;
 &lt;h1 id=&#34;参考资料&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#参考资料&#34;&gt;#&lt;/a&gt; 参考资料&lt;/h1&gt;
 &lt;p&gt;《深入浅出 Nodejs》—— 朴灵&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://blog.poetries.top/browser-working-principle/guide/part3/lesson13.html&#34;&gt;https://blog.poetries.top/browser-working-principle/guide/part3/lesson13.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9ibG9nLnBvZXRyaWVzLnRvcC9icm93c2VyLXdvcmtpbmctcHJpbmNpcGxlL2d1aWRlL3BhcnQzL2xlc3NvbjEzLmh0bWw=&#34;&gt;https://blog.poetries.top/browser-working-principle/guide/part3/lesson13.html&lt;/span&gt;&lt;/p&gt;
  ]]></description>
         </item>
         <item>
@@ -1191,7 +1191,7 @@
 &lt;p&gt;・尿液的正常排出，有赖于尿路管腔通畅和排尿功能正常。&lt;/p&gt;
 &lt;p&gt;・泌尿系统本身及其周围的许多疾病都可引起尿路梗阻，造成尿液排出障碍，引起梗阻近侧端尿路扩张积水。&lt;/p&gt;
 &lt;p&gt;・泌尿系统许多疾病与泌尿系梗阻互为因果&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;1.png&#34; alt=&#34;image-20210922212650050&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;1.png&#34; alt=&#34;image-20210922212650050&#34; /&gt;&lt;/p&gt;
 &lt;h3 id=&#34;一-病因&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#一-病因&#34;&gt;#&lt;/a&gt; (一)    病因&lt;/h3&gt;
 &lt;p&gt;\1.    尿路结石&lt;/p&gt;
 &lt;p&gt;\2.    泌尿生殖系统肿瘤&lt;/p&gt;
@@ -1202,7 +1202,7 @@
 &lt;p&gt;\7.    中枢或周围神经受到损伤&lt;/p&gt;
 &lt;p&gt;\8.    结核&lt;/p&gt;
 &lt;p&gt;\9.    医源性输尿管梗阻&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;2.png&#34; alt=&#34;image-20210922212659952&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;2.png&#34; alt=&#34;image-20210922212659952&#34; /&gt;&lt;/p&gt;
 &lt;h3 id=&#34;二-病理生理&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#二-病理生理&#34;&gt;#&lt;/a&gt; (二)  病理生理&lt;/h3&gt;
 &lt;h4 id=&#34;1-病-理&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#1-病-理&#34;&gt;#&lt;/a&gt; \1.    病 理：&lt;/h4&gt;
 &lt;p&gt;基本病理改变是梗阻部位以上压力增高，尿路扩张积水，长时间梗阻将导致肾积水和肾功能损害。&lt;/p&gt;
@@ -1265,7 +1265,7 @@
 &lt;h3 id=&#34;二-病-因&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#二-病-因&#34;&gt;#&lt;/a&gt; (二)  病 因&lt;/h3&gt;
 &lt;p&gt;\1.    老龄 + 有功能的睾丸：是前列腺增生发病的两个重要因素，二者缺一不可。&lt;/p&gt;
 &lt;p&gt;\2.    受性激素的调控，前列腺间质细胞和腺上皮细胞相互影响，各种生长因子的作用，随着年龄增大体内性激素平衡失调以及雌、雄激素的协同效应等，可能是前列腺增生的重要病因。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;3.png&#34; alt=&#34;image-20210922212742642&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;3.png&#34; alt=&#34;image-20210922212742642&#34; /&gt;&lt;/p&gt;
 &lt;h3 id=&#34;三-病-理&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#三-病-理&#34;&gt;#&lt;/a&gt; (三)  病 理&lt;/h3&gt;
 &lt;p&gt;\1.    增生的部分为：移行带。&lt;/p&gt;
 &lt;p&gt;\2.    外科包膜：被压缩的外周腺体。&lt;/p&gt;
@@ -1448,7 +1448,7 @@
 &lt;h2 id=&#34;内存控制&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#内存控制&#34;&gt;#&lt;/a&gt; 内存控制&lt;/h2&gt;
 &lt;p&gt;Node 的内存控制基于 V8 的内存控制，基本是一样的，不再重复，见：&lt;a href=&#34;https://zyczxq.com/2021/09/23/JavaScript/v8-memoryManage/&#34;&gt;https://zyczxq.com/2021/09/23/JavaScript/v8-memoryManage/&lt;/a&gt;&lt;/p&gt;
 &lt;h1 id=&#34;参考资料&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#参考资料&#34;&gt;#&lt;/a&gt; 参考资料&lt;/h1&gt;
-&lt;p&gt;&lt;a href=&#34;http://nodejs.cn/&#34;&gt;Node.js 中文网 (nodejs.cn)&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cDovL25vZGVqcy5jbi8=&#34;&gt;Node.js 中文网 (nodejs.cn)&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;朴灵的《深入浅出 nodejs》&lt;/p&gt;
  ]]></description>
         </item>
@@ -1462,7 +1462,7 @@
 &lt;h2 id=&#34;一-泌尿系统结核&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#一-泌尿系统结核&#34;&gt;#&lt;/a&gt; 一、泌尿系统结核&lt;/h2&gt;
 &lt;h3 id=&#34;一-病理&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#一-病理&#34;&gt;#&lt;/a&gt; (一)  病理&lt;/h3&gt;
 &lt;h4 id=&#34;1-肾结核&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#1-肾结核&#34;&gt;#&lt;/a&gt; \1.    肾结核&lt;/h4&gt;
-&lt;p&gt;&lt;img src=&#34;1.jpg&#34; alt=&#34;image-20210915210722190&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;1.jpg&#34; alt=&#34;image-20210915210722190&#34; /&gt;&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;早期：&lt;/li&gt;
 &lt;/ol&gt;
@@ -2905,7 +2905,7 @@
 &lt;figure class=&#34;highlight javascript&#34;&gt;&lt;figcaption data-lang=&#34;javascript&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token comment&#34;&gt;// xhr.js&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token comment&#34;&gt;// 请求中取消请求的代码&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;3&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token keyword&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;config&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;cancelToken&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;4&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token comment&#34;&gt;// Handle cancellation&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;5&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  config&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;cancelToken&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;promise&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;then&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token keyword&#34;&gt;function&lt;/span&gt; &lt;span class=&#34;token function&#34;&gt;onCanceled&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token parameter&#34;&gt;cancel&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;6&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token keyword&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token operator&#34;&gt;!&lt;/span&gt;request&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;token punctuation&#34;&gt;&amp;#123;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;7&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;      &lt;span class=&#34;token keyword&#34;&gt;return&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;8&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;9&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    request&lt;span class=&#34;token punctuation&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;token function&#34;&gt;abort&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;10&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token function&#34;&gt;reject&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;(&lt;/span&gt;cancel&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;11&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    &lt;span class=&#34;token comment&#34;&gt;// Clean up request&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;12&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    request &lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;token keyword&#34;&gt;null&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;13&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;  &lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;token punctuation&#34;&gt;;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;14&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token punctuation&#34;&gt;&amp;#125;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;h1 id=&#34;总结&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#总结&#34;&gt;#&lt;/a&gt; 总结&lt;/h1&gt;
 &lt;p&gt;大概花了几天的时间把 axios 中主要模块的源代码分析了一遍，确实是收益良多。&lt;/p&gt;
 &lt;p&gt;作者水平有限（只是个刚学两年的小前端），如果有不正确的地方，还请大佬轻喷。&lt;/p&gt;
-&lt;p&gt;参考：&lt;a href=&#34;https://github.com/axios/axios&#34;&gt;axios/axios: Promise based HTTP client for the browser and node.js (github.com)&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;参考：&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9naXRodWIuY29tL2F4aW9zL2F4aW9z&#34;&gt;axios/axios: Promise based HTTP client for the browser and node.js (github.com)&lt;/span&gt;&lt;/p&gt;
  ]]></description>
         </item>
         <item>
@@ -2923,7 +2923,7 @@
 &lt;li&gt;K&lt;sub&gt;i&lt;/sub&gt; &amp;gt;= k&lt;sub&gt;2i&lt;/sub&gt; 且 k&lt;sub&gt;i&lt;/sub&gt; &amp;gt;= k&lt;sub&gt;2i+1&lt;/sub&gt;    (0&amp;lt;=i&amp;lt;=n/2)&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;用语言表示，即：&lt;strong&gt;树中所有非终端结点的值均不大于（不小于）其左右孩子的值&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;example.png&#34; alt=&#34;example&#34; title=&#34;例子&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;example.png&#34; alt=&#34;example&#34; title=&#34;例子&#34; /&gt;&lt;/p&gt;
 &lt;h1 id=&#34;思路&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#思路&#34;&gt;#&lt;/a&gt; 思路&lt;/h1&gt;
 &lt;ol&gt;
 &lt;li&gt;按堆的定义将待排序序列 list [0...n-1] 调整为大根堆（即建初堆），交换 list [0] 和 list [n-1]，则此时列表最后一个元素为最大的元素。&lt;/li&gt;
